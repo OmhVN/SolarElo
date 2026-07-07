@@ -81,7 +81,6 @@ public class ConfigMigrator {
             return;
         }
 
-        plugin.getLogger().info("Phát hiện cấu hình cũ cho " + resourceName + " (Version: " + (userVersion.isEmpty() ? "None" : userVersion) + "). Đang tiến hành backup và cập nhật lên phiên bản " + currentVersion + "...");
 
         File backupDir = new File(plugin.getDataFolder(), "backups");
         if (!backupDir.exists()) backupDir.mkdirs();
@@ -207,7 +206,6 @@ public class ConfigMigrator {
                 writer.write(l);
                 writer.newLine();
             }
-            plugin.getLogger().info("Đã cập nhật xong cấu hình: " + resourceName);
         } catch (Exception e) {
             plugin.getLogger().warning("Could not write merged configuration " + resourceName + ": " + e.getMessage());
         }
