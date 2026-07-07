@@ -12,3 +12,14 @@ solarelo-api/build/
 
 # Build settings
 settings.gradle
+
+# Local build artifacts
+target/
+obfuscation/
+*.log
+*.bbmodel
+*.png
+*.ttf
+scratch/
+skidfuscator-config.conf
+skidfuscator-error-*.txt
