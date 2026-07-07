@@ -1,4 +1,4 @@
-package dev.solar.solarelo.gui;
+package dev.solar.solarelo.hooks;
 
 import net.skinsrestorer.api.SkinsRestorerProvider;
 import net.skinsrestorer.api.property.SkinProperty;

@@ -1,4 +1,5 @@
 package dev.solar.solarelo.gui;
+import dev.solar.solarelo.hooks.SkinsRestorerHook;
 
 import dev.solar.solarelo.SolarElo;
 import dev.solar.solarelo.api.model.PlayerData;
@@ -32,25 +33,10 @@ public class AdminMenu {
 
         org.bukkit.configuration.file.FileConfiguration adminConfig = plugin.getGuiConfigManager().getAdminConfig();
         List<String> disposition = adminConfig.getStringList("admin-list.gui-disposition");
-        int tempRows = 6;
-        if (disposition != null && !disposition.isEmpty()) {
-            tempRows = disposition.size();
-        }
-        if (tempRows < 1 || tempRows > 6) tempRows = 6;
-        final int rows = tempRows;
-
-        int tempLimit = 45;
-        if (disposition != null && !disposition.isEmpty()) {
-            int count = 0;
-            for (String row : disposition) {
-                for (int c = 0; c < row.length() && c < 9; c++) {
-                    if (row.charAt(c) == 'x') count++;
-                }
-            }
-            tempLimit = count;
-        }
-        final int limit = tempLimit;
-        final int offset = (page - 1) * limit;
+        GuiLayoutHelper.LayoutInfo layout = GuiLayoutHelper.getLayoutInfo(adminConfig, "admin-list.gui-disposition", page);
+        int rows = layout.rows;
+        int limit = layout.limit;
+        int offset = layout.offset;
 
         plugin.runAsync(() -> {
             List<PlayerData> dbPlayers = plugin.getDatabaseManager().getTopPlayers(limit, offset, true);
@@ -228,25 +214,10 @@ public class AdminMenu {
 
         org.bukkit.configuration.file.FileConfiguration adminConfig = plugin.getGuiConfigManager().getAdminConfig();
         List<String> disposition = adminConfig.getStringList("elo-history.gui-disposition");
-        int tempRows = 6;
-        if (disposition != null && !disposition.isEmpty()) {
-            tempRows = disposition.size();
-        }
-        if (tempRows < 1 || tempRows > 6) tempRows = 6;
-        final int rows = tempRows;
-
-        int tempLimit = 45;
-        if (disposition != null && !disposition.isEmpty()) {
-            int count = 0;
-            for (String row : disposition) {
-                for (int c = 0; c < row.length() && c < 9; c++) {
-                    if (row.charAt(c) == 'x') count++;
-                }
-            }
-            tempLimit = count;
-        }
-        final int limit = tempLimit;
-        final int offset = (page - 1) * limit;
+        GuiLayoutHelper.LayoutInfo layout = GuiLayoutHelper.getLayoutInfo(adminConfig, "elo-history.gui-disposition", page);
+        int rows = layout.rows;
+        int limit = layout.limit;
+        int offset = layout.offset;
 
         plugin.runAsync(() -> {
             List<EloHistoryEntry> history = plugin.getDatabaseManager().getEloHistory(targetUuid);
@@ -374,25 +345,10 @@ public class AdminMenu {
 
         org.bukkit.configuration.file.FileConfiguration adminConfig = plugin.getGuiConfigManager().getAdminConfig();
         List<String> disposition = adminConfig.getStringList("kill-history.gui-disposition");
-        int tempRows = 6;
-        if (disposition != null && !disposition.isEmpty()) {
-            tempRows = disposition.size();
-        }
-        if (tempRows < 1 || tempRows > 6) tempRows = 6;
-        final int rows = tempRows;
-
-        int tempLimit = 45;
-        if (disposition != null && !disposition.isEmpty()) {
-            int count = 0;
-            for (String row : disposition) {
-                for (int c = 0; c < row.length() && c < 9; c++) {
-                    if (row.charAt(c) == 'x') count++;
-                }
-            }
-            tempLimit = count;
-        }
-        final int limit = tempLimit;
-        final int offset = (page - 1) * limit;
+        GuiLayoutHelper.LayoutInfo layout = GuiLayoutHelper.getLayoutInfo(adminConfig, "kill-history.gui-disposition", page);
+        int rows = layout.rows;
+        int limit = layout.limit;
+        int offset = layout.offset;
 
         plugin.runAsync(() -> {
             List<KillHistoryEntry> history = plugin.getDatabaseManager().getKillHistory(targetUuid);

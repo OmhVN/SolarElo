@@ -1,4 +1,5 @@
 package dev.solar.solarelo.gui;
+import dev.solar.solarelo.hooks.SkinsRestorerHook;
 
 import dev.solar.solarelo.SolarElo;
 import dev.solar.solarelo.api.model.PlayerData;
@@ -28,27 +29,10 @@ public class LeaderboardMenu {
         final String finalFilter = filter;
         org.bukkit.configuration.file.FileConfiguration guiConfig = plugin.getGuiConfigManager().getLeaderboardConfig();
         List<String> disposition = guiConfig.getStringList("gui-disposition");
-        int tempRows = guiConfig.getInt("rows", 6);
-        if (disposition != null && !disposition.isEmpty()) {
-            tempRows = disposition.size();
-        }
-        if (tempRows < 1 || tempRows > 6) tempRows = 6;
-        final int rows = tempRows;
-
-        int tempLimit = (rows - 1) * 9;
-        if (disposition != null && !disposition.isEmpty()) {
-            int count = 0;
-            for (String row : disposition) {
-                for (int c = 0; c < row.length() && c < 9; c++) {
-                    if (row.charAt(c) == 'x') {
-                        count++;
-                    }
-                }
-            }
-            tempLimit = count;
-        }
-        final int limit = tempLimit;
-        final int offset = (page - 1) * limit;
+        GuiLayoutHelper.LayoutInfo layout = GuiLayoutHelper.getLayoutInfo(guiConfig, "gui-disposition", page);
+        int rows = layout.rows;
+        int limit = layout.limit;
+        int offset = layout.offset;
 
         plugin.runAsync(() -> {
             List<PlayerData> players;

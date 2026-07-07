@@ -1,4 +1,5 @@
 package dev.solar.solarelo.gui;
+import dev.solar.solarelo.hooks.SkinsRestorerHook;
 
 import dev.solar.solarelo.SolarElo;
 import dev.solar.solarelo.api.model.PlayerData;
