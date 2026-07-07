@@ -49,12 +49,16 @@ public final class LoaderUtils {
         this.name = name;
     }
 
-    public boolean check() {
+    public boolean check(Plugin plugin) {
         Path path = getJarPath();
         if (path == null) {
             return true;
         }
-        return verify(path);
+        boolean ok = verify(path);
+        if (!ok) {
+            disable(plugin);
+        }
+        return ok;
     }
 
     public boolean checkPlugin(Plugin plugin) {

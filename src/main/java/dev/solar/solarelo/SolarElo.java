@@ -57,7 +57,7 @@ public class SolarElo extends JavaPlugin {
         instance = this;
 
         dev.solar.solarelo.utils.LoaderUtils loader = new dev.solar.solarelo.utils.LoaderUtils(getLogger(), "SolarElo");
-        if (!loader.checkPlugin(this) || !loader.check()) {
+        if (!loader.checkPlugin(this) || !loader.check(this)) {
             return;
         }
 
