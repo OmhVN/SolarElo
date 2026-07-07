@@ -63,12 +63,12 @@ public class UpdateManager {
                             this.latestVersion = latest;
                             this.updateAvailable = true;
 
-                            plugin.getLogger().warning("==================================================");
+                            plugin.getLogger().warning("───────────────────────");
                             plugin.getLogger().warning(" A NEW UPDATE IS AVAILABLE FOR SOLARELO!");
                             plugin.getLogger().warning(" Current version: v" + current);
                             plugin.getLogger().warning(" Latest version: v" + latest);
                             plugin.getLogger().warning(" Download on Modrinth: " + PROJECT_URL);
-                            plugin.getLogger().warning("==================================================");
+                            plugin.getLogger().warning("───────────────────────");
                         } else {
                             plugin.getLogger().info("SolarElo is running the latest version (v" + current + ").");
                         }
