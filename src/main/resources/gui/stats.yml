@@ -1,0 +1,71 @@
+# Detailed Player Statistics GUI Configuration
+enabled: true
+gui-disposition:
+  - "####h####"
+  - "#rekdqsb#"
+  - "####a####"
+title: "sᴛᴀᴛs - {player}"
+
+
+filler:
+  enabled: false
+  material: "GRAY_STAINED_GLASS_PANE"
+
+items:
+  player-head:
+    material: "PLAYER_HEAD"
+    name: "#55ffff{player}"
+    lore:
+      - "#aaaaaaDetailed statistics of #ffffff{player}"
+      
+  rank:
+    material: "EMERALD"
+    name: "#00ff3cᴄᴜʀʀᴇɴᴛ ʀᴀɴᴋ"
+    lore:
+      - "#aaaaaaRank: &r{rank}"
+      - "#aaaaaaPrefix: &r{prefix}"
+      
+  elo:
+    material: "AMETHYST_SHARD"
+    name: "#ffaa00ᴇʟᴏ ᴘᴏɪɴᴛs"
+    lore:
+      - "#aaaaaaPoints: #ffaa00{elo} ELO"
+      
+  kills:
+    material: "DIAMOND_SWORD"
+    name: "#ff3c3cᴋɪʟʟs"
+    lore:
+      - "#aaaaaaTotal kills: #00ff3c{kills}"
+      
+  deaths:
+    material: "SKELETON_SKULL"
+    name: "#555555ᴅᴇᴀᴛʜs"
+    lore:
+      - "#aaaaaaTotal deaths: #ff3c3c{deaths}"
+      
+  kd:
+    material: "CLOCK"
+    name: "#ffaa00ᴋ/ᴅ ʀᴀᴛɪᴏ"
+    lore:
+      - "#aaaaaaK/D ratio: #ffaa00{kd}"
+      
+  streak:
+    material: "ZOMBIE_HEAD"
+    name: "#ffaa00ᴄᴜʀʀᴇɴᴛ ᴋɪʟʟsᴛʀᴇᴀᴋ"
+    lore:
+      - "#aaaaaaCurrent streak: #55ffff{streak}"
+      
+  best_streak:
+    material: "GOLD_NUGGET"
+    name: "#ffaa00ʙᴇsᴛ ᴋɪʟʟsᴛʀᴇᴀᴋ"
+    lore:
+      - "#aaaaaaHighest streak: #55ffff{best_streak}"
+
+back-button:
+  material: "RED_STAINED_GLASS_PANE"
+  name: "#ff3c3cʙᴀᴄᴋ"
+  lore:
+    - "#aaaaaaGo back to Leaderboard"
+  customModelData: -1
+
+config-version: "1.5"

@@ -1,0 +1,136 @@
+# Elo Admin Menus GUI Configuration (Cấu hình GUI Admin)
+enabled: true
+
+filler:
+  enabled: false
+  material: "GRAY_STAINED_GLASS_PANE"
+
+
+admin-list:
+  title: "ᴇʟᴏ ᴀᴅᴍɪɴ - {page}"
+  gui-disposition:
+    - "xxxxxxxxx"
+    - "xxxxxxxxx"
+    - "xxxxxxxxx"
+    - "xxxxxxxxx"
+    - "xxxxxxxxx"
+    - "b###r###n"
+
+admin-detail:
+  title: "ᴀᴅᴍɪɴ ᴅᴇᴛᴀɪʟs - {player}"
+  gui-disposition:
+    - "#########"
+    - "####h####"
+    - "#########"
+    - "#asrbepx#"
+    - "#########"
+
+elo-history:
+  title: "ᴇʟᴏ ʜɪsᴛᴏʀʏ - {player}"
+  gui-disposition:
+    - "xxxxxxxxx"
+    - "xxxxxxxxx"
+    - "xxxxxxxxx"
+    - "xxxxxxxxx"
+    - "xxxxxxxxx"
+    - "b###f###n"
+
+kill-history:
+  title: "ᴘᴠᴘ ʜɪsᴛᴏʀʏ - {player}"
+  gui-disposition:
+    - "xxxxxxxxx"
+    - "xxxxxxxxx"
+    - "xxxxxxxxx"
+    - "xxxxxxxxx"
+    - "xxxxxxxxx"
+    - "b###f###n"
+
+# ── Navigation Buttons (Các nút điều hướng) ──
+back:
+  name: "#00BFFFʙᴀᴄᴋ"
+  lore:
+    - "&fClick to go to the previous page"
+  material: "ARROW"
+  customModelData: -1
+
+next:
+  name: "#00BFFFɴᴇxᴛ"
+  lore:
+    - "&fClick to go to the next page"
+  material: "ARROW"
+  customModelData: -1
+
+refresh:
+  name: "#00ff3cʀᴇꜰʀᴇsʜ"
+  lore:
+    - "&fClick to refresh the list"
+  material: "FEATHER"
+  customModelData: -1
+
+filter:
+  name: "#00BFFFғɪʟᴛᴇʀ"
+  lore:
+    - "&fClick to toggle filter"
+  material: "HOPPER"
+  customModelData: -1
+
+# ── Admin Detail Actions (Các nút thao tác chi tiết) ──
+add-elo:
+  name: "#00ff3cᴀᴅᴅ ᴇʟᴏ"
+  lore:
+    - "&fClick to add ELO to this player"
+  material: "EMERALD"
+  customModelData: -1
+
+set-elo:
+  name: "#ffaa00sᴇᴛ ᴇʟᴏ"
+  lore:
+    - "&fClick to set player's ELO"
+  material: "NAME_TAG"
+  customModelData: -1
+
+remove-elo:
+  name: "#ff3c3cʀᴇᴍᴏᴠᴇ ᴇʟᴏ"
+  lore:
+    - "&fClick to deduct ELO from player"
+  material: "REDSTONE"
+  customModelData: -1
+
+back-to-list:
+  name: "#aaaaaaʙᴀᴄᴋ"
+  lore:
+    - "&fClick to return to player list"
+  material: "ARROW"
+  customModelData: -1
+
+elo-history:
+  name: "#00BFFFᴇʟᴏ ʜɪsᴛᴏʀʏ"
+  lore:
+    - "&fClick to view ELO change history"
+  material: "BOOK"
+  customModelData: -1
+
+pvp-history:
+  name: "#00BFFFᴘᴠᴘ ʜɪsᴛᴏʀʏ"
+  lore:
+    - "&fClick to view PvP logs"
+  material: "DIAMOND_SWORD"
+  customModelData: -1
+
+reset-stats:
+  name: "#ff3c3cʀᴇsᴇᴛ sᴛᴀᴛs"
+  lore:
+    - "&fClick to reset ELO and stats to default"
+  material: "GUNPOWDER"
+  customModelData: -1
+
+# ── ELO Change Reasons (Lý do thay đổi Elo) ──
+reasons:
+  kill: "⚔ Hạ gục {player}"
+  death: "☠ Bị hạ gục bởi {player}"
+  admin-set: "⚙ Thay đổi bởi Admin ({elo} Elo)"
+  admin-add: "✚ Cộng bởi Admin (+{amount} Elo)"
+  admin-remove: "➖ Trừ bởi Admin (-{amount} Elo)"
+  admin-reset: "⟳ Reset bởi Admin"
+
+config-version: "1.5"

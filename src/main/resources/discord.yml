@@ -1,0 +1,40 @@
+# Discord Webhooks settings
+discord-webhook:
+  enabled: false
+  url: "https://discord.com/api/webhooks/..."
+  events:
+    kill:
+      enabled: true
+      use-embed: true
+      format: "⚔️ **{killer}** ({killer_elo} Elo) has defeated **{victim}** ({victim_elo} Elo)!"
+      embed:
+        title: "⚔️ Player Defeated"
+        description: "**{killer}** ({killer_elo} Elo) has defeated **{victim}** ({victim_elo} Elo)!"
+        color: "#ff3c3c"
+        footer: "SolarElo Webhook System"
+        timestamp: true
+        thumbnail: "https://minotar.net/avatar/{killer}/100.png"
+    top-1-defeat:
+      enabled: true
+      use-embed: true
+      format: "👑 **{killer}** has defeated the #1 ranked player **{victim}**!"
+      embed:
+        title: "👑 TOP 1 Defeated"
+        description: "**{killer}** has defeated the #1 ranked player **{victim}**!"
+        color: "#ffaa00"
+        footer: "SolarElo Webhook System"
+        timestamp: true
+        thumbnail: "https://minotar.net/avatar/{killer}/100.png"
+    rank-up:
+      enabled: true
+      use-embed: true
+      format: "⚡ **{player}** has ranked up to **{rank}**!"
+      embed:
+        title: "⚡ Rank Up"
+        description: "**{player}** has ranked up to **{rank}**!"
+        color: "#00ffcc"
+        footer: "SolarElo Webhook System"
+        timestamp: true
+        thumbnail: "https://minotar.net/avatar/{player}/100.png"
+
+config-version: "1.5"

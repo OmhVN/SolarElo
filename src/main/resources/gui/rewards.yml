@@ -1,0 +1,41 @@
+# Rank Breakthrough Rewards GUI Configuration
+enabled: true
+gui-disposition:
+  - "#########"
+  - "#xxxxxxx#"
+  - "#xxxxxxx#"
+  - "#xxxxxxx#"
+  - "####a####"
+title: "ʀᴀɴᴋ ʀᴇᴡᴀʀᴅs"
+
+
+filler:
+  enabled: false
+  material: "BLACK_STAINED_GLASS_PANE"
+
+rank-item:
+  # Display name of the Rank
+  name: "{rank}"
+  lore:
+    - "#aaaaaaRequired Elo: #ffaa00{min_elo}"
+    - "#aaaaaaPrefix: &r{prefix}"
+    - ""
+    - "#ffaa00Breakthrough rewards:"
+    - "{rewards}"
+    - ""
+    - "{status}"
+  # Breakthrough commands format
+  reward-line-format: " #00ff3c• #ffffff{command}"
+  no-rewards-format: " #ff3c3c• No automatic rewards"
+  # Unlock status indicators
+  status-unlocked: "#00ff3c✔ Unlocked"
+  status-locked: "#ff3c3c🔒 Locked (Needs {missing} more Elo)"
+
+back-button:
+  material: "RED_STAINED_GLASS_PANE"
+  name: "#ff3c3cʙᴀᴄᴋ"
+  lore:
+    - "#aaaaaaGo back to Elo Leaderboard"
+  customModelData: -1
+
+config-version: "1.5"

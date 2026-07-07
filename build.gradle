@@ -1,0 +1,110 @@
+import org.gradle.api.attributes.java.TargetJvmVersion
+
+plugins {
+    id 'java'
+    id 'com.gradleup.shadow' version '8.3.6'
+}
+
+subprojects {
+    apply plugin: 'java-library'
+
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+
+    repositories {
+        mavenCentral()
+        maven { url = 'https://repo.papermc.io/repository/maven-public/' }
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.compilerArgs.add("-parameters")
+        options.encoding = 'UTF-8'
+    }
+}
+
+group = 'dev.solar'
+version = '1.1-R07'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+sourceCompatibility = JavaVersion.VERSION_21
+targetCompatibility = JavaVersion.VERSION_21
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://repo.papermc.io/repository/maven-public/' }
+    maven { url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
+    maven { url = 'https://repo.codemc.io/repository/maven-public/' }
+    maven { url = 'https://repo.codemc.io/repository/maven-releases/' }
+    maven { url = 'https://jitpack.io' }
+
+    maven { url = 'https://repo.opencollab.dev/main/' }
+}
+
+dependencies {
+
+    compileOnly 'dev.folia:folia-api:1.21.11-R0.1-SNAPSHOT'
+
+
+    implementation project(':solarelo-api')
+
+
+    compileOnly 'me.clip:placeholderapi:2.12.2'
+
+
+    compileOnly 'com.zaxxer:HikariCP:7.1.0'
+
+
+    compileOnly 'org.xerial:sqlite-jdbc:3.53.2.0'
+
+
+    compileOnly 'com.mysql:mysql-connector-j:9.7.0'
+
+
+    compileOnly 'org.mariadb.jdbc:mariadb-java-client:3.5.1'
+
+
+    compileOnly 'org.slf4j:slf4j-api:2.0.18'
+    compileOnly 'org.slf4j:slf4j-simple:2.0.18'
+
+
+    compileOnly 'net.skinsrestorer:skinsrestorer-api:15.0.3'
+
+
+    implementation 'org.bstats:bstats-bukkit:3.2.1'
+}
+
+processResources {
+    inputs.property "version", project.version
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand(project: project)
+    }
+}
+
+shadowJar {
+    archiveClassifier.set('')
+
+    relocate 'org.bstats', 'dev.solar.solarelo.bstats'
+
+
+    configurations = [project.configurations.runtimeClasspath]
+
+    exclude 'META-INF/maven/**'
+    exclude 'META-INF/proguard/**'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs.add("-parameters")
+    options.encoding = 'UTF-8'
+    options.release = 21
+}
+
+tasks.register('copyDependencies', Copy) {
+    from configurations.compileClasspath
+    into "$buildDir/dependencies"
+}

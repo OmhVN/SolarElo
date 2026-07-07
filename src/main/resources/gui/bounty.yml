@@ -1,0 +1,124 @@
+# Bounty Quest GUI Configuration (Nhiệm vụ Săn thưởng)
+enabled: true
+gui-disposition:
+  - "xxxxxxxxx"
+  - "xxxxxxxxx"
+  - "xxxxxxxxx"
+  - "xxxxxxxxx"
+  - "xxxxxxxxx"
+  - "b##arf##n"
+title: "ʙᴏᴜɴᴛʏ ǫᴜᴇsᴛs"
+
+
+filler:
+  enabled: false
+  material: "GRAY_STAINED_GLASS_PANE"
+
+minimum-target-elo: 5000 # Minimum Elo required for a player to appear on the Bounty target selection menu
+minimum-unlock-elo: 1200 # Minimum Elo required for a player to use/unlock the Bounty feature
+
+# Item shown for each online player in the bounty selection GUI
+target-player-head:
+  name: "#ff3c3cᴛᴀʀɢᴇᴛ #ffffff{player}"
+  lore:
+    - "#aaaaaaElo: #ffaa00{elo}"
+    - "#aaaaaaRank: &r{rank}"
+    - ""
+    - "#ffaa00Click to accept contract to eliminate target!"
+    - "#ffaa00Success: #00ff3c+{reward_elo} Elo #ffffff+ rewards."
+
+# When player has an active target (Khi đang có nhiệm vụ hoạt động)
+active-bounty-item:
+  name: "#00ff3cᴀᴄᴛɪᴠᴇ ǫᴜᴇsᴛ"
+  material: "PLAYER_HEAD"
+  lore:
+    - "#aaaaaaTarget: #ff3c3c{target}"
+    - "#aaaaaaReward Elo: #00ff3c+{reward_elo}"
+    - "#aaaaaaTime Remaining: #ffaa00{time_remaining}"
+    - ""
+    - "#ffffffFind and eliminate #ffaa00{target} #ffffffto get rewards!"
+    - "#ffffffIf they log out, the contract is preserved."
+
+cancel-bounty-item:
+  name: "#ff3c3cᴄᴀɴᴄᴇʟ ǫᴜᴇsᴛ"
+  material: "BARRIER"
+  lore:
+    - "#ffffffClick to cancel the current bounty contract."
+    - "#ffffffYou will be penalized with a #ff3c3c{cooldown} second #ffffffcooldown"
+    - "#ffffffbefore you can accept another quest."
+  confirm_sound: error
+
+cooldown-item:
+  name: "#ff3c3cᴄᴏᴏʟᴅᴏᴡɴ"
+  material: "CLOCK"
+  lore:
+    - "#ffffffYou completed or canceled a quest recently."
+    - "#ffffffPlease wait before accepting the next quest."
+    - ""
+    - "#ffffffRemaining time: #ff3c3c{remaining} seconds."
+
+no-targets-item:
+  name: "#ff3c3cɴᴏ ᴠᴀʟɪᴅ ᴛᴀʀɢᴇᴛs"
+  material: "BARRIER"
+  lore:
+    - "#ffffffNo other valid players online currently."
+    - "#ffffff(You cannot target yourself)"
+
+locked-item:
+  name: "#ff3c3cʙᴏᴜɴᴛʏ ʟᴏᴄᴋᴇᴅ"
+  material: "BARRIER"
+  lore:
+    - "#ffffffYou need at least #ffaa00{required} Elo #ffffffto unlock"
+    - "#ffffffthe Bounty feature."
+    - ""
+    - "#aaaaaaYour current Elo: #ff3c3c{elo} Elo"
+
+back:
+  name: "#00BFFFʙᴀᴄᴋ"
+  lore:
+    - "&fClick to go to the previous page"
+  material: "ARROW"
+  customModelData: -1
+
+next:
+  name: "#00BFFFɴᴇxᴛ"
+  lore:
+    - "&fClick to go to the next page"
+  material: "ARROW"
+  customModelData: -1
+
+active-quest:
+  name: "#00BFFFᴀᴄᴛɪᴠᴇ ǫᴜᴇsᴛ"
+  lore:
+    - "&fClick to view current contract details"
+    - "&fand remaining time."
+  material: "BLUE_BANNER"
+  customModelData: -1
+
+refresh:
+  name: "#00BFFFʀᴇꜰʀᴇsʜ"
+  lore:
+    - "&fClick to refresh the targets list"
+  material: "ANVIL"
+  customModelData: -1
+
+filter:
+  name: "#00BFFFғɪʟᴛᴇʀ"
+  material: "HOPPER"
+  customModelData: -1
+  selected_color: "#00BFFF"
+  unselected_color: "&f"
+  bullet_icon: "▪ "
+  options: # DON'T CHANGE ANYTHING IN HERE
+    - "HIGH_TO_LOW"
+    - "LOW_TO_HIGH"
+  option-names:
+    HIGH_TO_LOW: "High to Low (Top)"
+    LOW_TO_HIGH: "Low to High (Bottom)"
+  lore:
+    - "&fFilter state:"
+    - "{options}"
+    - ""
+    - "#00BFFFClick to change filter!"
+
+config-version: "1.5"

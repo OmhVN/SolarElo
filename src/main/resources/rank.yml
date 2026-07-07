@@ -1,0 +1,66 @@
+# SolarElo
+
+# Ranks được sắp xếp từ thấp đến cao theo min-elo
+# rankup-commands: lệnh chạy khi player lên rank (dùng {player})
+ranks:
+  lt5:
+    display: "#aaaaaaLT5"
+    min-elo: 0
+    prefix: "#aaaaaa[LT5]"
+    rankup-commands: []
+
+  ht5:
+    display: "#777777HT5"
+    min-elo: 1000
+    prefix: "#777777[HT5]"
+    rankup-commands: []
+
+  lt4:
+    display: "#00ff3cLT4"
+    min-elo: 1150
+    prefix: "#00ff3c[LT4]"
+    rankup-commands: []
+
+  ht4:
+    display: "#00cc30HT4"
+    min-elo: 1300
+    prefix: "#00cc30[HT4]"
+    rankup-commands: []
+
+  lt3:
+    display: "#ffff55LT3"
+    min-elo: 1450
+    prefix: "#ffff55[LT3]"
+    rankup-commands: []
+
+  ht3:
+    display: "#ffaa00HT3"
+    min-elo: 1600
+    prefix: "#ffaa00[HT3]"
+    rankup-commands: []
+
+  lt2:
+    display: "#ff77ffLT2"
+    min-elo: 1750
+    prefix: "#ff77ff[LT2]"
+    rankup-commands: []
+
+  ht2:
+    display: "#ff55ffHT2"
+    min-elo: 1900
+    prefix: "#ff55ff[HT2]"
+    rankup-commands: []
+
+  lt1:
+    display: "#ff3c3cLT1"
+    min-elo: 2050
+    prefix: "#ff3c3c[LT1]"
+    rankup-commands: []
+
+  ht1:
+    display: "#cc0000HT1"
+    min-elo: 2200
+    prefix: "#cc0000[HT1]"
+    rankup-commands: []
+
+config-version: "1.5"

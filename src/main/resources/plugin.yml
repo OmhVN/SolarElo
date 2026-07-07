@@ -1,0 +1,36 @@
+name: SolarElo
+version: '${project.version}'
+main: dev.solar.solarelo.SolarElo
+api-version: '1.21'
+author: OmhVN
+folia-supported: true
+load: STARTUP
+softdepend: [PlaceholderAPI, SkinsRestorer]
+
+libraries:
+  - com.zaxxer:HikariCP:7.1.0
+  - org.xerial:sqlite-jdbc:3.53.2.0
+  - com.mysql:mysql-connector-j:9.7.0
+  - org.slf4j:slf4j-api:2.0.18
+  - org.slf4j:slf4j-simple:2.0.18
+
+commands:
+  elo:
+    description: View your ELO stats or another player's ELO stats
+    usage: /elo [player]
+  topelo:
+    description: View the ELO leaderboard
+    usage: /topelo [page]
+  eloadmin:
+    description: Administrative commands for SolarElo
+    usage: /eloadmin <set|add|remove|reset|reload>
+    permission: solarelo.admin
+  bounty:
+    description: Open the bounty quest GUI
+    usage: /bounty
+
+
+permissions:
+  solarelo.admin:
+    description: Access to administrative commands for SolarElo
+    default: op

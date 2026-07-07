@@ -1,0 +1,39 @@
+# Elo Bounty System (Hệ thống Săn thưởng Elo)
+bounty:
+  enabled: true
+  # Thưởng chuỗi hạ gục (Streak Bounties)
+  streak-bounties:
+    "5":
+      reward-elo: 20
+      commands:
+        - "eco give {killer} 500"
+    "10":
+      reward-elo: 50
+      commands:
+        - "eco give {killer} 1000"
+        - "give {killer} diamond 1"
+  # Thưởng hạ gục TOP bảng xếp hạng (Rank Bounties)
+  top-player-bounties:
+    "1":
+      reward-elo: 50
+      commands:
+        - "eco give {killer} 2000"
+    "2":
+      reward-elo: 30
+      commands:
+        - "eco give {killer} 1000"
+    "3":
+      reward-elo: 20
+      commands:
+        - "eco give {killer} 500"
+
+# Config settings for accepted contracts (Cài đặt nhiệm vụ săn thưởng /bounty)
+bounty-quest:
+  reward-elo: 20
+  contract-duration-seconds: 5400 # 1 hour 30 minutes duration for the contract itself
+  cooldown-seconds: 5400 # 1 hour 30 minutes cooldown after completing a contract
+  cancel-cooldown-seconds: 300 # 5 minutes cooldown after cancelling a contract
+  commands:
+    - "give {killer} diamond 2"
+
+config-version: "1.5"

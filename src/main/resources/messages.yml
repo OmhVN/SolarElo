@@ -1,0 +1,121 @@
+# SolarElo
+
+prefix: "<gradient:#ff8a00:#da1b60>SolarElo</gradient> #555555> #aaaaaa"
+
+# ── PvP ───────────────────────────────
+kill-gain: "#00ff3cKill #ffaa00{victim} #00ff3c+#ffaa00{gained} Elo #aaaaaa(Streak: #ff3c3c{streak}#aaaaaa) #555555| #ffffffTotal: #ffaa00{elo}"
+death-loss: "#ff3c3cChết bởi #ffaa00{killer} #ff3c3c-#ffaa00{lost} Elo #555555| #ffffffTotal: #ffaa00{elo}"
+streak-end: "#ff3c3cStreak #ffaa00{streak} #ff3c3ckill đã kết thúc!"
+top-1-defeat: "#ffaa00[TOP 1 BONUS] Bạn đã nhận thêm #ffaa00{extra} Elo #ffaa00từ việc hạ gục người đứng đầu Server!"
+# Định dạng chú thích khi di chuột vào tên người chơi trong chat (\n là xuống dòng)
+hover-stats-format: "#ffaa00{player} #ffffffStats:\n#aaaaaaCấp bậc: &r{rank}\n#aaaaaaĐiểm Elo: #ffaa00{elo}\n#aaaaaaTỷ lệ K/D: #ffaa00{kd} #aaaaaa({kills}/{deaths})\n#aaaaaaChuỗi thắng: #ff3c3c{streak}"
+
+# ── Anti-farm ─────────────────────────
+anti-farm-cooldown: "#ff3c3cPhải chờ #ffaa00{seconds}s #ff3c3ctrước khi nhận Elo từ việc giết #ffaa00{player} #ff3c3clại."
+anti-farm-diminished: "#ffaa00Elo giảm do farm #aaaaaa(giết lặp). Nhận được: #ffaa00{gained}"
+anti-farm-ip: "#ff3c3cKhông thể nhận Elo do trùng IP hoặc cùng dải IP subnet."
+anti-farm-afk: "#ff3c3cKhông thể nhận Elo do nạn nhân đang AFK hoặc không hoạt động."
+anti-farm-spawn: "#ff3c3cKhông thể nhận Elo do nạn nhân vừa hồi sinh hoặc ở gần điểm spawn."
+anti-farm-elo-difference: "#ff3c3cKhông thể nhận Elo do chênh lệch Elo giữa hai bên quá lớn ({difference} Elo)."
+
+# ── Rank ──────────────────────────────
+rank-up: "#ffaa00★ RANK UP ★ #ffaa00Bạn đã lên &r{rank}#ffaa00!"
+rank-down: "#ff3c3c▼ RANK DOWN ▼ #ffaa00Bạn xuống &r{rank}#ffaa00."
+
+# ── Commands ──────────────────────────
+elo-info: "#ffaa00{player} #555555| #ffffffElo: #ffaa00{elo} #ffffff| Rank: {rank} #ffffff| K: #00ff3c{kills} #ffffff| D: #ff3c3c{deaths} #ffffff| K/D: #ffaa00{kd} #ffffff| Streak: #ff3c3c{streak}"
+elo-info-own: "#ffaa00Stats của bạn #555555| #ffffffElo: #ffaa00{elo} #ffffff| Rank: {rank} #ffffff| K: #00ff3c{kills} #ffffff| D: #ff3c3c{deaths} #ffffff| K/D: #ffaa00{kd} #ffffff| Streak: #ff3c3c{streak}"
+
+# ── Leaderboard ───────────────────────
+top-header: "#555555&m         &r #ffaa00SolarElo #555555- #aaaaaaTop Players &r#555555&m         "
+top-entry: "#555555{pos}. &r{rank} #ffffff{player} #555555- #ffaa00Elo: #ffffff{elo} #555555| Streak: #ff3c3c{streak}"
+top-footer: "#555555&m         &r #aaaaaaTrang #ffaa00{page}#aaaaaa/#ffaa00{max_pages} &r#555555&m         "
+
+# ── Leaderboard Details ───────────────
+gui-detail-header: "#555555&m         &r #ffaa00Thống kê chi tiết &r#555555&m         "
+gui-detail-format: "#aaaaaaNgười chơi: #ffaa00{player}\n#aaaaaaCấp bậc: &r{rank}\n#aaaaaaĐiểm Elo: #ffaa00{elo}\n#aaaaaaMạng giết: #00ff3c{kills}\n#aaaaaaSố lần chết: #ff3c3c{deaths}\n#aaaaaaTỷ lệ K/D: #ffaa00{kd}\n#aaaaaaChuỗi thắng: #ff3c3c{streak}\n#aaaaaaChuỗi thắng lớn nhất: #ffaa00{best_streak}"
+gui-detail-footer: "#555555&m                                           "
+
+# ── Admin ─────────────────────────────
+admin-set: "&#00ff3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &fĐã đặt ELO của &#ffffff{player} &fthành &#00ff3c{elo} ELO&f."
+admin-add: "&#00ff3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &fĐã cộng &#00ff3c+{amount} ELO &fcho &#ffffff{player}"
+admin-remove: "&#00ff3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &fĐã trừ &#ff3c3c-{amount} ELO &fcủa &#ffffff{player}"
+admin-reset: "&#00ff3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &fĐã reset ELO & Stats của &#ffffff{player} &fvề mặc định."
+
+# ── Misc ──────────────────────────────
+reload: "&#00ff3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &fReload cấu hình plugin thành công!"
+no-permission: "&#ff3c3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &cBạn không có quyền thực hiện thao tác này."
+player-not-found: "&#ff3c3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &cKhông tìm thấy người chơi này."
+season-resetting: "&#ffaa00ᴇʟᴏ ᴀᴅᴍɪɴ &8» &fĐang tiến hành kết thúc mùa giải và trao thưởng..."
+season-reset-success: "&#00ff3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &fMùa giải đã được reset thành công! Đã trao thưởng cho các người chơi hàng đầu và thực hiện soft-reset ELO."
+elo-decay-notice: "#ff3c3cBạn bị trừ {amount} Elo do không hoạt động tích cực gần đây!"
+
+
+# ── Bounty ────────────────────────────
+bounty-broadcast-streak: "#ffaa00[SĂN THƯỞNG] #ffaa00{player} #ffffffđã đạt chuỗi #ff3c3c{streak} kills#ffffff! Treo thưởng: #00ff3c+{elo} Elo #ffffff+ phần quà!"
+bounty-claim-streak: "#ffaa00[SĂN THƯỞNG] #ffaa00{killer} #ffffffđã chấm dứt chuỗi #ff3c3c{streak} #ffffffcủa #ffaa00{victim} #ffffffvà nhận thưởng (#00ff3c+{elo} Elo#ffffff)!"
+bounty-claim-top: "#ffaa00[SĂN THƯỞNG] #ffaa00{killer} #ffffffđã tiêu diệt người chơi TOP #ffaa00{rank} #ffaa00({victim}) #ffffffvà nhận thưởng (#00ff3c+{elo} Elo#ffffff)!"
+welcome-top-10: "#ffaa00[Chào Mừng] Huyền thoại #ffffff{player} #aaaaaa(Hạng #{rank} | {elo} Elo) #ffaa00đã tham gia máy chủ!"
+welcome-top-3: "#ffaa00[Chào Mừng] Huyền thoại #ffffff{player} #aaaaaa(Hạng #{rank} | {elo} Elo) #ffaa00đã tham gia máy chủ!"
+bounty-targeted: "#ffaa00[Nhiệm Vụ] Một thợ săn đã nhận khế ước truy nã bạn!"
+
+# ── Elo Lock ──────────────────────────
+elo-locked-by-admin: "&#ff3c3cElo của bạn đã bị khóa bởi Admin!"
+elo-unlocked-by-admin: "&#00ff3cElo của bạn đã được mở khóa bởi Admin!"
+admin-lock-success: "&#00ff3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &fĐã khóa Elo của player &#ffffff{player} &fthành công."
+admin-unlock-success: "&#00ff3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &fĐã mở khóa Elo của player &#ffffff{player} &fthành công."
+elo-locked-auto: "&#ff3c3cElo của bạn đã bị tự động khóa do đạt mức tối thiểu!"
+bounty-locked-error: "&#ff3c3cElo của bạn đang bị khóa, không thể sử dụng tính năng săn thưởng!"
+
+# ── Alt Accounts (IP check) ───────────
+alts-no-ip: "&#ff3c3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &cKhông tìm thấy dữ liệu IP của &#ffffff{player} &cđể kiểm tra alts."
+alts-list-header: "&8&m                                                    \n&#ffaa00&lDANH SÁCH TÀI KHOẢN CÙNG IP\n&7IP Address: &#ffffff{ip}\n"
+alts-list-item: "  &8▪ &#ffffff{player} &7- &#ffaa00{elo} ELO &7({status}&7)"
+alts-list-footer: "&8&m                                                    "
+alts-list-header-admin: "&#ffaa00&m                                                    \n&#ffaa00ᴀʟᴛ ᴀᴄᴄᴏᴜɴᴛs &8» &fDanh sách tài khoản cùng IP\n&7IP Address: &#ffffff{ip}\n"
+alts-list-footer-admin: "&#ffaa00&m                                                    "
+alts-status-online: "&#00ff3c● &7Online"
+alts-status-offline: "&7● &7Offline"
+
+# ── GUI Toggles & Disabled ────────────
+gui-disabled-leaderboard: "&#ff3c3cTính năng Bảng xếp hạng hiện đang bị tắt."
+gui-disabled-rewards: "&#ff3c3cTính năng Phần thưởng hiện đang bị tắt."
+gui-disabled-settings: "&#ff3c3cTính năng Cài đặt hiện đang bị tắt."
+gui-disabled-stats: "&#ff3c3cTính năng Xem thống kê bằng giao diện hiện đang bị tắt."
+gui-disabled-bounty: "&#ff3c3cTính năng Săn tiền thưởng hiện đang bị tắt."
+gui-disabled-admin: "&#ff3c3cTính năng Quản trị hiện đang bị tắt."
+
+# ── Season & Bounty System Broadcasts & Notifications ──
+season-reward-top1: "#ffaa00★ MÙA GIẢI KẾT THÚC! #e0e0e0Người chơi #00ff3c{player} #e0e0e0đạt ngôi vô địch TOP 1 với #ffaa00{elo} Elo#e0e0e0!"
+season-reward-top2: "#ffaa00★ MÙA GIẢI KẾT THÚC! #e0e0e0Người chơi #00ff3c{player} #e0e0e0đạt hạng TOP 2 với #ffaa00{elo} Elo#e0e0e0!"
+season-reward-top3: "#ffaa00★ MÙA GIẢI KẾT THÚC! #e0e0e0Người chơi #00ff3c{player} #e0e0e0đạt hạng TOP 3 với #ffaa00{elo} Elo#e0e0e0!"
+season-reward-top10: "#ffaa00★ MÙA GIẢI KẾT THÚC! #e0e0e0Người chơi #00ff3c{player} #e0e0e0đã xuất sắc đứng trong TOP 10 với #ffaa00{elo} Elo#e0e0e0!"
+bounty-quest-broadcast: "#00ff3c{killer} #ffffffđã hoàn thành nhiệm vụ và tiêu diệt #ff3c3c{victim}#ffffff!"
+bounty-quest-completed: "#00ff3c[Nhiệm Vụ] Bạn đã tiêu diệt mục tiêu {victim} và nhận thưởng +{reward_elo} Elo!"
+
+# ── Admin Dialog Input ────────────────
+dialog-title-add: "Cộng ELO"
+dialog-body-add: "Nhập số ELO muốn CỘNG cho {player}:"
+dialog-field-add: "Số ELO cần cộng"
+
+dialog-title-set: "Đặt ELO"
+dialog-body-set: "Nhập số ELO muốn ĐẶT cho {player}:"
+dialog-field-set: "Số ELO cần đặt"
+
+dialog-title-remove: "Trừ ELO"
+dialog-body-remove: "Nhập số ELO muốn TRỪ của {player}:"
+dialog-field-remove: "Số ELO cần trừ"
+
+dialog-button-confirm: "Xác nhận"
+dialog-button-confirm-hover: "Click để xác nhận số ELO"
+dialog-button-cancel: "Hủy"
+dialog-button-cancel-hover: "Click để hủy và quay lại"
+
+dialog-invalid-number: "&#ff3c3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &cGiá trị nhập vào phải là số nguyên! &7Thử lại."
+dialog-cancel-message: "&#ff3c3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &7Đã hủy yêu cầu chỉnh sửa."
+
+# ── Season Toggle ─────────────────────
+season-disabled-error: "&#ff3c3cTính năng Mùa giải hiện đang bị tắt."
+season-disabled-display: "Đã tắt"
+
+config-version: "1.5"

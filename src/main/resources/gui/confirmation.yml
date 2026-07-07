@@ -1,0 +1,30 @@
+# Confirmation GUI Configuration (Xác nhận nhận nhiệm vụ)
+
+title: "{target}"
+gui-disposition:
+  - "#########"
+  - "#ccctaaa#"
+  - "#########"
+
+filler:
+  enabled: true
+  material: "GRAY_STAINED_GLASS_PANE"
+
+
+confirm-item:
+  name: "#00ff3cᴄᴏɴꜰɪʀᴍ"
+  material: "LIME_STAINED_GLASS_PANE"
+  lore:
+    - "#ffffffMake sure you want to accept this contract."
+    - ""
+    - "#ffffffTarget: #ff3c3c{target}"
+    - "#ffffffClick here to confirm."
+
+cancel-item:
+  name: "#ff3c3cɢᴏ ʙᴀᴄᴋ"
+  material: "RED_STAINED_GLASS_PANE"
+  lore:
+    - "#ffffffCancel and return"
+    - "#ffffffto target selection list."
+
+config-version: "1.5"

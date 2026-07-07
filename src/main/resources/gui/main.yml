@@ -1,0 +1,70 @@
+# Elo Main Menu GUI Configuration (Menu Chính SolarElo)
+title: "ᴇʟᴏ ᴍᴇɴᴜ"
+gui-disposition:
+  - "#########"
+  - "#b#lir#s#"
+  - "#########"
+
+filler:
+  enabled: false
+  material: "GRAY_STAINED_GLASS_PANE"
+
+bounty-item:
+  enabled: true
+  name: "#ff3c3c⚔ ʙᴏᴜɴᴛʏ ⚔"
+  material: "DIAMOND_SWORD"
+  lore:
+    - "&fClick to view the Bounty list"
+    - "&fand accept contracts to eliminate other players."
+    - ""
+    - "#ff3c3cClick to open!"
+  customModelData: -1
+  confirm_sound: click
+
+leaderboard-item:
+  enabled: true
+  name: "#00BFFF★ ʟᴇᴀᴅᴇʀʙᴏᴀʀᴅ ★"
+  material: "BLUE_BANNER"
+  lore:
+    - "&fClick to view the ELO Leaderboard"
+    - "&fand other players' statistics."
+    - ""
+    - "#00BFFFClick to open!"
+  customModelData: -1
+  confirm_sound: click
+
+rewards-item:
+  enabled: true
+  name: "#00ff3c✪ ʀᴇᴡᴀʀᴅs ✪"
+  material: "CHEST"
+  lore:
+    - "&fClick to view rank breakthrough rewards"
+    - "&fearned by reaching ELO milestones."
+    - ""
+    - "#00ff3cClick to open!"
+  customModelData: -1
+  confirm_sound: xp
+
+settings-item:
+  enabled: true
+  name: "#ffaa00⚙ sᴇᴛᴛɪɴɢs ⚙"
+  material: "COMPARATOR"
+  lore:
+    - "&fClick to customize notifications,"
+    - "&fwelcome effects, and titles."
+    - ""
+    - "#ffaa00Click to open!"
+  customModelData: -1
+  confirm_sound: click
+
+ip-blocked-item:
+  material: "RED_BANNER"
+  name: "#ff3c3c⚠ ᴀᴄᴄᴇꜱꜱ ᴅᴇɴɪᴇᴅ ⚠"
+  lore:
+    - "#aaaaaaDetected multiple accounts on the same IP!"
+    - "#aaaaaaGUI access has been disabled."
+    - ""
+    - "#ff3c3cPlease disconnect other accounts to unlock."
+  customModelData: -1
+
+config-version: "1.5"

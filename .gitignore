@@ -1,0 +1,51 @@
+# Gradle
+.gradle/
+build/
+solarelo-api/build/
+
+# IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+skidfuscator-error-*.txt
+proguard_error.log
+
+# Temporary/scratch files
+scratch/
+bin/
+out/
+target/
+
+# Local configuration/credentials
+local.properties
+
+# Obfuscation tools and outputs
+mappings/
+obfuscation/
+build-obfuscated.ps1
+skidfuscator-config.conf
+
+# Design assets, logs and fonts
+logo.png
+solarelo_banner_minecraft_3d.png
+solarelo_logo.bbmodel
+solarelo_palette.png
+banner.png
+*.ttf
+
+# Documentation and description
+dev_log_discord.md
+WIKI.md
+bbb_description.md
+
+# Build settings
+settings.gradle

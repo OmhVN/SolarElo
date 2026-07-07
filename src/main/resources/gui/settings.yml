@@ -1,0 +1,54 @@
+# Elo Settings Menu GUI Configuration (Menu Cài Đặt SolarElo)
+enabled: true
+gui-disposition:
+  - "#########"
+  - "##c#b#t##"
+  - "####a####"
+title: "sᴇᴛᴛɪɴɢs"
+
+filler:
+  enabled: false
+  material: "GRAY_STAINED_GLASS_PANE"
+
+items:
+  chat-notification:
+    name: "#00BFFFᴄʜᴀᴛ ɴᴏᴛɪꜰɪᴄᴀᴛɪᴏɴ"
+    material: "BOOK"
+    lore_on:
+      - "&a✔ Enabled"
+      - "&7Click to disable."
+    lore_off:
+      - "&c❌ Disabled"
+      - "&7Click to enable."
+    confirm_sound: click
+
+  title-notification:
+    name: "#ff3c3cᴛɪᴛʟᴇ ɴᴏᴛɪꜰɪᴄᴀᴛɪᴏɴ"
+    material: "COMPASS"
+    lore_on:
+      - "&a✔ Enabled"
+      - "&7Click to disable."
+    lore_off:
+      - "&c❌ Disabled"
+      - "&7Click to enable."
+    confirm_sound: click
+
+  bounty-notification:
+    name: "#ffaa00ʙᴏᴜɴᴛʏ ɴᴏᴛɪꜰɪᴄᴀᴛɪᴏɴ"
+    material: "WRITABLE_BOOK"
+    lore_on:
+      - "&a✔ Enabled"
+      - "&7Click to disable."
+    lore_off:
+      - "&c❌ Disabled"
+      - "&7Click to enable."
+    confirm_sound: click
+
+back-button:
+  name: "#ff3c3cʙᴀᴄᴋ"
+  material: "ARROW"
+  lore:
+    - "&fClick to return to the main menu"
+  confirm_sound: click
+
+config-version: "1.5"

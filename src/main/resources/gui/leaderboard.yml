@@ -1,0 +1,87 @@
+# Elo Leaderboard GUI Configuration
+enabled: true
+title: "ʟᴇᴀᴅᴇʀʙᴏᴀʀᴅ - ᴘᴀɢᴇ {page}"
+gui-disposition:
+  - "xxxxxxxxx"
+  - "xxxxxxxxx"
+  - "xxxxxxxxx"
+  - "xxxxxxxxx"
+  - "xxxxxxxxx"
+  - "b##srf##n"
+
+
+rank-colors:
+  top-5: "#ffaa00"
+  top-10: "#55ffff"
+  top-50: "#00ff3c"
+  top-100: "#aaaaaa"
+  default: "#ffffff"
+
+filler:
+  enabled: false
+  material: "GRAY_STAINED_GLASS_PANE"
+
+player-head:
+  material: PLAYER_HEAD
+  name: "{pos_color}#{pos} #ffffff{player}"
+  lore:
+    - "#aaaaaaRank: &r{rank}"
+    - "#aaaaaaElo Points: #ffaa00{elo}"
+    - ""
+    - "#ffaa00Click to view detailed statistics!"
+
+back:
+  name: "#00BFFFʙᴀᴄᴋ"
+  lore:
+    - "&fClick to go to the previous page"
+  material: "ARROW"
+  customModelData: -1
+
+next:
+  name: "#00BFFFɴᴇxᴛ"
+  lore:
+    - "&fClick to go to the next page"
+  material: "ARROW"
+  customModelData: -1
+
+refresh:
+  name: "#00BFFFʀᴇꜰʀᴇsʜ"
+  lore:
+    - "&fClick to refresh the leaderboard"
+  material: "ANVIL"
+  customModelData: -1
+
+filter:
+  name: "#00BFFFғɪʟᴛᴇʀ"
+  material: "HOPPER"
+  customModelData: -1
+  selected_color: "#00BFFF"
+  unselected_color: "&f"
+  bullet_icon: "▪ "
+  options: # DON'T CHANGE ANYTHING IN HERE
+    - "HIGH_TO_LOW"
+    - "LOW_TO_HIGH"
+    - "ONLINE_ONLY"
+  option-names:
+    HIGH_TO_LOW: "High to Low (Top)"
+    LOW_TO_HIGH: "Low to High (Bottom)"
+    ONLINE_ONLY: "Online Only (Top ELO)"
+  lore:
+    - "&fFilter state:"
+    - "{options}"
+    - ""
+    - "#00BFFFClick to change filter!"
+
+self-player-head:
+  enabled: true
+  material: "PLAYER_HEAD"
+  name: "#00BFFFsᴇʟꜰ #ffffff{player}"
+  lore:
+    - "&fCurrent Elo: #ffaa00{elo}"
+    - "&fCurrent Rank: {pos_color}#{pos}"
+    - "&fNext Rank: #55ffff{next_rank}"
+    - "&fElo Needed: #ff3c3c{elo_needed}"
+    - "&fSeason Ends: #00ff3c{season_time}"
+  customModelData: -1
+
+config-version: "1.5"
