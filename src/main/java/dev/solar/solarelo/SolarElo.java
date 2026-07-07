@@ -56,6 +56,10 @@ public class SolarElo extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
+        dev.solar.solarelo.utils.LoaderUtils loader = new dev.solar.solarelo.utils.LoaderUtils(getLogger(), "SolarElo");
+        if (!loader.checkPlugin(this) || !loader.check()) {
+            return;
+        }
 
         dev.solar.solarelo.managers.ConfigMigrator.checkFolder(this);
 
