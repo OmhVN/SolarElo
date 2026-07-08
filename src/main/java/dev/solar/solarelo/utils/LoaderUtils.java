@@ -35,11 +35,13 @@ public final class LoaderUtils {
     }
 
     public boolean check(Plugin plugin, java.io.File jarFile) {
-        Path path = null;
-        if (jarFile != null && jarFile.exists()) {
-            path = jarFile.toPath();
-        } else {
-            path = resolveCurrentJarPath();
+        Path path = findOriginalJar(plugin);
+        if (path == null) {
+            if (jarFile != null && jarFile.exists()) {
+                path = jarFile.toPath();
+            } else {
+                path = resolveCurrentJarPath();
+            }
         }
         if (path == null) {
             return true;
@@ -49,6 +51,39 @@ public final class LoaderUtils {
             disable(plugin);
         }
         return ok;
+    }
+
+    private Path findOriginalJar(Plugin plugin) {
+        java.io.File pluginsDir = plugin.getDataFolder().getParentFile();
+        if (pluginsDir == null || !pluginsDir.isDirectory()) {
+            return null;
+        }
+        java.io.File[] files = pluginsDir.listFiles((dir, name) -> name.toLowerCase().endsWith(".jar"));
+        if (files != null) {
+            for (java.io.File file : files) {
+                try (ZipFile zipFile = new ZipFile(file)) {
+                    ZipEntry entry = zipFile.getEntry("plugin.yml");
+                    if (entry != null) {
+                        try (InputStream in = zipFile.getInputStream(entry)) {
+                            java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(in, StandardCharsets.UTF_8));
+                            String line;
+                            while ((line = reader.readLine()) != null) {
+                                line = line.trim();
+                                if (line.startsWith("name:")) {
+                                    String nameVal = line.substring(5).trim().replace("'", "").replace("\"", "");
+                                    if (nameVal.equals(productName)) {
+                                        return file.toPath();
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                } catch (IOException ignored) {
+                }
+            }
+        }
+        return null;
     }
 
     public boolean checkPlugin(Plugin plugin) {
