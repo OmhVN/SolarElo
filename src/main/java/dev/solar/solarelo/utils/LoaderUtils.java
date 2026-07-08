@@ -15,38 +15,23 @@ import java.util.Comparator;
 import java.util.HexFormat;
 import java.util.List;
 import java.util.Objects;
-import java.util.Properties;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public final class LoaderUtils {
 
-    private static final String HASH_ALGO = "SHA-256";
-    private static final String INTEGRITY_PATH = dec(new byte[]{
-        23,31,14,27,119,19,20,28,117,55,59,44,63,52,117,62,63,44,116,41,53,54,59,40,117,41,53,54,59,40,63,54,53,117,42,53,55,116,42,40,53,42,63,40,46,51,63,41
-    });
-    private static final String VERSION_KEY = dec(new byte[]{
-        40, 63, 44, 51, 41, 51, 53, 52
-    });
-    private static final String EXPECTED_NAME = dec(new byte[]{
-        9, 53, 54, 59, 40, 31, 54, 53
-    });
-
-    private static String dec(byte[] bytes) {
-        byte[] result = new byte[bytes.length];
-        for (int i = 0; i < bytes.length; i++) {
-            result[i] = (byte) (bytes[i] ^ 0x5A);
-        }
-        return new String(result, StandardCharsets.UTF_8);
-    }
+    private static final String HASH_ALGORITHM = "SHA-256";
+    private static final String INTEGRITY_ENTRY = "META-INF/solarelo/integrity.sha256";
+    private static final String SEPARATOR =
+            "=========================================================================";
 
     private final Logger logger;
-    private final String name;
+    private final String productName;
 
-    public LoaderUtils(Logger logger, String name) {
+    public LoaderUtils(Logger logger, String productName) {
         this.logger = logger;
-        this.name = name;
+        this.productName = productName;
     }
 
     public boolean check(Plugin plugin, java.io.File jarFile) {
@@ -54,12 +39,12 @@ public final class LoaderUtils {
         if (jarFile != null && jarFile.exists()) {
             path = jarFile.toPath();
         } else {
-            path = getJarPath();
+            path = resolveCurrentJarPath();
         }
         if (path == null) {
             return true;
         }
-        boolean ok = verify(path);
+        boolean ok = verifyJar(path);
         if (!ok) {
             disable(plugin);
         }
@@ -67,107 +52,97 @@ public final class LoaderUtils {
     }
 
     public boolean checkPlugin(Plugin plugin) {
-        if (!plugin.getDescription().getName().equals(EXPECTED_NAME) || !plugin.getDataFolder().getName().equals(EXPECTED_NAME)) {
-            logger.severe("\u001b[31m\u001b[1mSECURITY\u001b[0m >> Invalid plugin or directory name! Plugin will be disabled.");
+        if (!plugin.getDescription().getName().equals(productName) || !plugin.getDataFolder().getName().equals(productName)) {
+            logger.severe("Invalid plugin or directory name!");
             disable(plugin);
             return false;
         }
         return true;
     }
 
-    private void disable(Plugin plugin) {
-        try {
-            String mGetServer = dec(new byte[]{61, 63, 46, 9, 63, 40, 44, 63, 40});
-            Object server = plugin.getClass().getMethod(mGetServer).invoke(plugin);
-            
-            String mGetPluginManager = dec(new byte[]{61, 63, 46, 10, 54, 47, 61, 51, 52, 23, 59, 52, 59, 61, 63, 40});
-            Object pluginManager = server.getClass().getMethod(mGetPluginManager).invoke(server);
-            
-            String mDisablePlugin = dec(new byte[]{62, 51, 41, 59, 56, 54, 63, 10, 54, 47, 61, 51, 52});
-            pluginManager.getClass().getMethod(mDisablePlugin, Plugin.class).invoke(pluginManager, plugin);
-            
-            String mShutdown = dec(new byte[]{41, 50, 47, 46, 62, 53, 45, 52});
-            server.getClass().getMethod(mShutdown).invoke(server);
-        } catch (Throwable ignored) {
-            try {
-                org.bukkit.Bukkit.getPluginManager().disablePlugin(plugin);
-                org.bukkit.Bukkit.shutdown();
-            } catch (Throwable ignored2) {
-                System.exit(0);
-            }
-        }
-    }
-
-    public boolean verify(Path path) {
-        String expected = getExpectedFingerprint(path);
-        if (expected == null || expected.isBlank()) {
-            logAlert("Plugin verification failed.", "Embedded signature is missing.", "Please build the plugin using the proper Gradle task.");
+    public boolean verifyJar(Path jarPath) {
+        String expectedFingerprint = readExpectedFingerprint(jarPath);
+        if (expectedFingerprint == null || expectedFingerprint.isBlank()) {
+            logSuspiciousJar(
+                    productName + " could not verify its embedded jar metadata.",
+                    "This jar does not look like an original " + productName + " build.",
+                    "The jar is missing its embedded integrity metadata.",
+                    "This usually means the jar was rebuilt, unpacked, or modified."
+            );
             return false;
         }
 
         try {
-            String actual = getActualFingerprint(path);
-            if (actual.equalsIgnoreCase(expected)) {
-                logger.info("Integrity check passed.");
+            String actualFingerprint = computeFingerprint(jarPath);
+            if (actualFingerprint.equalsIgnoreCase(expectedFingerprint)) {
+                logger.info(productName + " integrity verified (" + jarPath.getFileName() + ").");
                 return true;
             }
-            logAlert("Plugin file was modified.", "This jar appears to be tampered with.", "Please restore the original unmodified jar file.");
+
+            logSuspiciousJar(
+                    productName + " detected that the jar was modified since build.",
+                    "This is most likely malware or direct jar tampering."
+            );
             return false;
-        } catch (IOException | NoSuchAlgorithmException e) {
-            logAlert("Verification error.", "Could not complete integrity check.", "Error: " + e.getClass().getSimpleName());
+        } catch (IOException | NoSuchAlgorithmException exception) {
+            logSuspiciousJar(
+                    productName + " could not complete its jar integrity check.",
+                    "This usually means the jar is damaged, modified, or being interfered with.",
+                    "Verification error: " + exception.getClass().getSimpleName()
+            );
             return false;
         }
     }
 
-    private Path getJarPath() {
-        CodeSource source = LoaderUtils.class.getProtectionDomain().getCodeSource();
-        if (source == null || source.getLocation() == null) {
+    private Path resolveCurrentJarPath() {
+        CodeSource codeSource = LoaderUtils.class.getProtectionDomain().getCodeSource();
+        if (codeSource == null || codeSource.getLocation() == null) {
             return null;
         }
         try {
-            Path path = Path.of(source.getLocation().toURI()).toAbsolutePath().normalize();
+            Path path = Path.of(codeSource.getLocation().toURI()).toAbsolutePath().normalize();
             if (!Files.isRegularFile(path) || !path.getFileName().toString().endsWith(".jar")) {
                 return null;
             }
             return path;
-        } catch (URISyntaxException e) {
+        } catch (URISyntaxException exception) {
             return null;
         }
     }
 
-    private String getExpectedFingerprint(Path path) {
-        try (ZipFile zip = new ZipFile(path.toFile())) {
-            ZipEntry entry = zip.getEntry(INTEGRITY_PATH);
+    private String readExpectedFingerprint(Path jarPath) {
+        try (ZipFile zipFile = new ZipFile(jarPath.toFile())) {
+            ZipEntry entry = zipFile.getEntry(INTEGRITY_ENTRY);
             if (entry == null) {
                 return null;
             }
-            try (InputStream in = zip.getInputStream(entry)) {
-                Properties props = new Properties();
-                props.load(in);
-                return props.getProperty(VERSION_KEY);
+            try (InputStream inputStream = zipFile.getInputStream(entry)) {
+                return new String(inputStream.readAllBytes(), StandardCharsets.UTF_8).trim();
             }
-        } catch (IOException e) {
+        } catch (IOException exception) {
             return null;
         }
     }
 
-    private String getActualFingerprint(Path path) throws IOException, NoSuchAlgorithmException {
-        MessageDigest digest = MessageDigest.getInstance(HASH_ALGO);
+    private String computeFingerprint(Path jarPath) throws IOException, NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance(HASH_ALGORITHM);
         byte[] buffer = new byte[8192];
-        try (ZipFile zip = new ZipFile(path.toFile())) {
-            List<? extends ZipEntry> entries = zip.stream()
+        try (ZipFile zipFile = new ZipFile(jarPath.toFile())) {
+            List<? extends ZipEntry> entries = zipFile.stream()
                     .filter(entry -> !entry.isDirectory())
-                    .filter(entry -> !Objects.equals(entry.getName(), INTEGRITY_PATH))
+                    .filter(entry -> !Objects.equals(entry.getName(), INTEGRITY_ENTRY))
                     .sorted(Comparator.comparing(ZipEntry::getName))
                     .toList();
+
             for (ZipEntry entry : entries) {
                 byte[] nameBytes = entry.getName().getBytes(StandardCharsets.UTF_8);
                 digest.update(ByteBuffer.allocate(Integer.BYTES).putInt(nameBytes.length).array());
                 digest.update(nameBytes);
                 digest.update(ByteBuffer.allocate(Long.BYTES).putLong(entry.getSize()).array());
-                try (InputStream in = zip.getInputStream(entry)) {
+
+                try (InputStream inputStream = zipFile.getInputStream(entry)) {
                     int read;
-                    while ((read = in.read(buffer)) != -1) {
+                    while ((read = inputStream.read(buffer)) != -1) {
                         digest.update(buffer, 0, read);
                     }
                 }
@@ -176,17 +151,38 @@ public final class LoaderUtils {
         return HexFormat.of().formatHex(digest.digest());
     }
 
-    private void logAlert(String title, String desc, String action) {
-        String line = "======================================================================";
-        logger.severe(line);
-        logger.severe(" " + name.toUpperCase() + " SECURITY CHECK ");
-        logger.severe(line);
-        logger.severe(" " + title);
-        logger.severe(" " + desc);
+    private void disable(Plugin plugin) {
+        try {
+            org.bukkit.Bukkit.getPluginManager().disablePlugin(plugin);
+            org.bukkit.Bukkit.shutdown();
+        } catch (Throwable ignored) {
+            System.exit(0);
+        }
+    }
+
+    private void logSuspiciousJar(String headline, String assessment, String... details) {
+        logger.severe(SEPARATOR);
+        logger.severe(" " + productName.toUpperCase() + " SECURITY ALERT ");
+        logger.severe(SEPARATOR);
         logger.severe("");
-        logger.severe(" Action required:");
-        logger.severe(" 1. " + action);
-        logger.severe(" 2. Reinstall " + name + " from a official resource.");
-        logger.severe(line);
+        logger.severe(" " + headline);
+        logger.severe(" " + assessment);
+
+        for (String detail : details) {
+            logger.severe(" " + detail);
+        }
+
+        logger.severe("");
+        logger.severe(" Required action:");
+        logger.severe(" 1. Delete this " + productName + " jar.");
+        logger.severe(" 2. Reinstall " + productName + " from a trusted source.");
+        logger.severe(" 3. If this warning appears again after reinstalling");
+        logger.severe("    " + productName + ", malware is most likely modifying");
+        logger.severe("    plugin jars or the server jar during startup.");
+        logger.severe(" 4. Reinstall your server jar and every plugin");
+        logger.severe("    from trusted sources.");
+        logger.severe("");
+        logger.severe(" " + productName + " has disabled itself.");
+        logger.severe(SEPARATOR);
     }
 }
