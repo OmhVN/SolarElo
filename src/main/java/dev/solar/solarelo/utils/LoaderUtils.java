@@ -33,7 +33,30 @@ public final class LoaderUtils {
             return;
         }
 
-        String expectedFingerprint = readExpectedFingerprint(path);
+        // Verify with retry mechanism (handles hot-loads/SFTP copy delays)
+        boolean ok = verifyJarWithRetry(productName, path);
+        if (!ok) {
+            throw new SecurityException("[" + productName + "] Jar file integrity verification failed! The plugin has been disabled to prevent potential malware execution.");
+        }
+    }
+
+    private static boolean verifyJarWithRetry(String productName, Path jarPath) {
+        String expectedFingerprint = null;
+        
+        // Attempt to read expected fingerprint with retries (up to 1s total delay)
+        for (int i = 0; i < 5; i++) {
+            expectedFingerprint = readExpectedFingerprint(jarPath);
+            if (expectedFingerprint != null && !expectedFingerprint.isBlank()) {
+                break;
+            }
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return false;
+            }
+        }
+
         if (expectedFingerprint == null || expectedFingerprint.isBlank()) {
             logSuspiciousJar(
                     productName,
@@ -42,34 +65,46 @@ public final class LoaderUtils {
                     "The jar is missing its embedded integrity metadata.",
                     "This usually means the jar was rebuilt, unpacked, or modified."
             );
-            throw new SecurityException("[" + productName + "] Jar file integrity verification failed! The plugin has been disabled to prevent potential malware execution.");
+            return false;
         }
 
-        try {
-            String actualFingerprint = computeFingerprint(path);
-            if (actualFingerprint.equalsIgnoreCase(expectedFingerprint)) {
-                System.out.println("[" + productName + "] Integrity verified (" + path.getFileName() + ").");
-                return;
+        // Attempt to verify actual fingerprint against expected with retries
+        for (int attempt = 0; attempt < 5; attempt++) {
+            try {
+                String actualFingerprint = computeFingerprint(jarPath);
+                if (actualFingerprint.equalsIgnoreCase(expectedFingerprint)) {
+                    System.out.println("[" + productName + "] Integrity verified (" + jarPath.getFileName() + ").");
+                    return true;
+                }
+            } catch (IOException | NoSuchAlgorithmException ignored) {
+                // Handle temporary file lock or write in progress
             }
-
-            logSuspiciousJar(
-                    productName,
-                    productName + " detected that the jar was modified since build.",
-                    "This is most likely malware or direct jar tampering."
-            );
-            throw new SecurityException("[" + productName + "] Jar file integrity verification failed! The plugin has been disabled to prevent potential malware execution.");
-        } catch (IOException | NoSuchAlgorithmException exception) {
-            logSuspiciousJar(
-                    productName,
-                    productName + " could not complete its jar integrity check.",
-                    "This usually means the jar is damaged, modified, or being interfered with.",
-                    "Verification error: " + exception.getClass().getSimpleName()
-            );
-            throw new SecurityException("[" + productName + "] Jar file integrity verification failed! The plugin has been disabled to prevent potential malware execution.");
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return false;
+            }
         }
+
+        logSuspiciousJar(
+                productName,
+                productName + " detected that the jar was modified since build.",
+                "This is most likely malware or direct jar tampering."
+        );
+        return false;
     }
 
     private static Path findOriginalJar(String productName) {
+        Path currentPath = resolveCurrentJarPath();
+        if (currentPath != null) {
+            String fileName = currentPath.getFileName().toString();
+            java.io.File originalFile = new java.io.File("plugins", fileName);
+            if (originalFile.exists()) {
+                return originalFile.toPath();
+            }
+        }
+
         java.io.File pluginsDir = new java.io.File("plugins");
         if (!pluginsDir.isDirectory()) {
             return null;
