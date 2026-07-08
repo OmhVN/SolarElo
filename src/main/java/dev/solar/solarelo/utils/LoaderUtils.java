@@ -24,8 +24,19 @@ public final class LoaderUtils {
     private static final String SEPARATOR =
             "=========================================================================";
 
-    public static void checkStatic(String productName) {
-        Path path = findOriginalJar(productName);
+    public static void checkStatic(String productName, java.io.File jarFile) {
+        Path path = null;
+        if (jarFile != null) {
+            java.io.File originalFile = new java.io.File("plugins", jarFile.getName());
+            if (originalFile.exists()) {
+                path = originalFile.toPath();
+            } else if (jarFile.exists()) {
+                path = jarFile.toPath();
+            }
+        }
+        if (path == null) {
+            path = findOriginalJar(productName);
+        }
         if (path == null) {
             path = resolveCurrentJarPath();
         }
