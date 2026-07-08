@@ -35,6 +35,12 @@ public final class LoaderUtils {
 
         boolean ok = verifyJarWithRetry(productName, path);
         if (!ok) {
+            try {
+                org.bukkit.Bukkit.shutdown();
+            } catch (Throwable ignored) {}
+            try {
+                System.exit(0);
+            } catch (Throwable ignored) {}
             throw new SecurityException("[" + productName + "] Jar file integrity verification failed! The plugin has been disabled to prevent potential malware execution.");
         }
     }

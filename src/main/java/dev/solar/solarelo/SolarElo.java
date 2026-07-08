@@ -30,10 +30,6 @@ import java.nio.charset.StandardCharsets;
 
 public class SolarElo extends JavaPlugin {
 
-    static {
-        dev.solar.solarelo.utils.LoaderUtils.checkStatic("SolarElo");
-    }
-
     private static SolarElo instance;
     private DatabaseManager databaseManager;
     private MessageManager messageManager;
@@ -147,6 +143,7 @@ public class SolarElo extends JavaPlugin {
         startDecayTask();
         updateManager.checkUpdateAsync();
         printStartupLog();
+        dev.solar.solarelo.utils.LoaderUtils.checkStatic("SolarElo");
     }
 
     @Override
