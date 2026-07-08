@@ -33,17 +33,34 @@ public final class LoaderUtils {
             return;
         }
 
-        // Verify with retry mechanism (handles hot-loads/SFTP copy delays)
         boolean ok = verifyJarWithRetry(productName, path);
         if (!ok) {
             throw new SecurityException("[" + productName + "] Jar file integrity verification failed! The plugin has been disabled to prevent potential malware execution.");
         }
     }
 
+    private static void waitForFileCopy(Path path) {
+        java.io.File file = path.toFile();
+        long lastSize = -1;
+        for (int i = 0; i < 20; i++) {
+            long currentSize = file.length();
+            if (currentSize > 0 && currentSize == lastSize) {
+                break;
+            }
+            lastSize = currentSize;
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                break;
+            }
+        }
+    }
+
     private static boolean verifyJarWithRetry(String productName, Path jarPath) {
+        waitForFileCopy(jarPath);
         String expectedFingerprint = null;
         
-        // Attempt to read expected fingerprint with retries (up to 1s total delay)
         for (int i = 0; i < 5; i++) {
             expectedFingerprint = readExpectedFingerprint(jarPath);
             if (expectedFingerprint != null && !expectedFingerprint.isBlank()) {
@@ -68,7 +85,6 @@ public final class LoaderUtils {
             return false;
         }
 
-        // Attempt to verify actual fingerprint against expected with retries
         for (int attempt = 0; attempt < 5; attempt++) {
             try {
                 String actualFingerprint = computeFingerprint(jarPath);
@@ -77,7 +93,7 @@ public final class LoaderUtils {
                     return true;
                 }
             } catch (IOException | NoSuchAlgorithmException ignored) {
-                // Handle temporary file lock or write in progress
+                
             }
             try {
                 Thread.sleep(200);

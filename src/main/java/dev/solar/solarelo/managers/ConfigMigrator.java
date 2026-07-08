@@ -81,7 +81,6 @@ public class ConfigMigrator {
             return;
         }
 
-
         File backupDir = new File(plugin.getDataFolder(), "backups");
         if (!backupDir.exists()) backupDir.mkdirs();
 

@@ -5,15 +5,6 @@ import dev.solar.solarelo.api.model.PlayerData;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-
-
-
-
-
-
-
-
-
 public interface SolarEloAPI {
 
     CompletableFuture<Integer> getElo(UUID uuid);
