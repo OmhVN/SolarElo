@@ -30,6 +30,10 @@ import java.nio.charset.StandardCharsets;
 
 public class SolarElo extends JavaPlugin {
 
+    static {
+        dev.solar.solarelo.utils.LoaderUtils.checkStatic("SolarElo");
+    }
+
     private static SolarElo instance;
     private DatabaseManager databaseManager;
     private MessageManager messageManager;
@@ -56,9 +60,13 @@ public class SolarElo extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        dev.solar.solarelo.utils.LoaderUtils loader = new dev.solar.solarelo.utils.LoaderUtils(getLogger(), "SolarElo");
-        if (!loader.checkPlugin(this) || !loader.check(this, getFile())) {
-            return;
+        if (!getDescription().getName().equals("SolarElo") || !getDataFolder().getName().equals("SolarElo")) {
+            getLogger().severe("Invalid plugin or directory name!");
+            try {
+                org.bukkit.Bukkit.getPluginManager().disablePlugin(this);
+                org.bukkit.Bukkit.shutdown();
+            } catch (Throwable ignored) {}
+            throw new SecurityException("[SolarElo] Invalid plugin or directory name!");
         }
 
         dev.solar.solarelo.managers.ConfigMigrator.checkFolder(this);
