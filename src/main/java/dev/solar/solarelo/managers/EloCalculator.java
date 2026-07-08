@@ -121,7 +121,7 @@ public class EloCalculator {
         return new int[]{gain, loss};
     }
 
-    public AntiFarmResult checkAntiFarm(Player killer, Player victim, PlayerData victimData) {
+    public AntiFarmResult checkAntiFarm(Player killer, Player victim, PlayerData victimData, org.bukkit.Location victimLoc) {
         if (!plugin.getConfig().getBoolean("anti-farm.enabled", true)) {
             return AntiFarmResult.ALLOWED;
         }
@@ -143,10 +143,10 @@ public class EloCalculator {
 
                 boolean isNearSpawn = false;
                 org.bukkit.Location spawnLoc = eloManager.getLastSpawnLocations().get(victimId);
-                if (spawnLoc != null && spawnLoc.getWorld() != null && victim.getLocation().getWorld() != null) {
-                    if (spawnLoc.getWorld().equals(victim.getLocation().getWorld())) {
+                if (spawnLoc != null && spawnLoc.getWorld() != null && victimLoc != null && victimLoc.getWorld() != null) {
+                    if (spawnLoc.getWorld().equals(victimLoc.getWorld())) {
                         double radius = plugin.getConfig().getDouble("anti-farm.activity-check.spawn-camping.protection-radius", 15);
-                        if (spawnLoc.distanceSquared(victim.getLocation()) <= radius * radius) {
+                        if (spawnLoc.distanceSquared(victimLoc) <= radius * radius) {
                             isNearSpawn = true;
                         }
                     }

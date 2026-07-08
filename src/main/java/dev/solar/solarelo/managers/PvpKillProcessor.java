@@ -22,6 +22,7 @@ public class PvpKillProcessor {
     }
 
     public void processKill(Player killer, Player victim) {
+        org.bukkit.Location victimLoc = victim.getLocation();
         plugin.runAsync(() -> {
             PlayerData killerData = eloManager.getCachedData(killer.getUniqueId());
             if (killerData == null) {
@@ -38,7 +39,7 @@ public class PvpKillProcessor {
 
             if (killerData == null || victimData == null) return;
 
-            AntiFarmResult antiFarm = handleKillAntiFarm(killer, victim, victimData);
+            AntiFarmResult antiFarm = handleKillAntiFarm(killer, victim, victimData, victimLoc);
             if (antiFarm != AntiFarmResult.ALLOWED && antiFarm != AntiFarmResult.DIMINISHED) return;
 
             int killerElo = killerData.getElo();
@@ -185,8 +186,8 @@ public class PvpKillProcessor {
         });
     }
 
-    private AntiFarmResult handleKillAntiFarm(Player killer, Player victim, PlayerData victimData) {
-        AntiFarmResult antiFarm = eloManager.getEloCalculator().checkAntiFarm(killer, victim, victimData);
+    private AntiFarmResult handleKillAntiFarm(Player killer, Player victim, PlayerData victimData, org.bukkit.Location victimLoc) {
+        AntiFarmResult antiFarm = eloManager.getEloCalculator().checkAntiFarm(killer, victim, victimData, victimLoc);
         if (antiFarm != AntiFarmResult.ALLOWED && antiFarm != AntiFarmResult.DIMINISHED) {
             plugin.getLogger().info("[Anti-Farm] Bỏ qua cộng/trừ Elo cho " + killer.getName() + " và " + victim.getName() + ". Lý do: " + antiFarm.name());
         }
