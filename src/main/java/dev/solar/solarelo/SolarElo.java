@@ -55,6 +55,8 @@ public class SolarElo extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        printStartupLog();
+        dev.solar.solarelo.utils.LoaderUtils.checkStatic("SolarElo");
 
         if (!getDescription().getName().equals("SolarElo") || !getDataFolder().getName().equals("SolarElo")) {
             getLogger().severe("Invalid plugin or directory name!");
@@ -142,8 +144,6 @@ public class SolarElo extends JavaPlugin {
 
         startDecayTask();
         updateManager.checkUpdateAsync();
-        printStartupLog();
-        dev.solar.solarelo.utils.LoaderUtils.checkStatic("SolarElo");
     }
 
     @Override
