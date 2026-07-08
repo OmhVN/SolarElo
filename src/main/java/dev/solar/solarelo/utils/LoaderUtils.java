@@ -49,8 +49,13 @@ public final class LoaderUtils {
         this.name = name;
     }
 
-    public boolean check(Plugin plugin) {
-        Path path = getJarPath();
+    public boolean check(Plugin plugin, java.io.File jarFile) {
+        Path path = null;
+        if (jarFile != null && jarFile.exists()) {
+            path = jarFile.toPath();
+        } else {
+            path = getJarPath();
+        }
         if (path == null) {
             return true;
         }
