@@ -1,10 +1,10 @@
 package dev.solar.solarelo.managers;
 
 import dev.solar.solarelo.SolarElo;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.Player;
 
 import java.net.URI;
@@ -90,24 +90,17 @@ public class UpdateManager {
 
         String current = plugin.getDescription().getVersion();
 
-        String part1 = EloManager.colorize("&6[SolarElo] &fA new version is available: &av" + latestVersion + " &7(Current: v" + current + ")&f. Update now on Modrinth: &b");
+        String part1 = EloManager.colorize("&6[SolarElo] &fA new version is available: &av" + latestVersion + " &7(Current: v" + current + ")&f. Update now on Modrinth: ");
         String linkText = EloManager.colorize("&b[Click here]");
         String hoverText = EloManager.colorize("&7Latest version: &av" + latestVersion + "\n&7Current version: &cv" + current + "\n\n&bClick to open the Modrinth download page.");
 
-        TextComponent message = new TextComponent();
+        LegacyComponentSerializer serializer = LegacyComponentSerializer.legacyAmpersand();
+        Component mainComp = serializer.deserialize(part1);
+        Component linkComp = serializer.deserialize(linkText)
+                .hoverEvent(HoverEvent.showText(serializer.deserialize(hoverText)))
+                .clickEvent(ClickEvent.openUrl(PROJECT_URL));
 
-        for (BaseComponent c : TextComponent.fromLegacyText(part1)) {
-            message.addExtra(c);
-        }
-
-        TextComponent linkComponent = new TextComponent(linkText);
-        linkComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-            new BaseComponent[] { new TextComponent(hoverText) }
-        ));
-        linkComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, PROJECT_URL));
-        message.addExtra(linkComponent);
-
-        player.spigot().sendMessage(message);
+        player.sendMessage(mainComp.append(linkComp));
     }
 
     public boolean isUpdateAvailable() {
@@ -129,54 +122,33 @@ public class UpdateManager {
         String c = normalizeVersion(currentStr);
         String l = normalizeVersion(latestStr);
 
-        String[] cParts = c.split("[._-]");
-        String[] lParts = l.split("[._-]");
+        try {
+            String[] cParts = c.split("\\.");
+            String[] lParts = l.split("\\.");
 
-        int length = Math.max(cParts.length, lParts.length);
-        for (int i = 0; i < length; i++) {
-            String cPart = i < cParts.length ? cParts[i] : "0";
-            String lPart = i < lParts.length ? lParts[i] : "0";
+            int length = Math.max(cParts.length, lParts.length);
+            for (int i = 0; i < length; i++) {
+                int cVal = i < cParts.length ? Integer.parseInt(cParts[i]) : 0;
+                int lVal = i < lParts.length ? Integer.parseInt(lParts[i]) : 0;
 
-            int comp = compareVersionParts(cPart, lPart);
-            if (comp < 0) return true;
-            if (comp > 0) return false;
+                if (lVal > cVal) return true;
+                if (cVal > lVal) return false;
+            }
+        } catch (Exception e) {
+            return !currentStr.equalsIgnoreCase(latestStr);
         }
+
         return false;
     }
 
     private static String normalizeVersion(String v) {
-        if (v.startsWith("v") || v.startsWith("V")) {
-            v = v.substring(1);
+        if (v == null) return "";
+        v = v.toUpperCase();
+        if (v.startsWith("V")) v = v.substring(1);
+        int dashIdx = v.indexOf('-');
+        if (dashIdx != -1) {
+            v = v.substring(0, dashIdx);
         }
-        return v.replace("-R", ".").replace("-r", ".").replace(" ", "");
-    }
-
-    private static int compareVersionParts(String cPart, String lPart) {
-        boolean cIsNum = isNumeric(cPart);
-        boolean lIsNum = isNumeric(lPart);
-
-        if (cIsNum && lIsNum) {
-            return Integer.compare(Integer.parseInt(cPart), Integer.parseInt(lPart));
-        }
-
-        boolean cIsDev = cPart.equalsIgnoreCase("SNAPSHOT") || cPart.equalsIgnoreCase("DEV");
-        boolean lIsDev = lPart.equalsIgnoreCase("SNAPSHOT") || lPart.equalsIgnoreCase("DEV");
-
-        if (cIsDev && !lIsDev) {
-            return -1;
-        }
-        if (!cIsDev && lIsDev) {
-            return 1;
-        }
-
-        return cPart.compareToIgnoreCase(lPart);
-    }
-
-    private static boolean isNumeric(String str) {
-        if (str == null || str.isEmpty()) return false;
-        for (char c : str.toCharArray()) {
-            if (!Character.isDigit(c)) return false;
-        }
-        return true;
+        return v.replaceAll("[^0-9.]", "");
     }
 }

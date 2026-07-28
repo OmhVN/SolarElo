@@ -2,8 +2,6 @@ package dev.solar.solarelo.managers;
 
 import dev.solar.solarelo.SolarElo;
 import dev.solar.solarelo.api.model.PlayerData;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -796,15 +794,8 @@ public class EloManager {
     }
 
     private void sendActionBar(Player player, String message) {
-        try {
-            player.sendActionBar(net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
-                    .legacyAmpersand().deserialize(message.replace("§", "&")));
-        } catch (NoClassDefFoundError | Exception e) {
-            try {
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                        TextComponent.fromLegacyText(colorize(message)));
-            } catch (Exception ignored) {}
-        }
+        player.sendActionBar(net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
+                .legacyAmpersand().deserialize(message.replace("§", "&")));
     }
 
     public void resetSeason(org.bukkit.command.CommandSender sender) {
