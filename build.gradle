@@ -41,40 +41,21 @@ repositories {
     maven { url = 'https://repo.codemc.io/repository/maven-public/' }
     maven { url = 'https://repo.codemc.io/repository/maven-releases/' }
     maven { url = 'https://jitpack.io' }
-
     maven { url = 'https://repo.opencollab.dev/main/' }
 }
 
 dependencies {
-
     compileOnly 'dev.folia:folia-api:1.21.11-R0.1-SNAPSHOT'
-
-
     implementation project(':solarelo-api')
-
-
     compileOnly 'me.clip:placeholderapi:2.12.2'
-
-
     compileOnly 'com.zaxxer:HikariCP:7.1.0'
-
-
     compileOnly 'org.xerial:sqlite-jdbc:3.53.2.0'
-
-
     compileOnly 'com.mysql:mysql-connector-j:9.7.0'
-
-
     compileOnly 'org.mariadb.jdbc:mariadb-java-client:3.5.1'
-
-
     compileOnly 'org.slf4j:slf4j-api:2.0.18'
     compileOnly 'org.slf4j:slf4j-simple:2.0.18'
-
-
     compileOnly 'net.skinsrestorer:skinsrestorer-api:15.0.3'
-
-
+    implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
     implementation 'org.bstats:bstats-bukkit:3.2.1'
 }
 
@@ -92,12 +73,9 @@ jar {
 
 shadowJar {
     archiveClassifier.set('')
-
     relocate 'org.bstats', 'dev.solar.solarelo.bstats'
-
-
+    relocate 'com.github.benmanes.caffeine', 'dev.solar.solarelo.caffeine'
     configurations = [project.configurations.runtimeClasspath]
-
     exclude 'META-INF/maven/**'
     exclude 'META-INF/proguard/**'
 }
@@ -206,4 +184,3 @@ tasks.register('injectIntegritySignature') {
 }
 
 shadowJar.finalizedBy injectIntegritySignature
-
