@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 public class EloManager {
 
@@ -45,8 +46,10 @@ public class EloManager {
 
     private final SolarElo plugin;
     private final Map<UUID, PlayerData> cache = new ConcurrentHashMap<>();
-    private final Map<UUID, Integer> cachedRanks = new ConcurrentHashMap<>();
-    private final Map<UUID, Long> lastRankCacheTimes = new ConcurrentHashMap<>();
+    private final Cache<UUID, Integer> rankCache = Caffeine.newBuilder()
+            .expireAfterWrite(10, TimeUnit.SECONDS)
+            .maximumSize(5000)
+            .build();
 
     private final Map<UUID, Long> lastMoveTimes = new ConcurrentHashMap<>();
     private final Map<UUID, Long> lastAttackTimes = new ConcurrentHashMap<>();
@@ -193,26 +196,23 @@ public class EloManager {
     }
 
     public int getCachedRank(UUID uuid) {
-        long now = System.currentTimeMillis();
-        Long lastTime = lastRankCacheTimes.get(uuid);
-        if (lastTime == null || now - lastTime > 10000L) {
+        Integer cached = rankCache.getIfPresent(uuid);
+        if (cached == null) {
             plugin.runAsync(() -> {
                 int rank = plugin.getDatabaseManager().getPlayerRank(uuid);
-                cachedRanks.put(uuid, rank);
-                lastRankCacheTimes.put(uuid, System.currentTimeMillis());
+                rankCache.put(uuid, rank);
             });
+            return -1;
         }
-        return cachedRanks.getOrDefault(uuid, -1);
+        return cached;
     }
 
     public void updateRankCache(UUID uuid, int rank) {
-        cachedRanks.put(uuid, rank);
-        lastRankCacheTimes.put(uuid, System.currentTimeMillis());
+        rankCache.put(uuid, rank);
     }
 
     public void invalidateRankCache() {
-        cachedRanks.clear();
-        lastRankCacheTimes.clear();
+        rankCache.invalidateAll();
     }
 
     public static long parseTimeStringToMillis(String timeStr) {
