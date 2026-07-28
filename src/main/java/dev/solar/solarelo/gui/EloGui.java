@@ -535,7 +535,7 @@ public class EloGui {
     public static boolean checkIpBlockedRedirect(SolarElo plugin, Player player, boolean isMainMenu) {
         if (plugin.getEloManager().isIpBlocked(player)) {
             if (!isMainMenu) {
-                plugin.runSync(() -> openMainMenu(plugin, player));
+                plugin.runForEntity(player, () -> openMainMenu(plugin, player));
             }
             return true;
         }

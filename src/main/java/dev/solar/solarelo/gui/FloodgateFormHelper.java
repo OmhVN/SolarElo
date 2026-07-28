@@ -67,7 +67,7 @@ public class FloodgateFormHelper {
                         String input = (rawInput != null ? rawInput : "").trim();
                         if (input.isEmpty() || input.equalsIgnoreCase("cancel")) {
                             admin.sendMessage(EloGui.colorize("&#ff3c3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &7Đã hủy tìm kiếm."));
-                            plugin.runSync(() -> EloGui.openEloAdmin(plugin, admin));
+                            plugin.runForEntity(admin, () -> EloGui.openEloAdmin(plugin, admin));
                             return;
                         }
                         plugin.runAsync(() -> resolveAndOpen(plugin, admin, input));
@@ -127,13 +127,13 @@ public class FloodgateFormHelper {
                         "&#ff3c3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &cKhông tìm thấy người chơi: &f{name}"
                 ).replace("{name}", playerName);
                 admin.sendMessage(EloGui.colorize(notFound));
-                plugin.runSync(() -> EloGui.openEloAdmin(plugin, admin));
+                plugin.runForEntity(admin, () -> EloGui.openEloAdmin(plugin, admin));
                 return;
             }
             uuid = offline.getUuid();
             name = offline.getName();
         }
 
-        plugin.runSync(() -> EloGui.openEloAdminDetail(plugin, admin, uuid, name));
+        plugin.runForEntity(admin, () -> EloGui.openEloAdminDetail(plugin, admin, uuid, name));
     }
 }

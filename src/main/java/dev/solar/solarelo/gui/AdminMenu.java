@@ -43,7 +43,7 @@ public class AdminMenu {
             int totalPlayers = plugin.getDatabaseManager().getTotalPlayers();
             boolean hasNextPage = totalPlayers > (page * limit);
 
-            plugin.runSync(() -> {
+            plugin.runForEntity(player, () -> {
                 if (!player.isOnline()) return;
 
                 String titleTemplate = adminConfig.getString("admin-list.title", "ᴇʟᴏ ᴀᴅᴍɪɴ - {page}");
@@ -130,7 +130,7 @@ public class AdminMenu {
             }
             final PlayerData finalTData = tData;
 
-            plugin.runSync(() -> {
+            plugin.runForEntity(player, () -> {
                 if (!player.isOnline()) return;
 
                 org.bukkit.configuration.file.FileConfiguration adminConfig = plugin.getGuiConfigManager().getAdminConfig();
@@ -241,7 +241,7 @@ public class AdminMenu {
             }
             boolean hasNextPage = total > (page * limit);
 
-            plugin.runSync(() -> {
+            plugin.runForEntity(player, () -> {
                 if (!player.isOnline()) return;
 
                 String titleTemplate = adminConfig.getString("elo-history.title", "ᴇʟᴏ ʜɪsᴛᴏʀʏ - {player}");
@@ -383,7 +383,7 @@ public class AdminMenu {
                 }
             }
 
-            plugin.runSync(() -> {
+            plugin.runForEntity(player, () -> {
                 if (!player.isOnline()) return;
 
                 String titleTemplate = adminConfig.getString("kill-history.title", "ᴘᴠᴘ ʜɪsᴛᴏʀʏ - {player}");

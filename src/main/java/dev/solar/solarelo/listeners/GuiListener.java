@@ -67,7 +67,7 @@ public class GuiListener implements Listener {
         if (!isCustomGui) return;
 
         event.setCancelled(true);
-        plugin.runSync(player::updateInventory);
+        plugin.runForEntity(player, player::updateInventory);
 
         int slot = event.getRawSlot();
         if (slot < 0 || slot >= event.getInventory().getSize()) return;
@@ -130,9 +130,9 @@ public class GuiListener implements Listener {
         if (msg.equalsIgnoreCase("cancel")) {
             admin.sendMessage(dev.solar.solarelo.managers.EloManager.colorize("&#ff3c3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &7Đã hủy yêu cầu chỉnh sửa."));
             if ("search".equalsIgnoreCase(data.getAction())) {
-                plugin.runSync(() -> EloGui.openEloAdmin(plugin, admin));
+                plugin.runForEntity(admin, () -> EloGui.openEloAdmin(plugin, admin));
             } else {
-                plugin.runSync(() -> EloGui.openEloAdminDetail(plugin, admin, data.getTargetUuid(), data.getTargetName()));
+                plugin.runForEntity(admin, () -> EloGui.openEloAdminDetail(plugin, admin, data.getTargetUuid(), data.getTargetName()));
             }
             return;
         }
@@ -152,7 +152,7 @@ public class GuiListener implements Listener {
             return;
         }
 
-        plugin.runSync(() -> {
+        plugin.runForEntity(admin, () -> {
             switch (data.getAction()) {
                 case "set" -> {
                     plugin.getEloManager().setElo(data.getTargetUuid(), data.getTargetName(), amount);

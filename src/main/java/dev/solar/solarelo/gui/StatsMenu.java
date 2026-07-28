@@ -40,7 +40,7 @@ public class StatsMenu {
             }
             final PlayerData finalPData = pData;
 
-            plugin.runSync(() -> {
+            plugin.runForEntity(player, () -> {
                 if (!player.isOnline()) return;
 
                 EloGui.StatsHolder holder = new EloGui.StatsHolder(targetPlayerName, returnPage, returnFilter);

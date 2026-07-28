@@ -79,7 +79,7 @@ public class RankManager {
         List<String> commands = rankConfig.getStringList("ranks." + rankKey + ".rankup-commands");
         if (commands.isEmpty()) return;
 
-        plugin.runSync(() -> {
+        plugin.runForEntity(player, () -> {
             for (String cmd : commands) {
                 String parsed = cmd.replace("{player}", player.getName());
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), parsed);

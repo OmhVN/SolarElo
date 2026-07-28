@@ -142,7 +142,7 @@ public class PvpKillProcessor {
             }
 
             if (!bountyCommandsToRun.isEmpty()) {
-                plugin.runSync(() -> {
+                plugin.runForEntity(killer, () -> {
                     for (String cmd : bountyCommandsToRun) {
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), EloManager.colorize(cmd));
                     }
@@ -317,10 +317,11 @@ public class PvpKillProcessor {
             String questBroadcast = plugin.getMessageManager().get("bounty-quest-broadcast", "#00ff3c{killer} #ffffffđã hoàn thành nhiệm vụ và tiêu diệt #ff3c3c{victim}#ffffff!");
             String questCompletedMsg = plugin.getMessageManager().get("bounty-quest-completed", "#00ff3c[Nhiệm Vụ] Bạn đã tiêu diệt mục tiêu {victim} và nhận thưởng +{reward_elo} Elo!");
 
-            plugin.runSync(() -> {
-                if (questBroadcast != null && !questBroadcast.isEmpty()) {
-                    Bukkit.broadcastMessage(EloManager.colorize(questBroadcast.replace("{killer}", killer.getName()).replace("{victim}", victim.getName()).replace("{reward_elo}", String.valueOf(bountyQuestElo))));
-                }
+            if (questBroadcast != null && !questBroadcast.isEmpty()) {
+                String bMsg = EloManager.colorize(questBroadcast.replace("{killer}", killer.getName()).replace("{victim}", victim.getName()).replace("{reward_elo}", String.valueOf(bountyQuestElo)));
+                plugin.runSync(() -> Bukkit.broadcastMessage(bMsg));
+            }
+            plugin.runForEntity(killer, () -> {
                 killer.sendMessage(EloManager.colorize(questCompletedMsg.replace("{victim}", victim.getName()).replace("{reward_elo}", String.valueOf(bountyQuestElo))));
             });
         }

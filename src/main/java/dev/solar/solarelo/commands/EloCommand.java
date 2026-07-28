@@ -72,7 +72,7 @@ public class EloCommand implements CommandExecutor, TabCompleter {
                 plugin.runAsync(() -> {
                     PlayerData cached = plugin.getEloManager().getCachedData(player.getUniqueId());
                     PlayerData data = cached != null ? cached : plugin.getDatabaseManager().loadPlayer(player.getUniqueId(), player.getName());
-                    plugin.runSync(() -> {
+                    plugin.runForEntity(player, () -> {
                         if (data != null) {
                             sendStats(sender, data, true);
                         }
@@ -95,17 +95,27 @@ public class EloCommand implements CommandExecutor, TabCompleter {
             } else {
                 data = plugin.getDatabaseManager().getPlayerByName(targetName);
             }
-            plugin.runSync(() -> {
-                if (data == null) {
-                    plugin.getMessageManager().send(sender, "player-not-found", "#ff3c3cKhông tìm thấy player.");
-                    return;
-                }
-                if (sender instanceof Player player && plugin.getGuiConfigManager().getStatsConfig().getBoolean("enabled", true)) {
-                    dev.solar.solarelo.gui.EloGui.openStats(plugin, player, data.getName(), 1, "HIGH_TO_LOW");
-                } else {
+            if (sender instanceof Player playerSender) {
+                plugin.runForEntity(playerSender, () -> {
+                    if (data == null) {
+                        plugin.getMessageManager().send(sender, "player-not-found", "#ff3c3cKhông tìm thấy player.");
+                        return;
+                    }
+                    if (plugin.getGuiConfigManager().getStatsConfig().getBoolean("enabled", true)) {
+                        dev.solar.solarelo.gui.EloGui.openStats(plugin, playerSender, data.getName(), 1, "HIGH_TO_LOW");
+                    } else {
+                        sendStats(sender, data, false);
+                    }
+                });
+            } else {
+                plugin.runSync(() -> {
+                    if (data == null) {
+                        plugin.getMessageManager().send(sender, "player-not-found", "#ff3c3cKhông tìm thấy player.");
+                        return;
+                    }
                     sendStats(sender, data, false);
-                }
-            });
+                });
+            }
         });
 
         return true;

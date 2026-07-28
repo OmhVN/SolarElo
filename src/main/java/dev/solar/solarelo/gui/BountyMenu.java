@@ -80,7 +80,7 @@ public class BountyMenu {
             }
             boolean hasNextPage = totalTargets > (page * limit);
 
-            plugin.runSync(() -> {
+            plugin.runForEntity(player, () -> {
                 if (!player.isOnline()) return;
 
                 long cooldownEnd = plugin.getEloManager().getBountyCooldown(player.getUniqueId());

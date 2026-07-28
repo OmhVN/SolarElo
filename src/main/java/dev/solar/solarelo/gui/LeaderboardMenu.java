@@ -86,7 +86,7 @@ public class LeaderboardMenu {
 
             boolean hasNextPage = totalPlayers > (page * limit);
 
-            plugin.runSync(() -> {
+            plugin.runForEntity(player, () -> {
                 if (!player.isOnline()) return;
 
                 EloGui.LeaderboardHolder holder = new EloGui.LeaderboardHolder(page, finalFilter);

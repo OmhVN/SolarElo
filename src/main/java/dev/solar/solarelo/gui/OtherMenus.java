@@ -31,7 +31,7 @@ public class OtherMenus {
             if (tempRows < 1 || tempRows > 6) tempRows = 3;
             int rows = tempRows;
 
-            plugin.runSync(() -> {
+            plugin.runForEntity(player, () -> {
                 EloGui.MainMenuHolder holder = new EloGui.MainMenuHolder();
                 Inventory inv = EloGui.createInventory(holder, rows * 9, title);
                 holder.setInventory(inv);
@@ -184,7 +184,7 @@ public class OtherMenus {
             if (tempRows < 1 || tempRows > 6) tempRows = 3;
             int rows = tempRows;
 
-            plugin.runSync(() -> {
+            plugin.runForEntity(player, () -> {
                 if (!player.isOnline()) return;
 
                 EloGui.SettingsHolder holder = new EloGui.SettingsHolder();
@@ -413,7 +413,7 @@ public class OtherMenus {
             }
             final PlayerData finalTData = tData;
 
-            plugin.runSync(() -> {
+            plugin.runForEntity(player, () -> {
                 if (!player.isOnline()) return;
 
                 EloGui.ActiveQuestHolder holder = new EloGui.ActiveQuestHolder();

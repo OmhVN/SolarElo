@@ -32,7 +32,7 @@ public class TopEloCommand implements CommandExecutor {
                         break;
                     }
                 }
-                plugin.runSync(() -> {
+                Runnable sendTask = () -> {
                     sender.sendMessage(dev.solar.solarelo.managers.EloManager.colorize("#555555&m         &r #ffaa00Top 10 Elo #555555&m         "));
                     int rank = 1;
                     for (PlayerData pd : top) {
@@ -42,7 +42,12 @@ public class TopEloCommand implements CommandExecutor {
                         rank++;
                     }
                     sender.sendMessage(dev.solar.solarelo.managers.EloManager.colorize("#555555&m                                           "));
-                });
+                };
+                if (sender instanceof Player playerSender) {
+                    plugin.runForEntity(playerSender, sendTask);
+                } else {
+                    plugin.runSync(sendTask);
+                }
             });
             return true;
         }
