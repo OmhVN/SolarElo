@@ -40,6 +40,7 @@ repositories {
     maven { url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
     maven { url = 'https://repo.codemc.io/repository/maven-public/' }
     maven { url = 'https://repo.codemc.io/repository/maven-releases/' }
+    maven { url = 'https://repo.triumphteam.dev/releases/' }
     maven { url = 'https://jitpack.io' }
     maven { url = 'https://repo.opencollab.dev/main/' }
 }
@@ -56,6 +57,7 @@ dependencies {
     compileOnly 'org.slf4j:slf4j-simple:2.0.18'
     compileOnly 'net.skinsrestorer:skinsrestorer-api:15.0.3'
     implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
+    implementation 'dev.triumphteam:triumph-gui:3.1.10'
     implementation 'org.bstats:bstats-bukkit:3.2.1'
 }
 
@@ -75,6 +77,7 @@ shadowJar {
     archiveClassifier.set('')
     relocate 'org.bstats', 'dev.solar.solarelo.bstats'
     relocate 'com.github.benmanes.caffeine', 'dev.solar.solarelo.caffeine'
+    relocate 'dev.triumphteam.gui', 'dev.solar.solarelo.triumphgui'
     configurations = [project.configurations.runtimeClasspath]
     exclude 'META-INF/maven/**'
     exclude 'META-INF/proguard/**'
