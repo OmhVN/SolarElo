@@ -1,7 +1,16 @@
+<div align="center">
+
 ![solarelo](https://cdn.modrinth.com/data/cached_images/5bc184719d98ac36e88cd40eacde0bb7f9388033.png)
 
+[![Modrinth](https://img.shields.io/badge/Available_on-Modrinth-00AF5C?style=for-the-badge&logo=modrinth&logoColor=white)](https://modrinth.com/plugin/solarelo)
+[![BuiltByBit](https://img.shields.io/badge/Available_on-BuiltByBit-00A2FF?style=for-the-badge&logo=builtbybit&logoColor=white)](https://builtbybit.com/resources/solarelo.114473/)
+[![GitHub](https://img.shields.io/badge/Source-GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/OmhVN/SolarElo)
+[![Documentation](https://img.shields.io/badge/Read_the-Documentation-3884FF?style=for-the-badge&logo=gitbook&logoColor=white)](https://onic-studio.gitbook.io/solarplugins-docs/plugins/solarelo)
+
+</div>
+
 ### Why SolarElo?
-Say goodbye to unfair PvP farming, win-trading, and complex setup headaches. SolarElo calculates, tracks, and manages PvP ELO with zero performance impact - fully compatible and optimized for **Paper** and **Folia**. This plugin provides a highly scalable and secure competitive experience, complete with dynamic ranking formulas, robust anti-abuse algorithms, interactive GUIs, and seamless Discord integration.
+Say goodbye to unfair PvP farming, win-trading, and complex setup headaches. SolarElo calculates, tracks, and manages PvP ELO with zero performance impact - fully compatible and optimized for **Paper**, **Leaf**, and **Folia**. This plugin provides a highly scalable and secure competitive experience, complete with dynamic ranking formulas, robust anti-abuse algorithms, interactive GUIs, and seamless Discord integration.
 
 > **WARNING — AI-Assisted Development**
 >
