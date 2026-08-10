@@ -19,6 +19,7 @@ public class GuiConfigManager {
     private FileConfiguration settingsConfig;
     private FileConfiguration adminConfig;
     private FileConfiguration bountyCreateConfig;
+    private FileConfiguration bountySelectConfig;
 
     public GuiConfigManager(SolarElo plugin) {
         this.plugin = plugin;
@@ -90,6 +91,12 @@ public class GuiConfigManager {
             plugin.saveResource("gui/bounty_create.yml", false);
         }
         bountyCreateConfig = YamlConfiguration.loadConfiguration(bountyCreateFile);
+
+        File bountySelectFile = new File(guiFolder, "bounty_select.yml");
+        if (!bountySelectFile.exists()) {
+            plugin.saveResource("gui/bounty_select.yml", false);
+        }
+        bountySelectConfig = YamlConfiguration.loadConfiguration(bountySelectFile);
     }
 
     public FileConfiguration getLeaderboardConfig() {
@@ -130,5 +137,9 @@ public class GuiConfigManager {
 
     public FileConfiguration getBountyCreateConfig() {
         return bountyCreateConfig;
+    }
+
+    public FileConfiguration getBountySelectConfig() {
+        return bountySelectConfig;
     }
 }

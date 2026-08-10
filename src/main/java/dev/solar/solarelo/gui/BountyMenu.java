@@ -17,6 +17,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -446,6 +447,9 @@ public class BountyMenu {
     public static void openBountySelectPlayer(SolarElo plugin, Player player, int page) {
         if (EloGui.checkIpBlockedRedirect(plugin, player, false)) return;
 
+        org.bukkit.configuration.file.FileConfiguration cfg = plugin.getGuiConfigManager().getBountySelectConfig();
+        if (cfg != null && !cfg.getBoolean("enabled", true)) return;
+
         plugin.runAsync(() -> {
             List<PlayerData> playersList = new ArrayList<>(plugin.getEloManager().getCachedPlayers());
             playersList.removeIf(p -> p.getUuid().equals(player.getUniqueId()));
@@ -463,17 +467,36 @@ public class BountyMenu {
                 if (!player.isOnline()) return;
 
                 EloGui.BountySelectHolder holder = new EloGui.BountySelectHolder(page);
-                int size = 54;
-                Inventory inv = EloGui.createInventory(holder, size, EloGui.colorize("sᴇʟᴇᴄᴛ ᴛᴀʀɢᴇᴛ"));
+                String title = cfg != null ? cfg.getString("title", "sᴇʟᴇᴄᴛ ᴛᴀʀɢᴇᴛ") : "sᴇʟᴇᴄᴛ ᴛᴀʀɢᴇᴛ";
+                int rows = cfg != null ? cfg.getInt("rows", 6) : 6;
+                int size = Math.min(54, Math.max(9, rows * 9));
+
+                Inventory inv = EloGui.createInventory(holder, size, EloGui.colorize(title));
                 holder.setInventory(inv);
 
-                // Clean GUI without glass panes fillers
+                if (cfg != null && cfg.getBoolean("filler.enabled", false)) {
+                    String matName = cfg.getString("filler.material", "GRAY_STAINED_GLASS_PANE");
+                    Material mat = Material.matchMaterial(matName);
+                    if (mat == null) mat = Material.GRAY_STAINED_GLASS_PANE;
 
-                int itemsPerPage = 45; // Slots 0 to 44
+                    ItemStack pane = new ItemStack(mat);
+                    ItemMeta pMeta = pane.getItemMeta();
+                    if (pMeta != null) { pMeta.setDisplayName(" "); pane.setItemMeta(pMeta); }
+                    for (int i = 0; i < size; i++) inv.setItem(i, pane);
+                }
+
+                int backSlot = cfg != null ? cfg.getInt("buttons.back.slot", 45) : 45;
+                int nextSlot = cfg != null ? cfg.getInt("buttons.next.slot", 53) : 53;
+
+                int itemsPerPage = Math.max(1, size - 9);
                 int totalPages = Math.max(1, (int) Math.ceil((double) playersList.size() / itemsPerPage));
                 int currentPage = Math.min(Math.max(1, page), totalPages);
                 int startIndex = (currentPage - 1) * itemsPerPage;
                 int endIndex = Math.min(startIndex + itemsPerPage, playersList.size());
+
+                String headNameFmt = cfg != null ? cfg.getString("player-head.name", "&c{target}") : "&c{target}";
+                List<String> headLoreFmt = cfg != null && cfg.contains("player-head.lore") ? cfg.getStringList("player-head.lore") :
+                        Arrays.asList("&7Elo: &e{target_elo}", "&7Current Bounty: &a{target_bounty}", "", "&e👉 Click to place bounty on this player!");
 
                 for (int i = startIndex; i < endIndex; i++) {
                     PlayerData targetData = playersList.get(i);
@@ -483,13 +506,16 @@ public class BountyMenu {
                     SkullMeta meta = (SkullMeta) head.getItemMeta();
                     if (meta != null) {
                         SkinsRestorerHook.applySkin(meta, targetData.getUuid(), targetData.getName());
-                        meta.setDisplayName(EloGui.colorize("&c" + targetData.getName()));
-                        List<String> lore = new ArrayList<>();
-                        lore.add(EloGui.colorize("&7Elo: &e" + EloGui.formatNumber(targetData.getElo())));
+                        meta.setDisplayName(EloGui.colorize(headNameFmt.replace("{target}", targetData.getName())));
+
                         String bountyVal = plugin.getVaultHook().hasEconomy() ? plugin.getVaultHook().format(targetData.getBounty()) : (EloGui.formatNumber(targetData.getBounty()) + " Elo");
-                        lore.add(EloGui.colorize("&7Current Bounty: &a" + bountyVal));
-                        lore.add("");
-                        lore.add(EloGui.colorize("&e👉 Click to place bounty on this player!"));
+
+                        List<String> lore = new ArrayList<>();
+                        for (String l : headLoreFmt) {
+                            lore.add(EloGui.colorize(l.replace("{target}", targetData.getName())
+                                    .replace("{target_elo}", EloGui.formatNumber(targetData.getElo()))
+                                    .replace("{target_bounty}", bountyVal)));
+                        }
                         meta.setLore(lore);
 
                         NamespacedKey uuidKey = new NamespacedKey(plugin, "target_uuid");
@@ -500,33 +526,48 @@ public class BountyMenu {
                 }
 
                 // Back Button (Slot 45 - Bottom Left)
-                ItemStack back = new ItemStack(Material.ARROW);
+                String backMatName = cfg != null ? cfg.getString("buttons.back.material", "ARROW") : "ARROW";
+                Material bMat = Material.matchMaterial(backMatName);
+                if (bMat == null) bMat = Material.ARROW;
+                ItemStack back = new ItemStack(bMat);
                 ItemMeta bMeta = back.getItemMeta();
                 if (bMeta != null) {
-                    bMeta.setDisplayName(EloGui.colorize("&cʙᴀᴄᴋ"));
+                    String bName = cfg != null ? cfg.getString("buttons.back.name", "&cʙᴀᴄᴋ") : "&cʙᴀᴄᴋ";
+                    bMeta.setDisplayName(EloGui.colorize(bName));
+
+                    List<String> rawLore = currentPage > 1 ?
+                            (cfg != null && cfg.contains("buttons.back.lore-pages") ? cfg.getStringList("buttons.back.lore-pages") : Collections.singletonList("&7Go to page {prev_page}")) :
+                            (cfg != null && cfg.contains("buttons.back.lore-page-1") ? cfg.getStringList("buttons.back.lore-page-1") : Collections.singletonList("&7Return to bounty menu"));
+
                     List<String> bLore = new ArrayList<>();
-                    if (currentPage > 1) {
-                        bLore.add(EloGui.colorize("&7Go to page " + (currentPage - 1)));
-                    } else {
-                        bLore.add(EloGui.colorize("&7Return to bounty menu"));
+                    for (String l : rawLore) {
+                        bLore.add(EloGui.colorize(l.replace("{prev_page}", String.valueOf(currentPage - 1))));
                     }
                     bMeta.setLore(bLore);
                     back.setItemMeta(bMeta);
                 }
-                inv.setItem(45, back);
+                inv.setItem(backSlot, back);
 
                 // Next Button (Slot 53 - Bottom Right) if there's a next page
                 if (currentPage < totalPages) {
-                    ItemStack next = new ItemStack(Material.ARROW);
+                    String nextMatName = cfg != null ? cfg.getString("buttons.next.material", "ARROW") : "ARROW";
+                    Material nMat = Material.matchMaterial(nextMatName);
+                    if (nMat == null) nMat = Material.ARROW;
+                    ItemStack next = new ItemStack(nMat);
                     ItemMeta nMeta = next.getItemMeta();
                     if (nMeta != null) {
-                        nMeta.setDisplayName(EloGui.colorize("&aɴᴇxᴛ"));
+                        String nName = cfg != null ? cfg.getString("buttons.next.name", "&aɴᴇxᴛ") : "&aɴᴇxᴛ";
+                        nMeta.setDisplayName(EloGui.colorize(nName));
+
+                        List<String> rawLore = cfg != null && cfg.contains("buttons.next.lore") ? cfg.getStringList("buttons.next.lore") : Collections.singletonList("&7Go to page {next_page}");
                         List<String> nLore = new ArrayList<>();
-                        nLore.add(EloGui.colorize("&7Go to page " + (currentPage + 1)));
+                        for (String l : rawLore) {
+                            nLore.add(EloGui.colorize(l.replace("{next_page}", String.valueOf(currentPage + 1))));
+                        }
                         nMeta.setLore(nLore);
                         next.setItemMeta(nMeta);
                     }
-                    inv.setItem(53, next);
+                    inv.setItem(nextSlot, next);
                 }
 
                 player.openInventory(inv);
@@ -535,9 +576,13 @@ public class BountyMenu {
     }
 
     public static void handleBountySelectClick(InventoryClickEvent event, EloGui.BountySelectHolder holder, Player player, int slot, SolarElo plugin) {
+        org.bukkit.configuration.file.FileConfiguration cfg = plugin.getGuiConfigManager().getBountySelectConfig();
+        int backSlot = cfg != null ? cfg.getInt("buttons.back.slot", 45) : 45;
+        int nextSlot = cfg != null ? cfg.getInt("buttons.next.slot", 53) : 53;
+
         int currentPage = holder.getPage();
 
-        if (slot == 45) { // Bottom-left corner back button
+        if (slot == backSlot) { // Bottom-left corner back button
             plugin.getEffectManager().playGuiSound(player, "click");
             if (currentPage > 1) {
                 openBountySelectPlayer(plugin, player, currentPage - 1);
@@ -547,7 +592,7 @@ public class BountyMenu {
             return;
         }
 
-        if (slot == 53) { // Bottom-right corner next button
+        if (slot == nextSlot) { // Bottom-right corner next button
             plugin.getEffectManager().playGuiSound(player, "click");
             openBountySelectPlayer(plugin, player, currentPage + 1);
             return;
