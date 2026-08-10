@@ -498,6 +498,7 @@ public class BountyMenu {
                     SkullMeta meta = (SkullMeta) head.getItemMeta();
                     if (meta != null) {
                         SkinsRestorerHook.applySkin(meta, targetData.getUuid(), targetData.getName());
+                        meta.setDisplayName(EloGui.colorize(headNameFmt.replace("{target}", targetData.getName()).replace("{player}", targetData.getName())));
                         boolean useVault = plugin.getVaultHook() != null && plugin.getVaultHook().hasEconomy();
                         String bountyVal = useVault ? plugin.getVaultHook().format(targetData.getBounty()) : (EloGui.formatNumber(targetData.getBounty()) + " Elo");
 
