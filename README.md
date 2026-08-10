@@ -14,24 +14,6 @@ Say goodbye to unfair PvP farming, win-trading, and complex setup headaches. Sol
 
 ---
 
-### Changelog:
-
-* Fixed Vault economy thread safety by executing all `deposit` and `withdraw` operations synchronously on the main thread #1.1-R08
-* Integrated native Paper 1.21.4+ `DialogInputHelper` GUI for custom bounty amount input with automatic fallback for Bedrock/legacy clients #1.1-R08
-* Fixed raw color code rendering on ActionBars by deserializing legacy section color components #1.1-R08
-* Integrated multi-language support system (`lang/messages_vi.yml` & `lang/messages_en.yml`) with configurable language switcher #1.1-R08
-* Fixed missing private bounty claim notification for killers using `MessageManager` main-thread entity scheduling #1.1-R08
-* Added `bounty-placed-target` warning notification and audio effect when a bounty contract is placed on an online player #1.1-R08
-* Restored player head display name formatting in `sᴇʟᴇᴄᴛ ᴛᴀʀɢᴇᴛ` GUI #1.1-R08
-* Fixed `IllegalStateException: Thread failed main thread check: Cannot init menu async` on Canvas/Folia #1.1-R08
-* Migrated all ActionBars, Hover Stats, and Click Events from legacy BungeeCord Chat API to 100% Paper Adventure API #1.1-R08
-* Integrated high-performance Caffeine Cache ( `expireAfterWrite 10s` ) for zero-latency rank lookup #1.1-R08
-* Integrated Triumph-GUI library ( `dev.triumphteam:triumph-gui` ) with automated package relocation #1.1-R08
-* Fixed asynchronous `victim.getLocation()` thread safety violation during PvP Anti-Farm verification #1.1-R07-Fix
-* Fixed startup check sequence to run integrity signature check before displaying the ASCII banner #1.1-R07-Fix
-
----
-
 
 ## Main Feature Showcase
 
