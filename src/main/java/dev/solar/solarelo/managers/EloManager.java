@@ -125,14 +125,16 @@ public class EloManager {
 
     public void placeBounty(Player creator, UUID targetUuid, String targetName, int amount) {
         if (amount <= 0) {
-            creator.sendMessage(colorize("&#ff3c3cMức tiền thưởng truy nã phải lớn hơn 0!"));
+            String msg = plugin.getMessageManager().get("bounty-min-amount-error", "&#ff3c3cMức tiền thưởng truy nã phải lớn hơn 0!");
+            creator.sendMessage(colorize(msg));
             return;
         }
 
         plugin.runAsync(() -> {
             PlayerData creatorData = getData(creator.getUniqueId(), creator.getName());
             if (creatorData == null || creatorData.isLocked()) {
-                creator.sendMessage(colorize("&#ff3c3cTài khoản của bạn đang bị khóa, không thể treo thưởng truy nã!"));
+                String msg = plugin.getMessageManager().get("bounty-account-locked", "&#ff3c3cTài khoản của bạn đang bị khóa, không thể treo thưởng truy nã!");
+                creator.sendMessage(colorize(msg));
                 return;
             }
 
@@ -140,16 +142,21 @@ public class EloManager {
             if (useVault) {
                 double balance = plugin.getVaultHook().getBalance(creator);
                 if (balance < amount) {
-                    creator.sendMessage(colorize("&#ff3c3cBạn không đủ tiền (Cần " + plugin.getVaultHook().format(amount) + ") để treo thưởng!"));
+                    String msg = plugin.getMessageManager().get("bounty-insufficient-money", "&#ff3c3cBạn không đủ tiền (Cần {required}) để treo thưởng!")
+                            .replace("{required}", plugin.getVaultHook().format(amount));
+                    creator.sendMessage(colorize(msg));
                     return;
                 }
                 if (!plugin.getVaultHook().withdraw(creator, amount)) {
-                    creator.sendMessage(colorize("&#ff3c3cGiao dịch trừ tiền thất bại!"));
+                    String msg = plugin.getMessageManager().get("bounty-transaction-failed", "&#ff3c3cGiao dịch trừ tiền thất bại!");
+                    creator.sendMessage(colorize(msg));
                     return;
                 }
             } else {
                 if (creatorData.getElo() < amount) {
-                    creator.sendMessage(colorize("&#ff3c3cBạn không đủ Elo để treo thưởng mức " + amount + " Elo!"));
+                    String msg = plugin.getMessageManager().get("bounty-insufficient-elo", "&#ff3c3cBạn không đủ Elo để treo thưởng mức {amount} Elo!")
+                            .replace("{amount}", String.valueOf(amount));
+                    creator.sendMessage(colorize(msg));
                     return;
                 }
                 removeElo(creator.getUniqueId(), creator.getName(), amount);
@@ -159,7 +166,8 @@ public class EloManager {
             if (targetData == null) {
                 PlayerData loaded = plugin.getDatabaseManager().loadPlayer(targetUuid, targetName);
                 if (loaded == null) {
-                    creator.sendMessage(colorize("&#ff3c3cKhông tìm thấy dữ liệu người chơi mục tiêu."));
+                    String msg = plugin.getMessageManager().get("bounty-target-not-found", "&#ff3c3cKhông tìm thấy dữ liệu người chơi mục tiêu.");
+                    creator.sendMessage(colorize(msg));
                     return;
                 }
                 targetData = loaded;
@@ -173,7 +181,10 @@ public class EloManager {
 
             plugin.runForEntity(creator, () -> {
                 plugin.getEffectManager().playGuiSound(creator, "click");
-                creator.sendMessage(colorize("&#00ff3c[Truy Nã] Đã treo thưởng thành công &#ffaa00" + amountFormatted + " &#00ff3clên đầu &#ffffff" + targetName));
+                String creatorMsg = plugin.getMessageManager().get("bounty-placed-creator", "&#00ff3c[Truy Nã] Đã treo thưởng thành công &#ffaa00{amount} &#00ff3clên đầu &#ffffff{target}")
+                        .replace("{amount}", amountFormatted)
+                        .replace("{target}", targetName);
+                creator.sendMessage(colorize(creatorMsg));
             });
 
             String broadcastMsg = plugin.getMessageManager().get("bounty-placed-broadcast",

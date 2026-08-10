@@ -718,7 +718,9 @@ public class BountyMenu {
             plugin.getEffectManager().playGuiSound(player, "click");
             player.closeInventory();
             GuiListener.chatPrompts.put(player.getUniqueId(), new GuiListener.ChatPromptData(holder.getTargetUuid(), holder.getTargetName(), "bounty_custom"));
-            player.sendMessage(EloGui.colorize("&#00ff3c[Bounty] &fPlease enter the custom Elo bounty amount for &c" + holder.getTargetName() + " &fin chat (or type &#ff3c3ccancel&f to exit):"));
+            String msg = plugin.getMessageManager().get("bounty-custom-prompt", "&#00ff3c[Truy Nã] &fHãy nhập số tiền thưởng muốn treo lên đầu &c{target} &ftrong chat (hoặc gõ &#ff3c3ccancel&f để hủy):")
+                    .replace("{target}", holder.getTargetName());
+            player.sendMessage(EloGui.colorize(msg));
             return;
         }
 
