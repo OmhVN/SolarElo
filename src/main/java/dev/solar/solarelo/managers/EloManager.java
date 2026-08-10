@@ -147,11 +147,19 @@ public class EloManager {
                     creator.sendMessage(colorize(msg));
                     return;
                 }
-                if (!plugin.getVaultHook().withdraw(creator, amount)) {
+                final boolean[] withdrawSuccess = {false};
+                java.util.concurrent.CountDownLatch latch = new java.util.concurrent.CountDownLatch(1);
+                plugin.runSync(() -> {
+                    withdrawSuccess[0] = plugin.getVaultHook().withdraw(creator, amount);
+                    latch.countDown();
+                });
+                try { latch.await(); } catch (InterruptedException ignored) {}
+                if (!withdrawSuccess[0]) {
                     String msg = plugin.getMessageManager().get("bounty-transaction-failed", "&#ff3c3cGiao dịch trừ tiền thất bại!");
                     creator.sendMessage(colorize(msg));
                     return;
                 }
+
             } else {
                 if (creatorData.getElo() < amount) {
                     String msg = plugin.getMessageManager().get("bounty-insufficient-elo", "&#ff3c3cBạn không đủ Elo để treo thưởng mức {amount} Elo!")

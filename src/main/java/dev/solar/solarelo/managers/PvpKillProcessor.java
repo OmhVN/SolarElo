@@ -301,9 +301,11 @@ public class PvpKillProcessor {
             String amountFormatted;
 
             if (useVault) {
-                plugin.getVaultHook().deposit(killer, placedBounty);
+                final int finalBounty = placedBounty;
+                plugin.runSync(() -> plugin.getVaultHook().deposit(killer, finalBounty));
                 amountFormatted = plugin.getVaultHook().format(placedBounty);
             } else {
+
                 gainRef[0] += placedBounty;
                 amountFormatted = placedBounty + " Elo";
             }
