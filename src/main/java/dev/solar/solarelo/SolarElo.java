@@ -68,10 +68,11 @@ public class SolarElo extends JavaPlugin {
         dev.solar.solarelo.managers.ConfigMigrator.checkFolder(this);
 
         dev.solar.solarelo.managers.ConfigMigrator.migrate(this, "config.yml");
-        dev.solar.solarelo.managers.ConfigMigrator.migrate(this, "messages.yml");
+        dev.solar.solarelo.managers.ConfigMigrator.migrate(this, "lang/messages_vi.yml");
+        dev.solar.solarelo.managers.ConfigMigrator.migrate(this, "lang/messages_en.yml");
         dev.solar.solarelo.managers.ConfigMigrator.migrate(this, "effects.yml");
         dev.solar.solarelo.managers.ConfigMigrator.migrate(this, "rank.yml");
-        dev.solar.solarelo.managers.ConfigMigrator.migrate(this, "discord.yml");
+        dev.solar.solarelo.managers.ConfigMigrator.migrate(this, "features/discord.yml");
         dev.solar.solarelo.managers.ConfigMigrator.migrate(this, "features/season.yml");
         dev.solar.solarelo.managers.ConfigMigrator.migrate(this, "features/bounty.yml");
         dev.solar.solarelo.managers.ConfigMigrator.migrate(this, "database.yml");
@@ -327,11 +328,11 @@ public class SolarElo extends JavaPlugin {
 
     public void reloadDiscordConfig() {
         if (discordFile == null) {
-            discordFile = new File(getDataFolder(), "discord.yml");
+            discordFile = new File(getDataFolder(), "features/discord.yml");
         }
         discordConfig = YamlConfiguration.loadConfiguration(discordFile);
 
-        InputStream defConfigStream = getResource("discord.yml");
+        InputStream defConfigStream = getResource("features/discord.yml");
         if (defConfigStream != null) {
             YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defConfigStream, StandardCharsets.UTF_8));
             discordConfig.setDefaults(defConfig);
