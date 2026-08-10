@@ -366,6 +366,8 @@ public class BountyMenu {
                     lore.add(EloGui.colorize("&7Elo của bạn hiện tại: &b" + EloGui.formatNumber(creatorData.getElo()) + " Elo"));
                     lore.add("");
                     lore.add(EloGui.colorize("&fMức thưởng đang chọn: &a+" + EloGui.formatNumber(holder.getSelectedAmount()) + " Elo"));
+                    lore.add("");
+                    lore.add(EloGui.colorize("&e👉 Bấm vào đây để nhập số Elo tùy chỉnh!"));
                     headMeta.setLore(lore);
                     targetHead.setItemMeta(headMeta);
                 }
@@ -512,7 +514,7 @@ public class BountyMenu {
             case 24 -> updateBountyCreateAmount(plugin, player, holder, +500);
             case 25 -> updateBountyCreateAmount(plugin, player, holder, +1000);
             case 23 -> updateBountyCreateAmount(plugin, player, holder, -holder.getSelectedAmount()); // Reset 0
-            case 21 -> { // Custom chat input
+            case 13, 21 -> { // Custom chat input (Clicking target head OR Anvil)
                 plugin.getEffectManager().playGuiSound(player, "click");
                 player.closeInventory();
                 GuiListener.chatPrompts.put(player.getUniqueId(), new GuiListener.ChatPromptData(holder.getTargetUuid(), holder.getTargetName(), "bounty_custom"));
