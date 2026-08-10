@@ -1,6 +1,6 @@
 # ☀️ SolarElo — Advanced PvP ELO & Rank Solution
 
-[![Leaf 1.21+](https://img.shields.io/badge/Minecraft-1.21%2B-brightgreen.svg)](https://papermc.io)
+[![Minecraft 1.21+](https://img.shields.io/badge/Minecraft-1.21%2B-brightgreen.svg)](https://papermc.io)
 [![Paper & Folia Ready](https://img.shields.io/badge/Server-Paper%20%7C%20Leaf%20%7C%20Folia-blue.svg)](https://papermc.io)
 [![Built with Triumph-GUI](https://img.shields.io/badge/GUI-Triumph--GUI-orange.svg)](https://github.com/TriumphTeam/triumph-gui)
 [![Database](https://img.shields.io/badge/Database-H2%20%7C%20MySQL%20%7C%20SQLite-yellow.svg)](https://github.com/brettwooldridge/HikariCP)
@@ -86,9 +86,9 @@ Prevent alt-farming, win-trading, and stat inflating with 5 layers of protection
 
 ## 📜 SpigotMC / BuiltByBit BBCode Format (Copy-Paste Ready)
 
-Below is the BBCode formatted version ready for pasting directly into SpigotMC or BuiltByBit resource description editor:
+Copy code bên dưới dán trực tiếp vào khung mô tả (BBCode Editor) của SpigotMC / BuiltByBit:
 
-```bbcode
+```text
 [CENTER][SIZE=6][B]☀️ SolarElo[/B][/SIZE]
 [SIZE=4]Advanced PvP ELO, Rank & Bounty Solution for Minecraft Servers[/SIZE][/CENTER]
 
