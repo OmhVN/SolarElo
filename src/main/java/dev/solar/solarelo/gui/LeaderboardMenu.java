@@ -206,7 +206,7 @@ public class LeaderboardMenu {
                 ItemStack prev = new ItemStack(mat);
                 ItemMeta prevMeta = prev.getItemMeta();
                 if (prevMeta != null) {
-                    prevMeta.setDisplayName(EloGui.colorize(guiConfig.getString(section + ".name", "#00BFFF\u029c\u1d00\u1d04\u1d0b")));
+                    prevMeta.setDisplayName(EloGui.colorize(guiConfig.getString(section + ".name", "#00BFFF\u0299\u1d00\u1d04\u1d0b")));
                     List<String> prevLore = new ArrayList<>();
                     for (String l : guiConfig.getStringList(section + ".lore")) {
                         prevLore.add(EloGui.colorize(l.replace("{page}", String.valueOf(page - 1))));
@@ -224,7 +224,7 @@ public class LeaderboardMenu {
                 ItemStack prev = new ItemStack(mat);
                 ItemMeta prevMeta = prev.getItemMeta();
                 if (prevMeta != null) {
-                    prevMeta.setDisplayName(EloGui.colorize("#00BFFF\u029c\u1d00\u1d04\u1d0b"));
+                    prevMeta.setDisplayName(EloGui.colorize("#00BFFF\u0299\u1d00\u1d04\u1d0b"));
                     List<String> prevLore = new ArrayList<>();
                     prevLore.add(EloGui.colorize("&fClick to return to the main menu"));
                     prevMeta.setLore(prevLore);

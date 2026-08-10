@@ -144,7 +144,7 @@ public class StatsMenu {
                     ItemStack backItem = new ItemStack(mat);
                     ItemMeta backMeta = backItem.getItemMeta();
                     if (backMeta != null) {
-                        backMeta.setDisplayName(EloGui.colorize(statsConfig.getString("back-button.name", "#ff3c3c\u029c\u1d0f\u1d1c\u0274\u1d1b\u028f")));
+                        backMeta.setDisplayName(EloGui.colorize(statsConfig.getString("back-button.name", "#00BFFF\u0299\u1d00\u1d04\u1d0b")));
                         List<String> backLore = new ArrayList<>();
                         for (String l : statsConfig.getStringList("back-button.lore")) {
                             backLore.add(EloGui.colorize(l));

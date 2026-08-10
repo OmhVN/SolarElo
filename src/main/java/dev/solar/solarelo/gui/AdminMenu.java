@@ -177,7 +177,7 @@ public class AdminMenu {
                 ItemStack removeBlock = EloGui.loadConfigItem(adminConfig, "remove-elo", "REDSTONE", "#ff3c3c\u0280\u1d07\u1d0d\u1d0f\u1d20\u1d07 ᴇʟᴏ", Arrays.asList("&fClick to deduct ELO from player"), -1);
                 setItemSafe(inv, adminConfig.getInt("remove-elo.slot", 30), removeBlock);
 
-                ItemStack backItem = EloGui.loadConfigItem(adminConfig, "back-to-list", "ARROW", "#aaaaaa\u029c\u1d00\u1d04\u1d0b", Arrays.asList("&fClick to return to player list"), -1);
+                ItemStack backItem = EloGui.loadConfigItem(adminConfig, "back-to-list", "ARROW", "#aaaaaa\u0299\u1d00\u1d04\u1d0b", Arrays.asList("&fClick to return to player list"), -1);
                 setItemSafe(inv, adminConfig.getInt("back-to-list.slot", 31), backItem);
 
                 ItemStack historyBook = EloGui.loadConfigItem(adminConfig, "elo-history", "BOOK", "#00BFFF\u1d07\u029f\u1d0f ʜɪsᴛᴏʀʏ", Arrays.asList("&fClick to view ELO change history"), -1);
@@ -435,7 +435,7 @@ public class AdminMenu {
 
                 int prevSlot = EloGui.getSlotFromLayout(adminConfig, "kill-history.gui-disposition", 'b', adminConfig.getInt("back.slot", 45));
                 if (page > 1 && prevSlot >= 0 && prevSlot < rows * 9) {
-                    ItemStack prevItem = EloGui.loadConfigItem(adminConfig, "back", "ARROW", "#00BFFF\u029c\u1d00\u1d04\u1d0b", Arrays.asList("&fClick to go to the previous page"), -1);
+                    ItemStack prevItem = EloGui.loadConfigItem(adminConfig, "back", "ARROW", "#00BFFF\u0299\u1d00\u1d04\u1d0b", Arrays.asList("&fClick to go to the previous page"), -1);
                     inv.setItem(prevSlot, prevItem);
                 }
 
