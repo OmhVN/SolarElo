@@ -95,9 +95,9 @@ Prevent alt-farming, win-trading, and stat inflating with 5 layers of protection
 
 ---
 
-## 📜 SpigotMC / BuiltByBit BBCode Format (Copy-Paste Ready)
+## 📜 SpigotMC BBCode Format (Universal XenForo Compatible)
 
-Copy code bên dưới dán trực tiếp vào khung mô tả (BBCode Editor) của SpigotMC / BuiltByBit:
+Copy code bên dưới dán trực tiếp vào khung mô tả (BBCode Editor) của SpigotMC:
 
 ```text
 [CENTER][IMG]https://cdn.modrinth.com/data/cached_images/6271845ecabf9719668a33c3998ae6e87a8fa222.png[/IMG][/CENTER]
@@ -105,7 +105,7 @@ Copy code bên dưới dán trực tiếp vào khung mô tả (BBCode Editor) c�
 [CENTER][SIZE=6][B]☀️ SolarElo[/B][/SIZE]
 [SIZE=4]Advanced PvP ELO, Rank & Bounty Solution for Minecraft Servers[/SIZE][/CENTER]
 
-[HR][/HR]
+[CENTER]─────────────────────────────────────────────────────────────[/CENTER]
 
 [CENTER]
 Say goodbye to unfair PvP farming, win-trading, and complex setup headaches.
@@ -113,7 +113,7 @@ SolarElo calculates, tracks, and manages PvP ELO with [B]zero performance impact
 fully compatible and optimized for [B]Paper[/B], [B]Leaf[/B], and [B]Folia 1.21+[/B].
 [/CENTER]
 
-[HR][/HR]
+[CENTER]─────────────────────────────────────────────────────────────[/CENTER]
 
 [CENTER][SIZE=5][B]✨ Feature Showcase[/B][/SIZE][/CENTER]
 
@@ -138,12 +138,12 @@ Customize personal sound preferences, toggle visual particle effects, and adjust
 [B]🛡️ Admin Management & Player Editor (/eloadmin)[/B]
 Search players, edit ELO values in real-time, lock/unlock player accounts, and manage seasons effortlessly.
 
-[HR][/HR]
+[CENTER]─────────────────────────────────────────────────────────────[/CENTER]
 
 [CENTER][SIZE=5][B]🛡️ Intelligent Anti-Farm & Security[/B][/SIZE]
 Integrated security algorithms: IP/Subnet checks, AFK movement checks, spawn camping protection, kill diminishing returns, and max Elo difference caps.[/CENTER]
 
-[HR][/HR]
+[CENTER]─────────────────────────────────────────────────────────────[/CENTER]
 
 [CENTER][SIZE=5][B]📊 PlaceholderAPI Support[/B][/SIZE][/CENTER]
 
@@ -160,7 +160,7 @@ Integrated security algorithms: IP/Subnet checks, AFK movement checks, spawn cam
 [*][ICODE]%solarelo_best_streak%[/ICODE] — Historical best killstreak
 [/LIST]
 
-[HR][/HR]
+[CENTER]─────────────────────────────────────────────────────────────[/CENTER]
 
 [CENTER][SIZE=5][B]💻 Key Commands[/B][/SIZE][/CENTER]
 
@@ -172,7 +172,7 @@ Integrated security algorithms: IP/Subnet checks, AFK movement checks, spawn cam
 [*][ICODE]/eloadmin[/ICODE] — Admin Management Panel (solarelo.admin)
 [/LIST]
 
-[HR][/HR]
+[CENTER]─────────────────────────────────────────────────────────────[/CENTER]
 
 [CENTER][URL=https://bstats.org/plugin/bukkit/SolarElo/31740][IMG]https://bstats.org/signatures/bukkit/SolarElo.svg[/IMG][/URL][/CENTER]
 ```
