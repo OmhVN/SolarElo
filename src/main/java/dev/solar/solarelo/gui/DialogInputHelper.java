@@ -204,4 +204,78 @@ public class DialogInputHelper {
 
         admin.showDialog(dialog);
     }
+
+
+    public static void showBountyCustomAmountDialog(SolarElo plugin, Player creator, UUID targetUuid, String targetName, int currentAmount) {
+        final String INPUT_KEY = "bounty_amount_input";
+
+        String promptTitle = plugin.getMessageManager().get("bounty-dialog-title", "Treo Thưởng Truy Nã");
+        String promptBody  = plugin.getMessageManager().get("bounty-dialog-body", "Nhập số tiền thưởng muốn treo lên đầu {target}:").replace("{target}", targetName);
+        String fieldLabel  = plugin.getMessageManager().get("bounty-dialog-field", "Số tiền / Elo");
+        String btnConfirm  = plugin.getMessageManager().get("dialog-button-confirm", "Xác nhận");
+        String btnConfirmHover = plugin.getMessageManager().get("dialog-button-confirm-hover", "Click để chọn số tiền này");
+        String btnCancel   = plugin.getMessageManager().get("dialog-button-cancel", "Hủy");
+        String btnCancelHover = plugin.getMessageManager().get("dialog-button-cancel-hover", "Click để hủy và quay lại");
+
+        DialogAction submitAction = DialogAction.customClick(
+            (view, audience) -> {
+                if (!(audience instanceof Player pCreator)) return;
+                String rawInput = view.getText(INPUT_KEY);
+                if (rawInput == null) return;
+                String userInput = rawInput.trim();
+
+                plugin.runForEntity(pCreator, () -> {
+                    int amount;
+                    try {
+                        amount = Integer.parseInt(userInput);
+                        if (amount < 0) amount = 0;
+                    } catch (NumberFormatException e) {
+                        String invalidMsg = plugin.getMessageManager().get("bounty-custom-invalid-number", "&#ff3c3c[Truy Nã] &cGiá trị nhập vào phải là số nguyên dương! &7Thử lại.");
+                        pCreator.sendMessage(dev.solar.solarelo.managers.EloManager.colorize(invalidMsg));
+                        showBountyCustomAmountDialog(plugin, pCreator, targetUuid, targetName, currentAmount);
+                        return;
+                    }
+
+                    int finalAmount = amount;
+                    EloGui.openBountyCreate(plugin, pCreator, targetUuid, targetName, finalAmount);
+                });
+            },
+            ClickCallback.Options.builder().build()
+        );
+
+        DialogAction cancelAction = DialogAction.customClick(
+            (view, audience) -> {
+                if (!(audience instanceof Player pCreator)) return;
+                plugin.runForEntity(pCreator, () -> {
+                    EloGui.openBountyCreate(plugin, pCreator, targetUuid, targetName, currentAmount);
+                });
+            },
+            ClickCallback.Options.builder().build()
+        );
+
+        Dialog dialog = Dialog.create(builder -> builder.empty()
+            .base(DialogBase.builder(parseComponent(promptTitle))
+                .body(List.of(
+                    DialogBody.plainMessage(parseComponent(promptBody))
+                ))
+                .inputs(List.of(
+                    DialogInput.text(INPUT_KEY, parseComponent(fieldLabel))
+                        .width(250)
+                        .labelVisible(true)
+                        .initial(currentAmount > 0 ? String.valueOf(currentAmount) : "")
+                        .maxLength(10)
+                        .build()
+                ))
+                .canCloseWithEscape(true)
+                .build()
+            )
+            .type(DialogType.confirmation(
+                ActionButton.create(parseComponent(btnConfirm), parseComponent(btnConfirmHover), 100, submitAction),
+                ActionButton.create(parseComponent(btnCancel),  parseComponent(btnCancelHover),  100, cancelAction)
+            ))
+        );
+
+        creator.showDialog(dialog);
+    }
 }
+

@@ -60,6 +60,10 @@ bounty-placed-broadcast: "&#ff3c3c[Bounty] &#ffaa00{creator} &#ffffffplaced a bo
 bounty-claimed-broadcast: "&#00ff3c[Bounty] &#ffaa00{killer} &#ffffffeliminated target &#ff3c3c{victim} &#ffffffand claimed the total bounty of &#00ff3c{amount}&#ffffff!"
 bounty-claimed-killer: "&#00ff3c[Bounty] You eliminated target &#ff3c3c{victim} &#00ff3cand received &#ffaa00{amount} &#00ff3cin your account!"
 bounty-placed-creator: "&#00ff3c[Bounty] Successfully placed bounty of &#ffaa00{amount} &#00ff3con &#ffffff{target}"
+bounty-placed-target: "&#ff3c3c[Bounty] &#ffaa00{creator} &#ffffffplaced a bounty of &#00ff3c{amount} &#ffffffon your head! Total bounty: &#ffaa00{total_bounty}!"
+bounty-dialog-title: "Place Bounty"
+bounty-dialog-body: "Enter bounty amount to place on {target}:"
+bounty-dialog-field: "Bounty Amount / Elo"
 bounty-min-amount-error: "&#ff3c3cBounty amount must be greater than 0!"
 bounty-account-locked: "&#ff3c3cYour account is currently locked from placing bounties!"
 bounty-insufficient-money: "&#ff3c3cYou do not have enough money (Requires {required}) to place this bounty!"
@@ -69,6 +73,7 @@ bounty-target-not-found: "&#ff3c3cTarget player data not found."
 bounty-custom-prompt: "&#00ff3c[Bounty] &fType the bounty amount you want to place on &c{target} &fin chat (or type &#ff3c3ccancel&f to exit):"
 bounty-custom-cancel: "&#ff3c3c[Bounty] &7Operation cancelled."
 bounty-custom-invalid-number: "&#ff3c3c[Bounty] &cValue must be a positive integer! &7Try again or type &#ff3c3ccancel&7 to exit."
+
 
 # ── Elo Lock ──────────────────────────────────────────────────
 elo-locked-by-admin: "&#ff3c3cYour ELO has been locked by an Admin!"

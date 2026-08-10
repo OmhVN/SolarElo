@@ -60,6 +60,10 @@ bounty-placed-broadcast: "&#ff3c3c[Truy Nã] &#ffaa00{creator} &#ffffffđã treo
 bounty-claimed-broadcast: "&#00ff3c[Truy Nã] &#ffaa00{killer} &#ffffffđã hạ gục mục tiêu bị truy nã &#ff3c3c{victim} &#ffffffvà ôm trọn phần thưởng &#00ff3c{amount}&#ffffff!"
 bounty-claimed-killer: "&#00ff3c[Truy Nã] Bạn đã hạ gục mục tiêu &#ff3c3c{victim} &#00ff3cvà nhận được &#ffaa00{amount} &#00ff3cvào tài khoản!"
 bounty-placed-creator: "&#00ff3c[Truy Nã] Đã treo thưởng thành công &#ffaa00{amount} &#00ff3clên đầu &#ffffff{target}"
+bounty-placed-target: "&#ff3c3c[Truy Nã] &#ffaa00{creator} &#ffffffđã treo thưởng &#00ff3c{amount} &#fffffflên đầu bạn! Tổng thưởng hiện tại: &#ffaa00{total_bounty}!"
+bounty-dialog-title: "Treo Thưởng Truy Nã"
+bounty-dialog-body: "Nhập số tiền thưởng muốn treo lên đầu {target}:"
+bounty-dialog-field: "Số tiền / Elo"
 bounty-min-amount-error: "&#ff3c3cMức tiền thưởng truy nã phải lớn hơn 0!"
 bounty-account-locked: "&#ff3c3cTài khoản của bạn đang bị khóa, không thể treo thưởng truy nã!"
 bounty-insufficient-money: "&#ff3c3cBạn không đủ tiền (Cần {required}) để treo thưởng!"
@@ -69,6 +73,7 @@ bounty-target-not-found: "&#ff3c3cKhông tìm thấy dữ liệu người chơi 
 bounty-custom-prompt: "&#00ff3c[Truy Nã] &fHãy nhập số tiền thưởng muốn treo lên đầu &c{target} &ftrong chat (hoặc gõ &#ff3c3ccancel&f để hủy):"
 bounty-custom-cancel: "&#ff3c3c[Truy Nã] &7Đã hủy thao tác."
 bounty-custom-invalid-number: "&#ff3c3c[Truy Nã] &cGiá trị nhập vào phải là số nguyên dương! &7Thử lại hoặc gõ &#ff3c3ccancel&7 để hủy."
+
 
 # ── Elo Lock (Khóa Elo) ───────────────────────────────────────
 elo-locked-by-admin: "&#ff3c3cElo của bạn đã bị khóa bởi Admin!"

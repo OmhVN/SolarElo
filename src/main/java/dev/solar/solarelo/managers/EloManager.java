@@ -187,6 +187,18 @@ public class EloManager {
                 creator.sendMessage(colorize(creatorMsg));
             });
 
+            Player targetPlayer = Bukkit.getPlayer(targetUuid);
+            if (targetPlayer != null && targetPlayer.isOnline()) {
+                plugin.runForEntity(targetPlayer, () -> {
+                    plugin.getEffectManager().playGuiSound(targetPlayer, "error");
+                    String targetMsg = plugin.getMessageManager().get("bounty-placed-target", "&#ff3c3c[Truy Nã] &#ffaa00{creator} &#ffffffđã treo thưởng &#00ff3c{amount} &#fffffflên đầu bạn! Tổng thưởng hiện tại: &#ffaa00{total_bounty}!")
+                            .replace("{creator}", creator.getName())
+                            .replace("{amount}", amountFormatted)
+                            .replace("{total_bounty}", totalFormatted);
+                    targetPlayer.sendMessage(colorize(targetMsg));
+                });
+            }
+
             String broadcastMsg = plugin.getMessageManager().get("bounty-placed-broadcast",
                     "&#ff3c3c[Truy Nã] &#ffaa00{creator} &#ffffffđã treo thưởng &#00ff3c{amount} &#fffffflên đầu &#ff3c3c{target}#ffffff! Tổng thưởng: &#ffaa00{total_bounty}!")
                     .replace("{creator}", creator.getName())
@@ -195,6 +207,7 @@ public class EloManager {
                     .replace("{total_bounty}", totalFormatted);
 
             plugin.runSync(() -> Bukkit.broadcastMessage(colorize(broadcastMsg)));
+
         });
     }
 
