@@ -344,7 +344,7 @@ public class BountyMenu {
                 if (!player.isOnline()) return;
 
                 EloGui.BountyCreateHolder holder = new EloGui.BountyCreateHolder(targetUuid, targetName, selectedAmount);
-                String title = EloGui.colorize("&cThiết Lập Tiền Thưởng Truy Nã");
+                String title = EloGui.colorize("&cʙᴏᴜɴᴛʏ ᴀᴍᴏᴜɴᴛ sᴇᴛᴜᴘ");
                 Inventory inv = EloGui.createInventory(holder, 27, title);
                 holder.setInventory(inv);
 
@@ -359,39 +359,39 @@ public class BountyMenu {
                 SkullMeta headMeta = (SkullMeta) targetHead.getItemMeta();
                 if (headMeta != null) {
                     SkinsRestorerHook.applySkin(headMeta, targetUuid, targetName);
-                    headMeta.setDisplayName(EloGui.colorize("&cMục Tiêu: &f" + targetName));
+                    headMeta.setDisplayName(EloGui.colorize("&cᴛᴀʀɢᴇᴛ: &f" + targetName));
                     List<String> lore = new ArrayList<>();
-                    lore.add(EloGui.colorize("&7Elo mục tiêu: &e" + EloGui.formatNumber(targetData.getElo())));
-                    lore.add(EloGui.colorize("&7Tiền thưởng hiện tại: &a" + EloGui.formatNumber(targetData.getBounty()) + " Elo"));
-                    lore.add(EloGui.colorize("&7Elo của bạn hiện tại: &b" + EloGui.formatNumber(creatorData.getElo()) + " Elo"));
+                    lore.add(EloGui.colorize("&7Target Elo: &e" + EloGui.formatNumber(targetData.getElo())));
+                    lore.add(EloGui.colorize("&7Current Bounty: &a" + EloGui.formatNumber(targetData.getBounty()) + " Elo"));
+                    lore.add(EloGui.colorize("&7Your Current Elo: &b" + EloGui.formatNumber(creatorData.getElo()) + " Elo"));
                     lore.add("");
-                    lore.add(EloGui.colorize("&fMức thưởng đang chọn: &a+" + EloGui.formatNumber(holder.getSelectedAmount()) + " Elo"));
+                    lore.add(EloGui.colorize("&fSelected Amount: &a+" + EloGui.formatNumber(holder.getSelectedAmount()) + " Elo"));
                     lore.add("");
-                    lore.add(EloGui.colorize("&e👉 Bấm vào đây để nhập số Elo tùy chỉnh!"));
+                    lore.add(EloGui.colorize("&e👉 Click here to enter custom Elo amount!"));
                     headMeta.setLore(lore);
                     targetHead.setItemMeta(headMeta);
                 }
                 inv.setItem(13, targetHead);
 
-                inv.setItem(10, createAmountButton(Material.RED_STAINED_GLASS_PANE, "&c-100 Elo", "&7Bấm để giảm 100 Elo"));
-                inv.setItem(11, createAmountButton(Material.RED_STAINED_GLASS_PANE, "&c-50 Elo", "&7Bấm để giảm 50 Elo"));
-                inv.setItem(12, createAmountButton(Material.RED_STAINED_GLASS_PANE, "&c-10 Elo", "&7Bấm để giảm 10 Elo"));
+                inv.setItem(10, createAmountButton(Material.RED_STAINED_GLASS_PANE, "&c-100 Elo", "&7Click to decrease 100 Elo"));
+                inv.setItem(11, createAmountButton(Material.RED_STAINED_GLASS_PANE, "&c-50 Elo", "&7Click to decrease 50 Elo"));
+                inv.setItem(12, createAmountButton(Material.RED_STAINED_GLASS_PANE, "&c-10 Elo", "&7Click to decrease 10 Elo"));
 
-                inv.setItem(14, createAmountButton(Material.LIME_STAINED_GLASS_PANE, "&a+10 Elo", "&7Bấm để tăng 10 Elo"));
-                inv.setItem(15, createAmountButton(Material.LIME_STAINED_GLASS_PANE, "&a+50 Elo", "&7Bấm để tăng 50 Elo"));
-                inv.setItem(16, createAmountButton(Material.LIME_STAINED_GLASS_PANE, "&a+100 Elo", "&7Bấm để tăng 100 Elo"));
+                inv.setItem(14, createAmountButton(Material.LIME_STAINED_GLASS_PANE, "&a+10 Elo", "&7Click to increase 10 Elo"));
+                inv.setItem(15, createAmountButton(Material.LIME_STAINED_GLASS_PANE, "&a+50 Elo", "&7Click to increase 50 Elo"));
+                inv.setItem(16, createAmountButton(Material.LIME_STAINED_GLASS_PANE, "&a+100 Elo", "&7Click to increase 100 Elo"));
 
-                inv.setItem(19, createAmountButton(Material.RED_CONCRETE, "&c-1000 Elo", "&7Bấm để giảm 1000 Elo"));
-                inv.setItem(20, createAmountButton(Material.RED_CONCRETE, "&c-500 Elo", "&7Bấm để giảm 500 Elo"));
+                inv.setItem(19, createAmountButton(Material.RED_CONCRETE, "&c-1000 Elo", "&7Click to decrease 1000 Elo"));
+                inv.setItem(20, createAmountButton(Material.RED_CONCRETE, "&c-500 Elo", "&7Click to decrease 500 Elo"));
 
-                inv.setItem(21, createAmountButton(Material.ANVIL, "&eNhập số tiền tùy chỉnh", "&fBấm để nhập số Elo tùy chỉnh vào chat"));
+                inv.setItem(21, createAmountButton(Material.ANVIL, "&eᴄᴜsᴛᴏᴍ ᴀᴍᴏᴜɴᴛ", "&fClick to type custom Elo amount in chat"));
 
-                inv.setItem(22, createAmountButton(Material.EMERALD_BLOCK, "&a✔ XÁC NHẬN TẠO TRUY NÃ", "&fTreo &a+" + holder.getSelectedAmount() + " Elo &flên đầu &c" + targetName));
+                inv.setItem(22, createAmountButton(Material.EMERALD_BLOCK, "&a✔ ᴄᴏɴꜰɪʀᴍ ʙᴏᴜɴᴛʏ", "&fPlace &a+" + holder.getSelectedAmount() + " Elo &fon &c" + targetName));
 
-                inv.setItem(23, createAmountButton(Material.BARRIER, "&cReset về 0", "&fĐặt lại mức thưởng chọn thành 0"));
+                inv.setItem(23, createAmountButton(Material.BARRIER, "&cʀᴇsᴇᴛ", "&fReset selected amount to 0"));
 
-                inv.setItem(24, createAmountButton(Material.LIME_CONCRETE, "&a+500 Elo", "&7Bấm để tăng 500 Elo"));
-                inv.setItem(25, createAmountButton(Material.LIME_CONCRETE, "&a+1000 Elo", "&7Bấm để tăng 1000 Elo"));
+                inv.setItem(24, createAmountButton(Material.LIME_CONCRETE, "&a+500 Elo", "&7Click to increase 500 Elo"));
+                inv.setItem(25, createAmountButton(Material.LIME_CONCRETE, "&a+1000 Elo", "&7Click to increase 1000 Elo"));
 
                 player.openInventory(inv);
             });
@@ -426,7 +426,7 @@ public class BountyMenu {
         PlayerData selfData = plugin.getEloManager().getData(player.getUniqueId(), player.getName());
         if (selfData != null && selfData.isLocked()) {
             plugin.getEffectManager().playGuiSound(player, "error");
-            String msg = plugin.getMessageManager().get("bounty-locked-error", "&cElo của bạn đang bị khóa, không thể sử dụng tính năng săn thưởng!");
+            String msg = plugin.getMessageManager().get("bounty-locked-error", "&cYour Elo is locked, cannot use bounty feature!");
             player.sendMessage(EloGui.colorize(msg));
             player.closeInventory();
             return;
@@ -491,7 +491,7 @@ public class BountyMenu {
             if (targetUuid != null) {
                 if (targetUuid.equals(player.getUniqueId()) && Bukkit.getOnlinePlayers().size() > 1 && !player.hasPermission("solarelo.admin")) {
                     plugin.getEffectManager().playGuiSound(player, "error");
-                    player.sendMessage(EloGui.colorize("&cBạn không thể tự treo thưởng lên chính mình!"));
+                    player.sendMessage(EloGui.colorize("&cYou cannot place a bounty on yourself!"));
                     return;
                 }
                 org.bukkit.OfflinePlayer target = Bukkit.getOfflinePlayer(targetUuid);
@@ -518,12 +518,12 @@ public class BountyMenu {
                 plugin.getEffectManager().playGuiSound(player, "click");
                 player.closeInventory();
                 GuiListener.chatPrompts.put(player.getUniqueId(), new GuiListener.ChatPromptData(holder.getTargetUuid(), holder.getTargetName(), "bounty_custom"));
-                player.sendMessage(EloGui.colorize("&#00ff3c[Truy Nã] &fVui lòng nhập số Elo bạn muốn treo thưởng lên &c" + holder.getTargetName() + " &fvào khung chat (hoặc gõ &#ff3c3ccancel&f để hủy):"));
+                player.sendMessage(EloGui.colorize("&#00ff3c[Bounty] &fPlease enter the custom Elo bounty amount for &c" + holder.getTargetName() + " &fin chat (or type &#ff3c3ccancel&f to exit):"));
             }
             case 22 -> { // Confirm create
                 if (holder.getSelectedAmount() <= 0) {
                     plugin.getEffectManager().playGuiSound(player, "error");
-                    player.sendMessage(EloGui.colorize("&cVui lòng chọn mức tiền thưởng lớn hơn 0!"));
+                    player.sendMessage(EloGui.colorize("&cPlease select a bounty amount greater than 0!"));
                     return;
                 }
                 player.closeInventory();

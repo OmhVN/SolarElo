@@ -155,7 +155,7 @@ public class AdminMenu {
                 SkullMeta skullMeta = (SkullMeta) head.getItemMeta();
                 if (skullMeta != null) {
                     SkinsRestorerHook.applySkin(skullMeta, targetUuid, targetName);
-                    skullMeta.setDisplayName(EloGui.colorize("&e&l" + targetName));
+                    skullMeta.setDisplayName(EloGui.colorize("&e" + targetName));
                     List<String> lore = new ArrayList<>();
                     lore.add(EloGui.colorize("&7Elo: &e" + EloGui.formatNumber(finalTData.getElo())));
                     lore.add(EloGui.colorize("&7Kills: &a" + finalTData.getKills() + " &7| Deaths: &c" + finalTData.getDeaths()));
@@ -507,7 +507,7 @@ public class AdminMenu {
                             if (ip != null && !ip.isEmpty()) {
                                 java.util.List<PlayerData> alts = plugin.getDatabaseManager().getAlts(ip);
                                 String header = plugin.getMessageManager().get("alts-list-header",
-                                    "&8&m                                                    \n&#ffaa00&lDANH SÁCH TÀI KHOẢN CÙNG IP\n&7IP Address: &#ffffff{ip}\n")
+                                    "&8&m                                                    \n&#ffaa00sᴀᴍᴇ ɪᴘ ᴀᴄᴄᴏᴜɴᴛ ʟɪsᴛ\n&7IP Address: &#ffffff{ip}\n")
                                     .replace("{ip}", ip);
                                 player.sendMessage(EloGui.colorize(header));
 
@@ -562,7 +562,7 @@ public class AdminMenu {
             if (dev.solar.solarelo.gui.ClientCompatibility.supportsDialog(player)) {
                 dev.solar.solarelo.gui.DialogInputHelper.showEloInputDialog(plugin, player, targetUuid, targetName, "add");
             } else {
-                player.sendMessage(EloGui.colorize("&#ffaa00ᴇʟᴏ ᴀᴅᴍɪɴ &8» &fNhập số ELO muốn &a&lCỘNG &fcho &#ffffff" + targetName + " &f(Gõ &#ff3c3ccancel&f để hủy):"));
+                player.sendMessage(EloGui.colorize("&#ffaa00ᴇʟᴏ ᴀᴅᴍɪɴ &8» &fEnter ELO amount to &aᴀᴅᴅ &ffor &#ffffff" + targetName + " &f(Type &#ff3c3ccancel&f to exit):"));
                 registerChatPrompt(player, targetUuid, targetName, "add");
             }
         } else if (slot == setSlot) {
@@ -571,7 +571,7 @@ public class AdminMenu {
             if (dev.solar.solarelo.gui.ClientCompatibility.supportsDialog(player)) {
                 dev.solar.solarelo.gui.DialogInputHelper.showEloInputDialog(plugin, player, targetUuid, targetName, "set");
             } else {
-                player.sendMessage(EloGui.colorize("&#ffaa00ᴇʟᴏ ᴀᴅᴍɪɴ &8» &fNhập số ELO muốn &6&lĐẶT &fcho &#ffffff" + targetName + " &f(Gõ &#ff3c3ccancel&f để hủy):"));
+                player.sendMessage(EloGui.colorize("&#ffaa00ᴇʟᴏ ᴀᴅᴍɪɴ &8» &fEnter ELO amount to &6sᴇᴛ &ffor &#ffffff" + targetName + " &f(Type &#ff3c3ccancel&f to exit):"));
                 registerChatPrompt(player, targetUuid, targetName, "set");
             }
         } else if (slot == removeSlot) {
@@ -580,7 +580,7 @@ public class AdminMenu {
             if (dev.solar.solarelo.gui.ClientCompatibility.supportsDialog(player)) {
                 dev.solar.solarelo.gui.DialogInputHelper.showEloInputDialog(plugin, player, targetUuid, targetName, "remove");
             } else {
-                player.sendMessage(EloGui.colorize("&#ffaa00ᴇʟᴏ ᴀᴅᴍɪɴ &8» &fNhập số ELO muốn &c&lTRỪ &fcủa &#ffffff" + targetName + " &f(Gõ &#ff3c3ccancel&f để hủy):"));
+                player.sendMessage(EloGui.colorize("&#ffaa00ᴇʟᴏ ᴀᴅᴍɪɴ &8» &fEnter ELO amount to &cʀᴇᴍᴏᴠᴇ &ffrom &#ffffff" + targetName + " &f(Type &#ff3c3ccancel&f to exit):"));
                 registerChatPrompt(player, targetUuid, targetName, "remove");
             }
         } else if (slot == backSlot) {
