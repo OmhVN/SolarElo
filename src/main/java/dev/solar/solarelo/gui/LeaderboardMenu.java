@@ -90,7 +90,7 @@ public class LeaderboardMenu {
                 if (!player.isOnline()) return;
 
                 EloGui.LeaderboardHolder holder = new EloGui.LeaderboardHolder(page, finalFilter);
-                String titleTemplate = guiConfig.getString("title", "#555555Bảng xếp hạng Elo - Trang {page}");
+                String titleTemplate = guiConfig.getString("title", "ʟᴇᴀᴅᴇʀʙᴏᴀʀᴅ - ᴘᴀɢᴇ {page}");
                 String title = EloGui.colorize(titleTemplate.replace("{page}", String.valueOf(page)));
                 Inventory inv = EloGui.createInventory(holder, rows * 9, title);
                 holder.setInventory(inv);
