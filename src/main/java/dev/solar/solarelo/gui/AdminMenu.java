@@ -137,7 +137,7 @@ public class AdminMenu {
                 String titleTemplate = adminConfig.getString("admin-detail.title", "ᴀᴅᴍɪɴ ᴅᴇᴛᴀɪʟs - {player}");
                 String title = EloGui.colorize(titleTemplate.replace("{player}", targetName));
                 EloGui.EloAdminDetailHolder holder = new EloGui.EloAdminDetailHolder(targetUuid, targetName);
-                Inventory inv = EloGui.createInventory(holder, 45, title);
+                Inventory inv = EloGui.createInventory(holder, 54, title);
                 holder.setInventory(inv);
 
                 boolean fillerEnabled = adminConfig.getBoolean("filler.enabled", true);
@@ -149,7 +149,7 @@ public class AdminMenu {
                         paneMeta.setDisplayName(" ");
                         pane.setItemMeta(paneMeta);
                     }
-                    for (int i = 0; i < 45; i++) {
+                    for (int i = 0; i < 54; i++) {
                         inv.setItem(i, pane);
                     }
                 }
@@ -169,31 +169,31 @@ public class AdminMenu {
                     skullMeta.setLore(lore);
                     head.setItemMeta(skullMeta);
                 }
-                inv.setItem(13, head);
+                setItemSafe(inv, 13, head);
 
                 ItemStack addBlock = EloGui.loadConfigItem(adminConfig, "add-elo", "EMERALD", "#00ff3cᴀᴅᴅ ᴇʟᴏ", Arrays.asList("&fClick to add ELO to this player"), -1);
-                inv.setItem(adminConfig.getInt("add-elo.slot", 28), addBlock);
+                setItemSafe(inv, adminConfig.getInt("add-elo.slot", 28), addBlock);
 
                 ItemStack setBlock = EloGui.loadConfigItem(adminConfig, "set-elo", "NAME_TAG", "#ffaa00sᴇᴛ ᴇʟᴏ", Arrays.asList("&fClick to set player's ELO"), -1);
-                inv.setItem(adminConfig.getInt("set-elo.slot", 29), setBlock);
+                setItemSafe(inv, adminConfig.getInt("set-elo.slot", 29), setBlock);
 
                 ItemStack removeBlock = EloGui.loadConfigItem(adminConfig, "remove-elo", "REDSTONE", "#ff3c3c\u0280\u1d07\u1d0d\u1d0f\u1d20\u1d07 ᴇʟᴏ", Arrays.asList("&fClick to deduct ELO from player"), -1);
-                inv.setItem(adminConfig.getInt("remove-elo.slot", 30), removeBlock);
+                setItemSafe(inv, adminConfig.getInt("remove-elo.slot", 30), removeBlock);
 
                 ItemStack backItem = EloGui.loadConfigItem(adminConfig, "back-to-list", "ARROW", "#aaaaaa\u029c\u1d00\u1d04\u1d0b", Arrays.asList("&fClick to return to player list"), -1);
-                inv.setItem(adminConfig.getInt("back-to-list.slot", 31), backItem);
+                setItemSafe(inv, adminConfig.getInt("back-to-list.slot", 31), backItem);
 
                 ItemStack historyBook = EloGui.loadConfigItem(adminConfig, "elo-history", "BOOK", "#00BFFF\u1d07\u029f\u1d0f ʜɪsᴛᴏʀʏ", Arrays.asList("&fClick to view ELO change history"), -1);
-                inv.setItem(adminConfig.getInt("elo-history.slot", 32), historyBook);
+                setItemSafe(inv, adminConfig.getInt("elo-history.slot", 32), historyBook);
 
                 ItemStack pvpSword = EloGui.loadConfigItem(adminConfig, "pvp-history", "DIAMOND_SWORD", "#00BFFF\u1d18\u1d20\u1d18 ʜɪsᴛᴏʀʏ", Arrays.asList("&fClick to view PvP logs"), -1);
-                inv.setItem(adminConfig.getInt("pvp-history.slot", 33), pvpSword);
+                setItemSafe(inv, adminConfig.getInt("pvp-history.slot", 33), pvpSword);
 
                 ItemStack resetBlock = EloGui.loadConfigItem(adminConfig, "reset-stats", "GUNPOWDER", "#ff3c3c\u0280\u1d07s\u1d07\u1d1b sᴛᴀᴛs", Arrays.asList("&fClick to reset ELO and stats to default"), -1);
-                inv.setItem(adminConfig.getInt("reset-stats.slot", 34), resetBlock);
+                setItemSafe(inv, adminConfig.getInt("reset-stats.slot", 34), resetBlock);
 
                 ItemStack searchItem = EloGui.loadConfigItem(adminConfig, "search", "COMPASS", "#ffaa00s\u1d07\u1d00\u0280\u1d04\u029c", Arrays.asList("&fClick to search a player by name"), -1);
-                inv.setItem(adminConfig.getInt("search.slot", 47), searchItem);
+                setItemSafe(inv, adminConfig.getInt("search.slot", 47), searchItem);
 
                 player.openInventory(inv);
             });
@@ -733,6 +733,12 @@ public class AdminMenu {
                 plugin.getEffectManager().playGuiSound(player, "click");
                 EloGui.openKillHistory(plugin, player, targetUuid, targetName, page + 1, filter);
             }
+        }
+    }
+
+    private static void setItemSafe(Inventory inv, int slot, ItemStack item) {
+        if (inv != null && item != null && slot >= 0 && slot < inv.getSize()) {
+            inv.setItem(slot, item);
         }
     }
 }
