@@ -308,6 +308,12 @@ public class PvpKillProcessor {
                 amountFormatted = placedBounty + " Elo";
             }
 
+            String killerMsg = plugin.getMessageManager().get("bounty-claimed-killer",
+                    "&#00ff3c[Truy Nã] Bạn đã hạ gục mục tiêu {victim} và nhận được {amount}!")
+                    .replace("{victim}", victim.getName())
+                    .replace("{amount}", amountFormatted);
+            killer.sendMessage(EloManager.colorize(killerMsg));
+
             String bountyClaimedBroadcast = plugin.getMessageManager().get("bounty-claimed-broadcast",
                     "&#00ff3c[Truy Nã] &#ffaa00{killer} &#ffffffđã hạ gục mục tiêu bị truy nã &#ff3c3c{victim} &#ffffffvà ôm trọn phần thưởng &#00ff3c{amount}&#ffffff!");
             if (bountyClaimedBroadcast != null && !bountyClaimedBroadcast.isEmpty()) {

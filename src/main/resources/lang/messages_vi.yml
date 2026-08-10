@@ -58,6 +58,7 @@ welcome-top-3: "#ffaa00[Chào Mừng] Huyền thoại #ffffff{player} #aaaaaa(H�
 bounty-targeted: "#ffaa00[Nhiệm Vụ] Một thợ săn đã nhận khế ước truy nã bạn!"
 bounty-placed-broadcast: "&#ff3c3c[Truy Nã] &#ffaa00{creator} &#ffffffđã treo thưởng &#00ff3c{amount} &#fffffflên đầu &#ff3c3c{target}&#ffffff! Tổng thưởng: &#ffaa00{total_bounty}!"
 bounty-claimed-broadcast: "&#00ff3c[Truy Nã] &#ffaa00{killer} &#ffffffđã hạ gục mục tiêu bị truy nã &#ff3c3c{victim} &#ffffffvà ôm trọn phần thưởng &#00ff3c{amount}&#ffffff!"
+bounty-claimed-killer: "&#00ff3c[Truy Nã] Bạn đã hạ gục mục tiêu &#ff3c3c{victim} &#00ff3cvà nhận được &#ffaa00{amount} &#00ff3cvào tài khoản!"
 bounty-placed-creator: "&#00ff3c[Truy Nã] Đã treo thưởng thành công &#ffaa00{amount} &#00ff3clên đầu &#ffffff{target}"
 bounty-min-amount-error: "&#ff3c3cMức tiền thưởng truy nã phải lớn hơn 0!"
 bounty-account-locked: "&#ff3c3cTài khoản của bạn đang bị khóa, không thể treo thưởng truy nã!"

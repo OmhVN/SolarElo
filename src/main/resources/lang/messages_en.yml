@@ -58,6 +58,7 @@ welcome-top-3: "#ffaa00[Welcome] Legend #ffffff{player} #aaaaaa(Rank #{rank} | {
 bounty-targeted: "#ffaa00[Quest] A bounty contract has been accepted against you!"
 bounty-placed-broadcast: "&#ff3c3c[Bounty] &#ffaa00{creator} &#ffffffplaced a bounty of &#00ff3c{amount} &#ffffffon &#ff3c3c{target}&#ffffff! Total bounty: &#ffaa00{total_bounty}!"
 bounty-claimed-broadcast: "&#00ff3c[Bounty] &#ffaa00{killer} &#ffffffeliminated target &#ff3c3c{victim} &#ffffffand claimed the total bounty of &#00ff3c{amount}&#ffffff!"
+bounty-claimed-killer: "&#00ff3c[Bounty] You eliminated target &#ff3c3c{victim} &#00ff3cand received &#ffaa00{amount} &#00ff3cin your account!"
 bounty-placed-creator: "&#00ff3c[Bounty] Successfully placed bounty of &#ffaa00{amount} &#00ff3con &#ffffff{target}"
 bounty-min-amount-error: "&#ff3c3cBounty amount must be greater than 0!"
 bounty-account-locked: "&#ff3c3cYour account is currently locked from placing bounties!"
