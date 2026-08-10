@@ -9,22 +9,36 @@ Say goodbye to unfair PvP farming, win-trading, and clunky configuration. **Sola
 
 ---
 
-## ✨ Feature Highlights
+## ✨ Feature Showcase
+
+![SolarElo Main Banner](https://cdn.modrinth.com/data/cached_images/6271845ecabf9719668a33c3998ae6e87a8fa222.png)
 
 ### 🎯 Custom Player Bounty Creation System (`/bounty`)
+![Bounty System](https://cdn.modrinth.com/data/cached_images/f83b1876ec5844f49eea69c848a6adce7a8d7d04.png)
 - **Interactive GUI & Chat Input**: Open `/bounty` to select any online target, adjust Elo bounty with `+`/`-` buttons or type exact amounts in chat via anvil/sign/dialog input helpers.
 - **ESC Exit & Clean UX**: Effortlessly navigate menus or cancel creation using ESC with zero leftover inventory bugs.
 - **Instant Claiming**: Defeating a player with an active bounty instantly awards the full placed Elo bounty to the killer, accompanied by server-wide broadcast announcements!
 
 ### 📊 Global Leaderboard & Stats GUI (`/topelo` & `/stats`)
+![Global Leaderboard](https://cdn.modrinth.com/data/cached_images/f7e84b5e46f148585d4f92364b13f70acc28b555.png)
 - **Multi-Sort Modes**: Sort rankings asynchronously by **Top ELO**, **Top Kills**, **Top Streak**, **Top Bounty**, or **Top Loss**.
 - **Player Skulls**: Real-time async player head rendering without main-thread server lag.
 - **Detailed Player Stats**: Click any player head in the leaderboard to inspect their full PvP breakdown (K/D ratio, Winrate, Current Rank, Best Streak, and Active Bounty).
 
 ### 🏆 Tiered Ranks & Rewards (`/elo`)
+![Tiered Ranks](https://cdn.modrinth.com/data/cached_images/46d3ff5726eec406959089780f002275cd18421d.png)
 - **Custom Rank Progression**: Define custom ranks in `rank.yml` with custom thresholds, prefixes, and hex color tags.
 - **Claimable Rank Rewards**: Interactive GUI panel displaying rank requirements, milestone badges, and claimable reward kits or console commands.
 - **Rank Change Effects**: Automatic title announcements, sound effects, particle bursts, and console command execution upon rank updates.
+
+### ⚙️ Player Settings GUI
+![Player Settings](https://cdn.modrinth.com/data/cached_images/11c41ab1a8dea56af89681896dd153f7d8452090.png)
+- Customize personal sound preferences, toggle visual particle effects, and adjust PvP chat alert notifications.
+
+### 🛡️ Admin Management & Player Editor (`/eloadmin`)
+![Admin Player List](https://cdn.modrinth.com/data/cached_images/e2b8f599c7a11f86881cbd2027920f8fff53d265.png)
+![Admin Player Editor](https://cdn.modrinth.com/data/cached_images/16acea286a4c80ee47cdbb9f6380756376439c48.png)
+- Search players, edit ELO values in real-time, lock/unlock player accounts, and manage seasons effortlessly.
 
 ### 🛡️ Smart Anti-Farm & Anti-Exploit Security
 Prevent alt-farming, win-trading, and stat inflating with 5 layers of protection:
@@ -37,10 +51,6 @@ Prevent alt-farming, win-trading, and stat inflating with 5 layers of protection
 ### 🤖 Rich Discord Webhooks & Season Automation
 - **Discord Integration**: Send formatted Discord embeds for PvP kills, rank promotions, top 1 dethroning, and bounty claims.
 - **Automated Season Resets**: Program seasonal resets that soft-compress ELO scores towards baselines, rewarding top brackets with automated console rewards.
-
-### ⚡ Developer API & PlaceholderAPI
-- **Extensive Placeholders**: Fully compatible with PAPI for Scoreboards, TAB, Nametags, and Holograms.
-- **Cache-Optimized API**: Fast thread-safe developer API (`SolarEloAPI`) for custom plugin integrations.
 
 ---
 
@@ -89,6 +99,8 @@ Prevent alt-farming, win-trading, and stat inflating with 5 layers of protection
 Copy code bên dưới dán trực tiếp vào khung mô tả (BBCode Editor) của SpigotMC / BuiltByBit:
 
 ```text
+[CENTER][IMG]https://cdn.modrinth.com/data/cached_images/6271845ecabf9719668a33c3998ae6e87a8fa222.png[/IMG][/CENTER]
+
 [CENTER][SIZE=6][B]☀️ SolarElo[/B][/SIZE]
 [SIZE=4]Advanced PvP ELO, Rank & Bounty Solution for Minecraft Servers[/SIZE][/CENTER]
 
@@ -104,20 +116,31 @@ fully compatible and optimized for [B]Paper[/B], [B]Leaf[/B], and [B]Folia 1.21+
 
 [CENTER][SIZE=5][B]✨ Feature Showcase[/B][/SIZE][/CENTER]
 
+[CENTER][IMG]https://cdn.modrinth.com/data/cached_images/f83b1876ec5844f49eea69c848a6adce7a8d7d04.png[/IMG][/CENTER]
 [B]🎯 Custom Bounty Creation System (/bounty)[/B]
 Open /bounty to choose target players, adjust bounty amounts using quick + / - buttons, or type custom numbers via chat input. Defeating a target immediately claims their accumulated bounty Elo!
 
+[CENTER][IMG]https://cdn.modrinth.com/data/cached_images/f7e84b5e46f148585d4f92364b13f70acc28b555.png[/IMG][/CENTER]
 [B]📊 Global Leaderboard & Profiles (/topelo & /stats)[/B]
 Asynchronous player head rendering with multi-sorting modes (Top Elo, Top Kills, Top Streak, Top Bounty, Top Loss). Click player heads to view detailed PvP statistics.
 
+[CENTER][IMG]https://cdn.modrinth.com/data/cached_images/46d3ff5726eec406959089780f002275cd18421d.png[/IMG][/CENTER]
 [B]🏆 Tiered Rank Progression & Rewards[/B]
 Visual rank dashboard displaying requirements, progression status, and claimable rank rewards with custom console command execution on rank promotion.
 
-[B]🛡️ Intelligent Anti-Farm & Security[/B]
-Integrated security algorithms: IP/Subnet checks, AFK movement checks, spawn camping protection, kill diminishing returns, and max Elo difference caps.
+[CENTER][IMG]https://cdn.modrinth.com/data/cached_images/11c41ab1a8dea56af89681896dd153f7d8452090.png[/IMG][/CENTER]
+[B]⚙️ Player Settings GUI[/B]
+Customize personal sound preferences, toggle visual particle effects, and adjust PvP chat alert notifications.
 
-[B]🤖 Discord Webhooks & Season Automation[/B]
-Rich Discord embeds for kills, rankups, top 1 dethroning, and bounty claims. Program seasonal resets to compress scores and distribute rank rewards automatically.
+[CENTER][IMG]https://cdn.modrinth.com/data/cached_images/e2b8f599c7a11f86881cbd2027920f8fff53d265.png[/IMG][/CENTER]
+[CENTER][IMG]https://cdn.modrinth.com/data/cached_images/16acea286a4c80ee47cdbb9f6380756376439c48.png[/IMG][/CENTER]
+[B]🛡️ Admin Management & Player Editor (/eloadmin)[/B]
+Search players, edit ELO values in real-time, lock/unlock player accounts, and manage seasons effortlessly.
+
+[HR][/HR]
+
+[CENTER][SIZE=5][B]🛡️ Intelligent Anti-Farm & Security[/B][/SIZE]
+Integrated security algorithms: IP/Subnet checks, AFK movement checks, spawn camping protection, kill diminishing returns, and max Elo difference caps.[/CENTER]
 
 [HR][/HR]
 
