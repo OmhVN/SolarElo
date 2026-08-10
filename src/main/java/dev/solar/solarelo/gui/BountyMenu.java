@@ -498,9 +498,8 @@ public class BountyMenu {
                     SkullMeta meta = (SkullMeta) head.getItemMeta();
                     if (meta != null) {
                         SkinsRestorerHook.applySkin(meta, targetData.getUuid(), targetData.getName());
-                        meta.setDisplayName(EloGui.colorize(headNameFmt.replace("{target}", targetData.getName())));
-
-                        String bountyVal = plugin.getVaultHook().hasEconomy() ? plugin.getVaultHook().format(targetData.getBounty()) : (EloGui.formatNumber(targetData.getBounty()) + " Elo");
+                        boolean useVault = plugin.getVaultHook() != null && plugin.getVaultHook().hasEconomy();
+                        String bountyVal = useVault ? plugin.getVaultHook().format(targetData.getBounty()) : (EloGui.formatNumber(targetData.getBounty()) + " Elo");
 
                         List<String> lore = new ArrayList<>();
                         for (String l : headLoreFmt) {

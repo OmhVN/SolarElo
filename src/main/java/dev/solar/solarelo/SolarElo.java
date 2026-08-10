@@ -96,6 +96,7 @@ public class SolarElo extends JavaPlugin {
             return;
         }
 
+        vaultHook = new dev.solar.solarelo.hooks.VaultHook(this);
         guiConfigManager = new GuiConfigManager(this);
         effectManager = new EffectManager(this);
         rankManager = new RankManager(this);
