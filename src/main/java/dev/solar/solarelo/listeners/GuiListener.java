@@ -56,6 +56,7 @@ public class GuiListener implements Listener {
                 || holder instanceof EloGui.StatsHolder
                 || holder instanceof EloGui.BountyHolder
                 || holder instanceof EloGui.BountyConfirmHolder
+                || holder instanceof EloGui.BountyCreateHolder
                 || holder instanceof EloGui.ActiveQuestHolder
                 || holder instanceof EloGui.MainMenuHolder
                 || holder instanceof EloGui.SettingsHolder
@@ -80,6 +81,8 @@ public class GuiListener implements Listener {
             dev.solar.solarelo.gui.StatsMenu.handleInventoryClick(event, statsHolder, player, slot, plugin);
         } else if (holder instanceof EloGui.BountyHolder bountyHolder) {
             dev.solar.solarelo.gui.BountyMenu.handleInventoryClick(event, bountyHolder, player, slot, plugin);
+        } else if (holder instanceof EloGui.BountyCreateHolder createHolder) {
+            dev.solar.solarelo.gui.BountyMenu.handleBountyCreateClick(event, createHolder, player, slot, plugin);
         } else if (holder instanceof EloGui.ActiveQuestHolder) {
             dev.solar.solarelo.gui.BountyMenu.handleActiveQuestClick(event, player, slot, plugin);
         } else if (holder instanceof EloGui.BountyConfirmHolder confirmHolder) {
@@ -107,6 +110,7 @@ public class GuiListener implements Listener {
                 || holder instanceof EloGui.StatsHolder
                 || holder instanceof EloGui.BountyHolder
                 || holder instanceof EloGui.BountyConfirmHolder
+                || holder instanceof EloGui.BountyCreateHolder
                 || holder instanceof EloGui.ActiveQuestHolder
                 || holder instanceof EloGui.MainMenuHolder
                 || holder instanceof EloGui.SettingsHolder
@@ -128,8 +132,10 @@ public class GuiListener implements Listener {
         String msg = event.getMessage().trim();
 
         if (msg.equalsIgnoreCase("cancel")) {
-            admin.sendMessage(dev.solar.solarelo.managers.EloManager.colorize("&#ff3c3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &7Đã hủy yêu cầu chỉnh sửa."));
-            if ("search".equalsIgnoreCase(data.getAction())) {
+            admin.sendMessage(dev.solar.solarelo.managers.EloManager.colorize("&#ff3c3c[Truy Nã] &7Đã hủy thao tác."));
+            if ("bounty_custom".equalsIgnoreCase(data.getAction())) {
+                plugin.runForEntity(admin, () -> EloGui.openBountyCreate(plugin, admin, data.getTargetUuid(), data.getTargetName(), 0));
+            } else if ("search".equalsIgnoreCase(data.getAction())) {
                 plugin.runForEntity(admin, () -> EloGui.openEloAdmin(plugin, admin));
             } else {
                 plugin.runForEntity(admin, () -> EloGui.openEloAdminDetail(plugin, admin, data.getTargetUuid(), data.getTargetName()));
@@ -147,12 +153,16 @@ public class GuiListener implements Listener {
         try {
             amount = Integer.parseInt(msg);
         } catch (NumberFormatException e) {
-            admin.sendMessage(dev.solar.solarelo.managers.EloManager.colorize("&#ff3c3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &cGiá trị nhập vào phải là số nguyên! &7Thử lại hoặc gõ &#ff3c3ccancel&7 để hủy."));
+            admin.sendMessage(dev.solar.solarelo.managers.EloManager.colorize("&#ff3c3c[Truy Nã] &cGiá trị nhập vào phải là số nguyên dương! &7Thử lại hoặc gõ &#ff3c3ccancel&7 để hủy."));
             chatPrompts.put(admin.getUniqueId(), data);
             return;
         }
 
         plugin.runForEntity(admin, () -> {
+            if ("bounty_custom".equalsIgnoreCase(data.getAction())) {
+                EloGui.openBountyCreate(plugin, admin, data.getTargetUuid(), data.getTargetName(), Math.max(0, amount));
+                return;
+            }
             switch (data.getAction()) {
                 case "set" -> {
                     plugin.getEloManager().setElo(data.getTargetUuid(), data.getTargetName(), amount);
@@ -160,7 +170,7 @@ public class GuiListener implements Listener {
                 }
                 case "add" -> {
                     plugin.getEloManager().addElo(data.getTargetUuid(), data.getTargetName(), amount);
-                    admin.sendMessage(dev.solar.solarelo.managers.EloManager.colorize("&#00ff3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &fĐã cộng &#00ff3c+" + amount + " ELO &fcho &#ffffff" + data.getTargetName()));
+                    admin.sendMessage(dev.solar.solarelo.managers.EloManager.colorize("&#00ff3cᴇʟᴏ ᴀᴅmAɴ &8» &fĐã cộng &#00ff3c+" + amount + " ELO &fcho &#ffffff" + data.getTargetName()));
                 }
                 case "remove" -> {
                     plugin.getEloManager().removeElo(data.getTargetUuid(), data.getTargetName(), amount);

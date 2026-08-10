@@ -15,9 +15,10 @@ public class PlayerData {
     private boolean settingChat = true;
     private boolean settingWelcomeEffect = true;
     private boolean settingTitle = true;
-    private String lastIp = null;
     private boolean locked = false;
     private long lockExpiry = 0L;
+    private String lastIp = "";
+    private int bounty = 0;
 
     public PlayerData(UUID uuid, String name, int elo, int kills, int deaths, int currentStreak, int bestStreak, long createdAt, boolean settingChat, boolean settingWelcomeEffect, boolean settingTitle) {
         this.uuid = uuid;
@@ -102,4 +103,8 @@ public class PlayerData {
 
     public long getLockExpiry() { return lockExpiry; }
     public void setLockExpiry(long lockExpiry) { this.lockExpiry = lockExpiry; }
+
+    public int getBounty() { return bounty; }
+    public void setBounty(int bounty) { this.bounty = Math.max(0, bounty); }
+    public void addBounty(int amount) { this.bounty = Math.max(0, this.bounty + amount); }
 }

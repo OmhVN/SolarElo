@@ -136,6 +136,34 @@ public class EloGui {
         }
     }
 
+    public static class BountyCreateHolder implements InventoryHolder {
+        private final UUID targetUuid;
+        private final String targetName;
+        private int selectedAmount;
+        private Inventory inventory;
+
+        public BountyCreateHolder(UUID targetUuid, String targetName, int selectedAmount) {
+            this.targetUuid = targetUuid;
+            this.targetName = targetName;
+            this.selectedAmount = Math.max(0, selectedAmount);
+        }
+
+        public UUID getTargetUuid() { return targetUuid; }
+        public String getTargetName() { return targetName; }
+        public int getSelectedAmount() { return selectedAmount; }
+        public void setSelectedAmount(int selectedAmount) { this.selectedAmount = Math.max(0, selectedAmount); }
+        public void addSelectedAmount(int delta) { this.selectedAmount = Math.max(0, this.selectedAmount + delta); }
+
+        @Override
+        public Inventory getInventory() {
+            return inventory;
+        }
+
+        public void setInventory(Inventory inventory) {
+            this.inventory = inventory;
+        }
+    }
+
     public static class ActiveQuestHolder implements InventoryHolder {
         private Inventory inventory;
 
@@ -328,6 +356,15 @@ public class EloGui {
             return;
         }
         OtherMenus.openBountyConfirm(plugin, player, targetUuid, targetName);
+    }
+
+    public static void openBountyCreate(SolarElo plugin, Player player, UUID targetUuid, String targetName, int initialAmount) {
+        if (!plugin.getBountyConfig().getBoolean("bounty.enabled", true) || !plugin.getGuiConfigManager().getBountyConfig().getBoolean("enabled", true)) {
+            String msg = plugin.getMessageManager().get("gui-disabled-bounty", "&#ff3c3cTính năng Săn tiền thưởng hiện đang bị tắt.");
+            player.sendMessage(colorize(msg));
+            return;
+        }
+        BountyMenu.openBountyCreate(plugin, player, targetUuid, targetName, initialAmount);
     }
 
     public static void openActiveQuest(SolarElo plugin, Player player) {

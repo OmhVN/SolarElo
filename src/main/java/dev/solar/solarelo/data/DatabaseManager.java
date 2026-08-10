@@ -216,6 +216,7 @@ public class DatabaseManager {
                     executeSilent(stmt, "ALTER TABLE solarelo_players ADD COLUMN last_ip VARCHAR(45) DEFAULT NULL");
                     executeSilent(stmt, "ALTER TABLE solarelo_players ADD COLUMN locked TINYINT NOT NULL DEFAULT 0");
                     executeSilent(stmt, "ALTER TABLE solarelo_players ADD COLUMN lock_expiry BIGINT NOT NULL DEFAULT 0");
+                    executeSilent(stmt, "ALTER TABLE solarelo_players ADD COLUMN bounty INT NOT NULL DEFAULT 0");
                     executeSilent(stmt, "UPDATE solarelo_players SET setting_chat = 1 WHERE setting_chat IS NULL");
                     executeSilent(stmt, "UPDATE solarelo_players SET setting_welcome_effect = 1 WHERE setting_welcome_effect IS NULL");
                     executeSilent(stmt, "UPDATE solarelo_players SET setting_title = 1 WHERE setting_title IS NULL");
@@ -230,6 +231,7 @@ public class DatabaseManager {
                     executeSilent(stmt, "ALTER TABLE solarelo_players ADD COLUMN last_ip TEXT DEFAULT NULL");
                     executeSilent(stmt, "ALTER TABLE solarelo_players ADD COLUMN locked INTEGER NOT NULL DEFAULT 0");
                     executeSilent(stmt, "ALTER TABLE solarelo_players ADD COLUMN lock_expiry INTEGER NOT NULL DEFAULT 0");
+                    executeSilent(stmt, "ALTER TABLE solarelo_players ADD COLUMN bounty INTEGER NOT NULL DEFAULT 0");
                     executeSilent(stmt, "UPDATE solarelo_players SET setting_chat = 1 WHERE setting_chat IS NULL");
                     executeSilent(stmt, "UPDATE solarelo_players SET setting_welcome_effect = 1 WHERE setting_welcome_effect IS NULL");
                     executeSilent(stmt, "UPDATE solarelo_players SET setting_title = 1 WHERE setting_title IS NULL");

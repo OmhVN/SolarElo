@@ -126,6 +126,59 @@ public class EloManager {
         cache.put(uuid, data);
     }
 
+    public void placeBounty(Player creator, UUID targetUuid, String targetName, int amount) {
+        if (amount <= 0) {
+            creator.sendMessage(colorize("&#ff3c3cMức tiền thưởng truy nã phải lớn hơn 0!"));
+            return;
+        }
+
+        plugin.runAsync(() -> {
+            PlayerData creatorData = getData(creator.getUniqueId(), creator.getName());
+            if (creatorData == null || creatorData.isLocked()) {
+                creator.sendMessage(colorize("&#ff3c3cElo của bạn đang bị khóa, không thể treo thưởng truy nã!"));
+                return;
+            }
+
+            if (creatorData.getElo() < amount) {
+                creator.sendMessage(colorize("&#ff3c3cBạn không đủ Elo để treo thưởng mức " + amount + " Elo!"));
+                return;
+            }
+
+            PlayerData targetData = getData(targetUuid, targetName);
+            if (targetData == null) {
+                PlayerData loaded = plugin.getDatabaseManager().loadPlayer(targetUuid, targetName);
+                if (loaded == null) {
+                    creator.sendMessage(colorize("&#ff3c3cKhông tìm thấy dữ liệu người chơi mục tiêu."));
+                    return;
+                }
+                targetData = loaded;
+            }
+
+            int oldCreatorElo = creatorData.getElo();
+            removeElo(creator.getUniqueId(), creator.getName(), amount);
+            targetData.addBounty(amount);
+            plugin.getDatabaseManager().savePlayer(targetData);
+
+            plugin.getDatabaseManager().recordEloChange(creator.getUniqueId(), -amount, "Treo thưởng truy nã lên " + targetName + " (-" + amount + " Elo)");
+
+            int newCreatorElo = creatorData.getElo() - amount;
+            plugin.runForEntity(creator, () -> {
+                handleEloChangeEffectsAndRank(creator, oldCreatorElo, newCreatorElo);
+                plugin.getEffectManager().playGuiSound(creator, "click");
+                creator.sendMessage(colorize("&#00ff3c[Truy Nã] Đã treo thưởng thành công &#ffaa00" + amount + " Elo &#00ff3clên đầu &#ffffff" + targetName));
+            });
+
+            String broadcastMsg = plugin.getMessageManager().get("bounty-placed-broadcast",
+                    "&#ff3c3c[Truy Nã] &#ffaa00{creator} &#ffffffđã treo thưởng &#00ff3c{amount} Elo &#fffffflên đầu &#ff3c3c{target}#ffffff! Tổng thưởng: &#ffaa00{total_bounty} Elo!")
+                    .replace("{creator}", creator.getName())
+                    .replace("{target}", targetName)
+                    .replace("{amount}", String.valueOf(amount))
+                    .replace("{total_bounty}", String.valueOf(targetData.getBounty()));
+
+            plugin.runSync(() -> Bukkit.broadcastMessage(colorize(broadcastMsg)));
+        });
+    }
+
     public UUID getActiveBountyTarget(UUID playerUuid) {
         Long endTime = activeBountyEndTimes.get(playerUuid);
         if (endTime != null && System.currentTimeMillis() > endTime) {

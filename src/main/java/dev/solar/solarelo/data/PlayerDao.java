@@ -72,6 +72,9 @@ public class PlayerDao {
                     data.setLastIp(rs.getString("last_ip"));
                     data.setLocked(rs.getInt("locked") != 0);
                     data.setLockExpiry(rs.getLong("lock_expiry"));
+                    try {
+                        data.setBounty(rs.getInt("bounty"));
+                    } catch (SQLException ignored) {}
                     return data;
                 }
             }
@@ -92,7 +95,7 @@ public class PlayerDao {
         long now = System.currentTimeMillis();
         PlayerData data = new PlayerData(uuid, name, defaultElo, 0, 0, 0, 0, now, true, true, true);
         try (PreparedStatement psInsert = conn.prepareStatement(
-                "INSERT INTO solarelo_players (uuid, name, elo, kills, deaths, current_streak, best_streak, created_at, setting_chat, setting_welcome_effect, setting_title, last_ip, locked, lock_expiry) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+                "INSERT INTO solarelo_players (uuid, name, elo, kills, deaths, current_streak, best_streak, created_at, setting_chat, setting_welcome_effect, setting_title, last_ip, locked, lock_expiry, bounty) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
             psInsert.setString(1, data.getUuid().toString());
             psInsert.setString(2, data.getName());
             psInsert.setInt(3, data.getElo());
@@ -107,6 +110,7 @@ public class PlayerDao {
             psInsert.setString(12, data.getLastIp());
             psInsert.setInt(13, data.isLocked() ? 1 : 0);
             psInsert.setLong(14, data.getLockExpiry());
+            psInsert.setInt(15, data.getBounty());
             psInsert.executeUpdate();
         }
         return data;
@@ -116,10 +120,10 @@ public class PlayerDao {
         try (Connection conn = getConnection()) {
             String sql;
             if (isMySQL()) {
-                sql = "INSERT INTO solarelo_players (uuid, name, elo, kills, deaths, current_streak, best_streak, created_at, setting_chat, setting_welcome_effect, setting_title, last_ip, locked, lock_expiry) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
-                        "ON DUPLICATE KEY UPDATE name=VALUES(name), elo=VALUES(elo), kills=VALUES(kills), deaths=VALUES(deaths), current_streak=VALUES(current_streak), best_streak=VALUES(best_streak), setting_chat=VALUES(setting_chat), setting_welcome_effect=VALUES(setting_welcome_effect), setting_title=VALUES(setting_title), last_ip=VALUES(last_ip), locked=VALUES(locked), lock_expiry=VALUES(lock_expiry)";
+                sql = "INSERT INTO solarelo_players (uuid, name, elo, kills, deaths, current_streak, best_streak, created_at, setting_chat, setting_welcome_effect, setting_title, last_ip, locked, lock_expiry, bounty) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
+                        "ON DUPLICATE KEY UPDATE name=VALUES(name), elo=VALUES(elo), kills=VALUES(kills), deaths=VALUES(deaths), current_streak=VALUES(current_streak), best_streak=VALUES(best_streak), setting_chat=VALUES(setting_chat), setting_welcome_effect=VALUES(setting_welcome_effect), setting_title=VALUES(setting_title), last_ip=VALUES(last_ip), locked=VALUES(locked), lock_expiry=VALUES(lock_expiry), bounty=VALUES(bounty)";
             } else {
-                sql = "INSERT OR REPLACE INTO solarelo_players (uuid, name, elo, kills, deaths, current_streak, best_streak, created_at, setting_chat, setting_welcome_effect, setting_title, last_ip, locked, lock_expiry) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                sql = "INSERT OR REPLACE INTO solarelo_players (uuid, name, elo, kills, deaths, current_streak, best_streak, created_at, setting_chat, setting_welcome_effect, setting_title, last_ip, locked, lock_expiry, bounty) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             }
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setString(1, data.getUuid().toString());
@@ -136,6 +140,7 @@ public class PlayerDao {
                 ps.setString(12, data.getLastIp());
                 ps.setInt(13, data.isLocked() ? 1 : 0);
                 ps.setLong(14, data.getLockExpiry());
+                ps.setInt(15, data.getBounty());
                 ps.executeUpdate();
             }
         } catch (SQLException e) {

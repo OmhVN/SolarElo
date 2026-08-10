@@ -293,6 +293,19 @@ public class PvpKillProcessor {
             }
         }
 
+        if (victimData.getBounty() > 0) {
+            int placedBountyElo = victimData.getBounty();
+            gainRef[0] += placedBountyElo;
+            victimData.setBounty(0);
+
+            String bountyClaimedBroadcast = plugin.getMessageManager().get("bounty-claimed-broadcast",
+                    "&#00ff3c[Truy Nã] &#ffaa00{killer} &#ffffffđã hạ gục mục tiêu bị truy nã &#ff3c3c{victim} &#ffffffvà ôm trọn phần thưởng &#00ff3c+{amount} Elo&#ffffff!");
+            if (bountyClaimedBroadcast != null && !bountyClaimedBroadcast.isEmpty()) {
+                String bMsg = EloManager.colorize(bountyClaimedBroadcast.replace("{killer}", killer.getName()).replace("{victim}", victim.getName()).replace("{amount}", String.valueOf(placedBountyElo)));
+                plugin.runSync(() -> Bukkit.broadcastMessage(bMsg));
+            }
+        }
+
         UUID activeTargetUuid = eloManager.getActiveBountyTarget(killer.getUniqueId());
         if (activeTargetUuid != null && activeTargetUuid.equals(victim.getUniqueId())) {
             eloManager.clearActiveBountyTarget(killer.getUniqueId());
