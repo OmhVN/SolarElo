@@ -11,60 +11,60 @@ filler:
 
 bounty-item:
   enabled: true
-  name: "&fʙᴏᴜɴᴛʏ"
+  name: "#ff3c3cʙᴏᴜɴᴛʏ"
   material: "DIAMOND_SWORD"
   lore:
-    - "&fClick to view the Bounty list"
-    - "&fand accept contracts to eliminate other players."
+    - "#ffffffClick to view the Bounty list"
+    - "#ffffffand place bounties on other players."
     - ""
-    - "&fClick to open!"
+    - "#ff3c3cClick to open!"
   customModelData: -1
   confirm_sound: click
 
 leaderboard-item:
   enabled: true
-  name: "&fʟᴇᴀᴅᴇʀʙᴏᴀʀᴅ"
+  name: "#00BFFFʟᴇᴀᴅᴇʀʙᴏᴀʀᴅ"
   material: "BLUE_BANNER"
   lore:
-    - "&fClick to view the ELO Leaderboard"
-    - "&fand other players' statistics."
+    - "#ffffffClick to view the ELO Leaderboard"
+    - "#ffffffand other players' statistics."
     - ""
-    - "&fClick to open!"
+    - "#00BFFFClick to open!"
   customModelData: -1
   confirm_sound: click
 
 rewards-item:
   enabled: true
-  name: "&fʀᴇᴡᴀʀᴅs"
+  name: "#00ff3cʀᴇᴡᴀʀᴅs"
   material: "CHEST"
   lore:
-    - "&fClick to view rank breakthrough rewards"
-    - "&fearned by reaching ELO milestones."
+    - "#ffffffClick to view rank breakthrough rewards"
+    - "#ffffffearned by reaching ELO milestones."
     - ""
-    - "&fClick to open!"
+    - "#00ff3cClick to open!"
   customModelData: -1
   confirm_sound: xp
 
 settings-item:
   enabled: true
-  name: "&fsᴇᴛᴛɪɴɢs"
+  name: "#ffaa00sᴇᴛᴛɪɴɢs"
   material: "COMPARATOR"
   lore:
-    - "&fClick to customize notifications,"
-    - "&fwelcome effects, and titles."
+    - "#ffffffClick to customize notifications,"
+    - "#ffffffwelcome effects, and titles."
     - ""
-    - "&fClick to open!"
+    - "#ffaa00Click to open!"
   customModelData: -1
   confirm_sound: click
 
 ip-blocked-item:
   material: "RED_BANNER"
-  name: "&cᴀᴄᴄᴇꜱꜱ ᴅᴇɴɪᴇᴅ"
+  name: "#ff3c3cᴀᴄᴄᴇꜱꜱ ᴅᴇɴɪᴇᴅ"
   lore:
-    - "&7Detected multiple accounts on the same IP!"
-    - "&7GUI access has been disabled."
+    - "#aaaaaaDetected multiple accounts on the same IP!"
+    - "#aaaaaaGUI access has been disabled."
     - ""
-    - "&cPlease disconnect other accounts to unlock."
+    - "#ff3c3cPlease disconnect other accounts to unlock."
   customModelData: -1
 
 config-version: "1.5"

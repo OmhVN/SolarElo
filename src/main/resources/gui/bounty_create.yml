@@ -16,7 +16,7 @@ target-head:
     - ""
     - "&fSelected Bounty: &a+{selected_amount}"
     - ""
-    - "&a✔ Click here to confirm and place bounty!"
+    - "&aClick here to confirm and place bounty!"
 
 # Custom amount button (Nút nhập số tiền tùy chỉnh)
 custom-amount:
