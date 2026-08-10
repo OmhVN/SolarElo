@@ -381,8 +381,8 @@ public class BountyMenu {
                 inv.setItem(15, createAmountButton(Material.LIME_STAINED_GLASS_PANE, "&a+50 Elo", "&7Click to increase 50 Elo"));
                 inv.setItem(16, createAmountButton(Material.LIME_STAINED_GLASS_PANE, "&a+100 Elo", "&7Click to increase 100 Elo"));
 
-                inv.setItem(19, createAmountButton(Material.RED_CONCRETE, "&c-1000 Elo", "&7Click to decrease 1000 Elo"));
-                inv.setItem(20, createAmountButton(Material.RED_CONCRETE, "&c-500 Elo", "&7Click to decrease 500 Elo"));
+                inv.setItem(19, createAmountButton(Material.RED_STAINED_GLASS_PANE, "&c-1000 Elo", "&7Click to decrease 1000 Elo"));
+                inv.setItem(20, createAmountButton(Material.RED_STAINED_GLASS_PANE, "&c-500 Elo", "&7Click to decrease 500 Elo"));
 
                 inv.setItem(21, createAmountButton(Material.ANVIL, "&eᴄᴜsᴛᴏᴍ ᴀᴍᴏᴜɴᴛ", "&fClick to type custom Elo amount in chat"));
 
@@ -390,8 +390,8 @@ public class BountyMenu {
 
                 inv.setItem(23, createAmountButton(Material.BARRIER, "&cʀᴇsᴇᴛ", "&fReset selected amount to 0"));
 
-                inv.setItem(24, createAmountButton(Material.LIME_CONCRETE, "&a+500 Elo", "&7Click to increase 500 Elo"));
-                inv.setItem(25, createAmountButton(Material.LIME_CONCRETE, "&a+1000 Elo", "&7Click to increase 1000 Elo"));
+                inv.setItem(24, createAmountButton(Material.LIME_STAINED_GLASS_PANE, "&a+500 Elo", "&7Click to increase 500 Elo"));
+                inv.setItem(25, createAmountButton(Material.LIME_STAINED_GLASS_PANE, "&a+1000 Elo", "&7Click to increase 1000 Elo"));
 
                 player.openInventory(inv);
             });
