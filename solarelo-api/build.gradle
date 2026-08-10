@@ -2,8 +2,25 @@ plugins {
     id 'java'
 }
 
+def getGitCommitHash = { ->
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'rev-parse', '--short', 'HEAD'
+            standardOutput = stdout
+            ignoreExitValue = true
+        }
+        def hash = stdout.toString().trim()
+        return hash.isEmpty() ? "dev" : hash
+    } catch (Exception e) {
+        return "dev"
+    }
+}
+
+def gitCommit = getGitCommitHash()
+
 group = 'dev.solar'
-version = '1.1-R08'
+version = "1.1-R08-${gitCommit}"
 
 java {
     toolchain {
