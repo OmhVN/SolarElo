@@ -1,7 +1,7 @@
-# SolarElo
+# SolarElo Rank Configuration (Cấu hình Cấp Bậc SolarElo)
 
-# Ranks được sắp xếp từ thấp đến cao theo min-elo
-# rankup-commands: lệnh chạy khi player lên rank (dùng {player})
+# Ranks are ordered from lowest to highest by min-elo (Ranks được sắp xếp từ thấp đến cao theo min-elo)
+# rankup-commands: Commands executed when player promotes to this rank (Lệnh chạy khi player lên rank, dùng {player})
 ranks:
   lt5:
     display: "#aaaaaaLT5"
@@ -58,9 +58,9 @@ ranks:
     rankup-commands: []
 
   ht1:
-    display: "#cc0000HT1"
+    display: "#ff0000HT1"
     min-elo: 2200
-    prefix: "#cc0000[HT1]"
+    prefix: "#ff0000[HT1]"
     rankup-commands: []
 
 config-version: "1.5"

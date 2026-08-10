@@ -3,18 +3,21 @@ enabled: true
 title: "sᴇʟᴇᴄᴛ ᴛᴀʀɢᴇᴛ"
 rows: 6
 
+# Filler items (Vật phẩm lót ô trống)
 filler:
   enabled: false
   material: "GRAY_STAINED_GLASS_PANE"
 
+# Target player head display (Hiển thị đầu người chơi mục tiêu)
 player-head:
   name: "&c{target}"
   lore:
     - "&7Elo: &e{target_elo}"
     - "&7Current Bounty: &a{target_bounty}"
     - ""
-    - "&e👉 Click to place bounty on this player!"
+    - "&eClick to place bounty on this player!"
 
+# Navigation buttons (Các nút chuyển trang & quay lại)
 buttons:
   back:
     slot: 45

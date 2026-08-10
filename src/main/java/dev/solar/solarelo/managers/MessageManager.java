@@ -20,17 +20,40 @@ public class MessageManager {
     }
 
     public void load() {
-        File file = new File(plugin.getDataFolder(), "messages.yml");
-        if (!file.exists()) {
-            plugin.saveResource("messages.yml", false);
+        File langDir = new File(plugin.getDataFolder(), "lang");
+        if (!langDir.exists()) {
+            langDir.mkdirs();
         }
-        messages = YamlConfiguration.loadConfiguration(file);
 
-        InputStream defaultStream = plugin.getResource("messages.yml");
+        saveResourceIfNotExists("lang/messages_vi.yml");
+        saveResourceIfNotExists("lang/messages_en.yml");
+        saveResourceIfNotExists("messages.yml");
+
+        String lang = plugin.getConfig().getString("language", "vi").toLowerCase();
+        File langFile = new File(plugin.getDataFolder(), "lang/messages_" + lang + ".yml");
+        if (!langFile.exists()) {
+            langFile = new File(plugin.getDataFolder(), "messages.yml");
+        }
+
+        messages = YamlConfiguration.loadConfiguration(langFile);
+
+        InputStream defaultStream = plugin.getResource("lang/messages_" + lang + ".yml");
+        if (defaultStream == null) {
+            defaultStream = plugin.getResource("messages.yml");
+        }
         if (defaultStream != null) {
             YamlConfiguration defaults = YamlConfiguration.loadConfiguration(
                     new InputStreamReader(defaultStream, StandardCharsets.UTF_8));
             messages.setDefaults(defaults);
+        }
+    }
+
+    private void saveResourceIfNotExists(String resourcePath) {
+        File file = new File(plugin.getDataFolder(), resourcePath);
+        if (!file.exists()) {
+            try {
+                plugin.saveResource(resourcePath, false);
+            } catch (Exception ignored) {}
         }
     }
 

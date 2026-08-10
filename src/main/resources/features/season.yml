@@ -1,20 +1,20 @@
-# Hệ Thống Mùa Giải & Tự Động Trao Thưởng (Seasonal ELO & Auto Rewards)
+# Season System & Automated Rewards Configuration (Cấu hình Hệ thống Mùa Giải & Tự Động Trao Thưởng)
 season:
   enabled: true
-  # Thời gian kết thúc mùa giải (Định dạng: YYYY-MM-DD HH:mm:ss)
+  # Season end date (Thời gian kết thúc mùa giải, Định dạng: YYYY-MM-DD HH:mm:ss)
   end-date: "2026-07-01 00:00:00"
 
-  # Soft-Reset settings
+  # Soft-Reset configuration on season end (Cấu hình Soft-Reset khi kết thúc mùa giải)
   soft-reset:
     enabled: true
-    # Công thức: default-elo + (elo-hiện-tại - default-elo) * multiplier
+    # Formula (Công thức): default-elo + (current-elo - default-elo) * multiplier
     multiplier: 0.4
-    # Reset stats khác (kills, deaths, streaks) về 0
+    # Reset kill/death/streak statistics to zero (Reset các chỉ số kills, deaths, streaks về 0)
     reset-stats: true
   
-  # Auto rewards commands when ending season (Cài đặt lệnh trao thưởng)
+  # Automatic reward commands on season end (Lệnh trao thưởng tự động khi kết thúc mùa giải)
   rewards:
-    # Trao thưởng theo thứ hạng chính xác (TOP 1, TOP 2, TOP 3, v.v.)
+    # Individual rank rewards (Trao thưởng theo vị trí chính xác TOP 1, TOP 2, TOP 3...)
     ranks:
       "1":
         - "give {player} diamond_block 1"
@@ -22,7 +22,7 @@ season:
         - "give {player} emerald_block 1"
       "3":
         - "give {player} iron_block 1"
-    # Hoặc trao thưởng theo khoảng thứ hạng (ví dụ: TOP 4 đến 10)
+    # Bracket rewards (Trao thưởng theo khoảng thứ hạng TOP 4 - 10)
     brackets:
       "4-10":
         - "give {player} gold_ingot 5"

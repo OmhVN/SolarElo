@@ -1,6 +1,7 @@
-# Database settings
+# Database Configuration (Cấu hình Cơ sở dữ liệu)
 database:
-  type: SQLITE   # SQLITE, MYSQL, or MARIADB
+  # Database type (Loại CSDL): SQLITE, MYSQL, or MARIADB
+  type: SQLITE
   mysql:
     host: localhost
     port: 3306

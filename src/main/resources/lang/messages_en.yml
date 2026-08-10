@@ -1,0 +1,134 @@
+# SolarElo - English Messages Configuration (Language File: English)
+
+prefix: "<gradient:#ff8a00:#da1b60>SolarElo</gradient> #555555> #aaaaaa"
+
+# ── PvP Messages ─────────────────────────────────────────────
+kill-gain: "#00ff3cKilled #ffaa00{victim} #00ff3c+#ffaa00{gained} Elo #aaaaaa(Streak: #ff3c3c{streak}#aaaaaa) #555555| #ffffffTotal: #ffaa00{elo}"
+death-loss: "#ff3c3cKilled by #ffaa00{killer} #ff3c3c-#ffaa00{lost} Elo #555555| #ffffffTotal: #ffaa00{elo}"
+streak-end: "#ff3c3cStreak of #ffaa00{streak} #ff3c3ckills has ended!"
+top-1-defeat: "#ffaa00[TOP 1 BONUS] You received #ffaa00{extra} extra Elo #ffaa00for defeating the #1 player!"
+hover-stats-format: "#ffaa00{player} #ffffffStats:\n#aaaaaaRank: &r{rank}\n#aaaaaaElo Points: #ffaa00{elo}\n#aaaaaaK/D Ratio: #ffaa00{kd} #aaaaaa({kills}/{deaths})\n#aaaaaaWin Streak: #ff3c3c{streak}"
+
+# ── Anti-farm Protection ─────────────────────────────────────
+anti-farm-cooldown: "#ff3c3cMust wait #ffaa00{seconds}s #ff3c3cbefore receiving Elo from killing #ffaa00{player} #ff3c3cagain."
+anti-farm-diminished: "#ffaa00Elo reduced due to repeated kill farming. Received: #ffaa00{gained}"
+anti-farm-ip: "#ff3c3cCannot earn Elo from players sharing the same IP address or subnet."
+anti-farm-afk: "#ff3c3cCannot earn Elo because the victim is AFK or inactive."
+anti-farm-spawn: "#ff3c3cCannot earn Elo because the victim recently respawned or is near spawn."
+anti-farm-elo-difference: "#ff3c3cCannot earn Elo due to large Elo gap between players ({difference} Elo)."
+
+# ── Rank Updates ──────────────────────────────────────────────
+rank-up: "#ffaa00★ RANK UP ★ #ffaa00You promoted to &r{rank}#ffaa00!"
+rank-down: "#ff3c3c▼ RANK DOWN ▼ #ffaa00You demoted to &r{rank}#ffaa00."
+
+# ── Command Outputs ──────────────────────────────────────────
+elo-info: "#ffaa00{player} #555555| #ffffffElo: #ffaa00{elo} #ffffff| Rank: {rank} #ffffff| K: #00ff3c{kills} #ffffff| D: #ff3c3c{deaths} #ffffff| K/D: #ffaa00{kd} #ffffff| Streak: #ff3c3c{streak}"
+elo-info-own: "#ffaa00Your Stats #555555| #ffffffElo: #ffaa00{elo} #ffffff| Rank: {rank} #ffffff| K: #00ff3c{kills} #ffffff| D: #ff3c3c{deaths} #ffffff| K/D: #ffaa00{kd} #ffffff| Streak: #ff3c3c{streak}"
+
+# ── Leaderboard ───────────────────────────────────────────────
+top-header: "#555555&m         &r #ffaa00SolarElo #555555- #aaaaaaTop Players &r#555555&m         "
+top-entry: "#555555{pos}. &r{rank} #ffffff{player} #555555- #ffaa00Elo: #ffffff{elo} #555555| Streak: #ff3c3c{streak}"
+top-footer: "#555555&m         &r #aaaaaaPage #ffaa00{page}#aaaaaa/#ffaa00{max_pages} &r#555555&m         "
+
+# ── Leaderboard Details ───────────────────────────────────────
+gui-detail-header: "#555555&m         &r #ffaa00Detailed Statistics &r#555555&m         "
+gui-detail-format: "#aaaaaaPlayer: #ffaa00{player}\n#aaaaaaRank: &r{rank}\n#aaaaaaElo Points: #ffaa00{elo}\n#aaaaaaKills: #00ff3c{kills}\n#aaaaaaDeaths: #ff3c3c{deaths}\n#aaaaaaK/D Ratio: #ffaa00{kd}\n#aaaaaaCurrent Streak: #ff3c3c{streak}\n#aaaaaaBest Streak: #ffaa00{best_streak}"
+gui-detail-footer: "#555555&m                                           "
+
+# ── Admin Actions ─────────────────────────────────────────────
+admin-set: "&#00ff3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &fSet &#ffffff{player}'s &fELO to &#00ff3c{elo} ELO&f."
+admin-add: "&#00ff3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &fAdded &#00ff3c+{amount} ELO &fto &#ffffff{player}"
+admin-remove: "&#00ff3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &fDeducted &#ff3c3c-{amount} ELO &ffrom &#ffffff{player}"
+admin-reset: "&#00ff3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &fReset ELO & Stats of &#ffffff{player} &fto default."
+
+# ── General System ────────────────────────────────────────────
+reload: "&#00ff3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &fPlugin configuration reloaded successfully!"
+no-permission: "&#ff3c3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &cYou do not have permission to execute this action."
+player-not-found: "&#ff3c3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &cPlayer not found."
+season-resetting: "&#ffaa00ᴇʟᴏ ᴀᴅᴍɪɴ &8» &fEnding season and distributing rewards..."
+season-reset-success: "&#00ff3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &fSeason reset successfully! Top players rewarded and soft ELO reset completed."
+elo-decay-notice: "#ff3c3cYou lost {amount} Elo due to recent inactivity!"
+
+# ── Bounty System ─────────────────────────────────────────────
+bounty-broadcast-streak: "#ffaa00[BOUNTY] #ffaa00{player} #ffffffreached a #ff3c3c{streak} kill streak#ffffff! Bounty reward: #00ff3c+{elo} Elo #ffffff+ items!"
+bounty-claim-streak: "#ffaa00[BOUNTY] #ffaa00{killer} #ffffffended #ffaa00{victim}'s #ff3c3c{streak} streak #ffffffand claimed the bounty (#00ff3c+{elo} Elo#ffffff)!"
+bounty-claim-top: "#ffaa00[BOUNTY] #ffaa00{killer} #ffffffeliminated TOP #ffaa00{rank} #ffaa00({victim}) #ffffffand claimed the bounty (#00ff3c+{elo} Elo#ffffff)!"
+welcome-top-10: "#ffaa00[Welcome] Legend #ffffff{player} #aaaaaa(Rank #{rank} | {elo} Elo) #ffaa00joined the server!"
+welcome-top-3: "#ffaa00[Welcome] Legend #ffffff{player} #aaaaaa(Rank #{rank} | {elo} Elo) #ffaa00joined the server!"
+bounty-targeted: "#ffaa00[Quest] A bounty contract has been accepted against you!"
+bounty-placed-broadcast: "&#ff3c3c[Bounty] &#ffaa00{creator} &#ffffffplaced a bounty of &#00ff3c{amount} &#ffffffon &#ff3c3c{target}&#ffffff! Total bounty: &#ffaa00{total_bounty}!"
+bounty-claimed-broadcast: "&#00ff3c[Bounty] &#ffaa00{killer} &#ffffffeliminated target &#ff3c3c{victim} &#ffffffand claimed the total bounty of &#00ff3c{amount}&#ffffff!"
+bounty-placed-creator: "&#00ff3c[Bounty] Successfully placed bounty of &#ffaa00{amount} &#00ff3con &#ffffff{target}"
+bounty-min-amount-error: "&#ff3c3cBounty amount must be greater than 0!"
+bounty-account-locked: "&#ff3c3cYour account is currently locked from placing bounties!"
+bounty-insufficient-money: "&#ff3c3cYou do not have enough money (Requires {required}) to place this bounty!"
+bounty-insufficient-elo: "&#ff3c3cYou do not have enough Elo to place a bounty of {amount} Elo!"
+bounty-transaction-failed: "&#ff3c3cMoney withdrawal failed!"
+bounty-target-not-found: "&#ff3c3cTarget player data not found."
+bounty-custom-prompt: "&#00ff3c[Bounty] &fType the bounty amount you want to place on &c{target} &fin chat (or type &#ff3c3ccancel&f to exit):"
+bounty-custom-cancel: "&#ff3c3c[Bounty] &7Operation cancelled."
+bounty-custom-invalid-number: "&#ff3c3c[Bounty] &cValue must be a positive integer! &7Try again or type &#ff3c3ccancel&7 to exit."
+
+# ── Elo Lock ──────────────────────────────────────────────────
+elo-locked-by-admin: "&#ff3c3cYour ELO has been locked by an Admin!"
+elo-unlocked-by-admin: "&#00ff3cYour ELO has been unlocked by an Admin!"
+admin-lock-success: "&#00ff3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &fSuccessfully locked Elo for player &#ffffff{player}&f."
+admin-unlock-success: "&#00ff3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &fSuccessfully unlocked Elo for player &#ffffff{player}&f."
+admin-set-elo-success: "&#00ff3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &fSet ELO of &#ffffff{player} &fto &#00ff3c{amount} ELO&f."
+admin-add-elo-success: "&#00ff3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &fAdded &#00ff3c+{amount} ELO &ffor &#ffffff{player}"
+admin-remove-elo-success: "&#00ff3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &fDeducted &#ff3c3c-{amount} ELO &ffrom &#ffffff{player}"
+elo-locked-auto: "&#ff3c3cYour ELO was automatically locked due to reaching minimum threshold!"
+bounty-locked-error: "&#ff3c3cYour ELO is locked, you cannot use the bounty feature!"
+
+# ── Alt Accounts (IP Check) ───────────────────────────────────
+alts-no-ip: "&#ff3c3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &cNo IP address data found for &#ffffff{player} &cto check alts."
+alts-list-header: "&8&m                                                    \n&#ffaa00&lACCOUNTS ON SAME IP\n&7IP Address: &#ffffff{ip}\n"
+alts-list-item: "  &8▪ &#ffffff{player} &7- &#ffaa00{elo} ELO &7({status}&7)"
+alts-list-footer: "&8&m                                                    "
+alts-list-header-admin: "&#ffaa00&m                                                    \n&#ffaa00ᴀʟᴛ ᴀᴄᴄᴏᴜɴᴛs &8» &fList of accounts sharing IP\n&7IP Address: &#ffffff{ip}\n"
+alts-list-footer-admin: "&#ffaa00&m                                                    "
+alts-status-online: "&#00ff3c● &7Online"
+alts-status-offline: "&7● &7Offline"
+
+# ── GUI Status Messages ───────────────────────────────────────
+gui-disabled-leaderboard: "&#ff3c3cLeaderboard feature is currently disabled."
+gui-disabled-rewards: "&#ff3c3cRank rewards feature is currently disabled."
+gui-disabled-settings: "&#ff3c3cSettings feature is currently disabled."
+gui-disabled-stats: "&#ff3c3cStats GUI feature is currently disabled."
+gui-disabled-bounty: "&#ff3c3cBounty system feature is currently disabled."
+gui-disabled-admin: "&#ff3c3cAdmin GUI feature is currently disabled."
+
+# ── Season & Bounty System Broadcasts ─────────────────────────
+season-reward-top1: "#ffaa00★ SEASON ENDED! #e0e0e0Player #00ff3c{player} #e0e0e0won 1ST PLACE with #ffaa00{elo} Elo#e0e0e0!"
+season-reward-top2: "#ffaa00★ SEASON ENDED! #e0e0e0Player #00ff3c{player} #e0e0e0achieved 2ND PLACE with #ffaa00{elo} Elo#e0e0e0!"
+season-reward-top3: "#ffaa00★ SEASON ENDED! #e0e0e0Player #00ff3c{player} #e0e0e0achieved 3RD PLACE with #ffaa00{elo} Elo#e0e0e0!"
+season-reward-top10: "#ffaa00★ SEASON ENDED! #e0e0e0Player #00ff3c{player} #e0e0e0reached TOP 10 with #ffaa00{elo} Elo#e0e0e0!"
+bounty-quest-broadcast: "#00ff3c{killer} #ffffffcompleted the bounty contract and eliminated #ff3c3c{victim}#ffffff!"
+bounty-quest-completed: "#00ff3c[Quest] You eliminated target {victim} and earned +{reward_elo} Elo!"
+
+# ── Admin Dialog Input ────────────────────────────────────────
+dialog-title-add: "Add ELO"
+dialog-body-add: "Enter the amount of ELO to ADD to {player}:"
+dialog-field-add: "Amount of ELO to add"
+
+dialog-title-set: "Set ELO"
+dialog-body-set: "Enter the ELO value to SET for {player}:"
+dialog-field-set: "ELO value to set"
+
+dialog-title-remove: "Deduct ELO"
+dialog-body-remove: "Enter the amount of ELO to DEDUCT from {player}:"
+dialog-field-remove: "Amount of ELO to deduct"
+
+dialog-button-confirm: "Confirm"
+dialog-button-confirm-hover: "Click to confirm ELO value"
+dialog-button-cancel: "Cancel"
+dialog-button-cancel-hover: "Click to cancel and return"
+
+dialog-invalid-number: "&#ff3c3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &cInput must be a valid integer! &7Try again."
+dialog-cancel-message: "&#ff3c3cᴇʟᴏ ᴀᴅᴍɪɴ &8» &7Modification cancelled."
+
+# ── Season Toggle ─────────────────────────────────────────────
+season-disabled-error: "&#ff3c3cSeason feature is currently disabled."
+season-disabled-display: "Disabled"
+
+config-version: "1.5"

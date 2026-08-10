@@ -1,7 +1,7 @@
-# Bounty System Configuration (Hệ thống Truy Nã / Săn Thưởng)
+# Bounty System Configuration (Cấu hình Hệ thống Truy Nã / Săn Thưởng)
 bounty:
   enabled: true
-  # Thưởng chuỗi hạ gục (Streak Bounties)
+  # Streak Bounties (Thưởng chuỗi hạ gục)
   streak-bounties:
     "5":
       reward-elo: 20
@@ -12,7 +12,7 @@ bounty:
       commands:
         - "eco give {killer} 1000"
         - "give {killer} diamond 1"
-  # Thưởng hạ gục TOP bảng xếp hạng (Rank Bounties)
+  # Rank Bounties for defeating leaderboard TOP players (Thưởng hạ gục TOP bảng xếp hạng)
   top-player-bounties:
     "1":
       reward-elo: 50
@@ -27,12 +27,12 @@ bounty:
       commands:
         - "eco give {killer} 500"
 
-# Config settings for accepted contracts (Cài đặt nhiệm vụ săn thưởng /bounty)
+# Contract quest settings (Cài đặt khế ước nhiệm vụ săn thưởng)
 bounty-quest:
   reward-elo: 20
-  contract-duration-seconds: 5400 # 1 hour 30 minutes duration for the contract itself
-  cooldown-seconds: 5400 # 1 hour 30 minutes cooldown after completing a contract
-  cancel-cooldown-seconds: 300 # 5 minutes cooldown after cancelling a contract
+  contract-duration-seconds: 5400 # 1 hour 30 minutes contract duration (Thời gian hiệu lực khế ước 1h30m)
+  cooldown-seconds: 5400 # 1 hour 30 minutes cooldown after completion (Thời gian chờ sau khi hoàn thành 1h30m)
+  cancel-cooldown-seconds: 300 # 5 minutes cooldown after cancellation (Thời gian chờ sau khi hủy khế ước 5m)
   commands:
     - "give {killer} diamond 2"
 
