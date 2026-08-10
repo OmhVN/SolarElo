@@ -46,12 +46,13 @@ public class BountyMenu {
             PlayerData selfData = cached != null ? cached : plugin.getDatabaseManager().loadPlayer(player.getUniqueId(), player.getName());
 
             List<Player> onlinePlayers = new ArrayList<>(Bukkit.getOnlinePlayers());
-            onlinePlayers.removeIf(p -> p.getUniqueId().equals(player.getUniqueId()));
-
             int minTargetElo = bountyConfig.getInt("minimum-target-elo", 0);
 
             List<PlayerData> targetDataList = new ArrayList<>();
             for (Player p : onlinePlayers) {
+                if (p.getUniqueId().equals(player.getUniqueId()) && onlinePlayers.size() > 1) {
+                    continue;
+                }
                 if (plugin.getEloManager().isIpBlocked(p)) {
                     continue;
                 }
@@ -61,6 +62,17 @@ public class BountyMenu {
                 }
                 if (data != null && data.getElo() >= minTargetElo) {
                     targetDataList.add(data);
+                }
+            }
+
+            if (targetDataList.isEmpty()) {
+                List<PlayerData> dbPlayers = plugin.getDatabaseManager().getTopPlayers(50, 0, true);
+                if (dbPlayers != null) {
+                    for (PlayerData data : dbPlayers) {
+                        if (data != null && data.getElo() >= minTargetElo) {
+                            targetDataList.add(data);
+                        }
+                    }
                 }
             }
 
@@ -113,7 +125,7 @@ public class BountyMenu {
             }
         }
 
-        boolean isLocked = selfData.getElo() < bountyConfig.getInt("minimum-unlock-elo", 1200);
+        boolean isLocked = selfData.getElo() < bountyConfig.getInt("minimum-unlock-elo", 0);
 
         if (isLocked) {
             int slot = EloGui.getSlotFromLayout(bountyConfig, 'l', 22);
@@ -124,7 +136,7 @@ public class BountyMenu {
                 if (meta != null) {
                     meta.setDisplayName(EloGui.colorize(bountyConfig.getString("locked-item.name", "#ff3c3c🔒 Bounty Locked")));
                     List<String> lore = new ArrayList<>();
-                    int reqElo = bountyConfig.getInt("minimum-unlock-elo", 1200);
+                    int reqElo = bountyConfig.getInt("minimum-unlock-elo", 0);
                     for (String l : bountyConfig.getStringList("locked-item.lore")) {
                         lore.add(EloGui.colorize(l.replace("{required}", String.valueOf(reqElo))
                                            .replace("{elo}", String.valueOf(selfData.getElo()))));
@@ -201,7 +213,7 @@ public class BountyMenu {
     }
 
     private static void addBountyControls(Inventory inv, SolarElo plugin, org.bukkit.configuration.file.FileConfiguration bountyConfig, int page, String activeFilter, int rows, boolean hasNextPage, PlayerData selfData) {
-        boolean isLocked = selfData.getElo() < bountyConfig.getInt("minimum-unlock-elo", 1200);
+        boolean isLocked = selfData.getElo() < bountyConfig.getInt("minimum-unlock-elo", 0);
 
         int prevSlot = EloGui.getSlotFromLayout(bountyConfig, 'b', 45);
         if (prevSlot >= 0 && prevSlot < rows * 9 && page > 1) {

@@ -14,8 +14,8 @@ filler:
   enabled: false
   material: "GRAY_STAINED_GLASS_PANE"
 
-minimum-target-elo: 5000 # Minimum Elo required for a player to appear on the Bounty target selection menu
-minimum-unlock-elo: 1200 # Minimum Elo required for a player to use/unlock the Bounty feature
+minimum-target-elo: 0 # Minimum Elo required for a player to appear on the Bounty target selection menu
+minimum-unlock-elo: 0 # Minimum Elo required for a player to use/unlock the Bounty feature
 
 # Item shown for each online player in the bounty selection GUI
 target-player-head:
@@ -59,7 +59,7 @@ cooldown-item:
 
 no-targets-item:
   name: "#ff3c3cɴᴏ ᴠᴀʟɪᴅ ᴛᴀʀɢᴇᴛs"
-  material: "BARRIER"
+  material: "PAPER"
   lore:
     - "#ffffffNo other valid players online currently."
     - "#ffffff(You cannot target yourself)"
