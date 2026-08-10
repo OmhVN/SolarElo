@@ -203,7 +203,9 @@ public class BountyMenu {
                 for (String l : headLoreTemplate) {
                     lore.add(EloGui.colorize(l.replace("{elo}", EloGui.formatNumber(tData.getElo()))
                                        .replace("{rank}", rankDisplay)
-                                       .replace("{bounty}", EloGui.formatNumber(tData.getBounty()))));
+                                       .replace("{bounty}", EloGui.formatNumber(tData.getBounty()))
+                                       .replace("{reward_elo}", EloGui.formatNumber(tData.getBounty()))
+                                       .replace("{player}", tData.getName())));
                 }
                 skullMeta.setLore(lore);
                 head.setItemMeta(skullMeta);

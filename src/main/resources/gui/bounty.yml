@@ -19,13 +19,13 @@ minimum-unlock-elo: 0 # Minimum Elo required for a player to use/unlock the Boun
 
 # Item shown for each online player in the bounty selection GUI
 target-player-head:
-  name: "#ff3c3cᴛᴀʀɢᴇᴛ #ffffff{player}"
+  name: "&cᴛᴀʀɢᴇᴛ: &f{player}"
   lore:
-    - "#aaaaaaElo: #ffaa00{elo}"
-    - "#aaaaaaRank: &r{rank}"
+    - "&7Elo: &e{elo}"
+    - "&7Rank: &f{rank}"
+    - "&7Bounty: &a{bounty} Elo"
     - ""
-    - "#ffaa00Click to accept contract to eliminate target!"
-    - "#ffaa00Success: #00ff3c+{reward_elo} Elo #ffffff+ rewards."
+    - "&e👉 Click to place or add bounty on this player!"
 
 # When player has an active target (Khi đang có nhiệm vụ hoạt động)
 active-bounty-item:
