@@ -107,9 +107,6 @@ public class AdminMenu {
                     inv.setItem(adminConfig.getInt("next.slot", 53), nextItem);
                 }
 
-                ItemStack searchItem = EloGui.loadConfigItem(adminConfig, "search", "COMPASS", "#ffaa00s\u1d07\u1d00\u0280\u1d04\u029c", Arrays.asList("&fClick to search a player by name"), -1);
-                inv.setItem(adminConfig.getInt("search.slot", 47), searchItem);
-
                 player.openInventory(inv);
             });
         });
@@ -137,7 +134,7 @@ public class AdminMenu {
                 String titleTemplate = adminConfig.getString("admin-detail.title", "ᴀᴅᴍɪɴ ᴅᴇᴛᴀɪʟs - {player}");
                 String title = EloGui.colorize(titleTemplate.replace("{player}", targetName));
                 EloGui.EloAdminDetailHolder holder = new EloGui.EloAdminDetailHolder(targetUuid, targetName);
-                Inventory inv = EloGui.createInventory(holder, 54, title);
+                Inventory inv = EloGui.createInventory(holder, 45, title);
                 holder.setInventory(inv);
 
                 boolean fillerEnabled = adminConfig.getBoolean("filler.enabled", true);
@@ -149,7 +146,7 @@ public class AdminMenu {
                         paneMeta.setDisplayName(" ");
                         pane.setItemMeta(paneMeta);
                     }
-                    for (int i = 0; i < 54; i++) {
+                    for (int i = 0; i < 45; i++) {
                         inv.setItem(i, pane);
                     }
                 }
@@ -191,9 +188,6 @@ public class AdminMenu {
 
                 ItemStack resetBlock = EloGui.loadConfigItem(adminConfig, "reset-stats", "GUNPOWDER", "#ff3c3c\u0280\u1d07s\u1d07\u1d1b sᴛᴀᴛs", Arrays.asList("&fClick to reset ELO and stats to default"), -1);
                 setItemSafe(inv, adminConfig.getInt("reset-stats.slot", 34), resetBlock);
-
-                ItemStack searchItem = EloGui.loadConfigItem(adminConfig, "search", "COMPASS", "#ffaa00s\u1d07\u1d00\u0280\u1d04\u029c", Arrays.asList("&fClick to search a player by name"), -1);
-                setItemSafe(inv, adminConfig.getInt("search.slot", 47), searchItem);
 
                 player.openInventory(inv);
             });
@@ -322,9 +316,6 @@ public class AdminMenu {
                     ItemStack nextItem = EloGui.loadConfigItem(adminConfig, "next", "ARROW", "#00BFFFɴᴇxᴛ", Arrays.asList("&fClick to go to the next page"), -1);
                     inv.setItem(adminConfig.getInt("next.slot", 53), nextItem);
                 }
-
-                ItemStack searchItem = EloGui.loadConfigItem(adminConfig, "search", "COMPASS", "#ffaa00s\u1d07\u1d00\u0280\u1d04\u029c", Arrays.asList("&fClick to search a player by name"), -1);
-                inv.setItem(adminConfig.getInt("search.slot", 47), searchItem);
 
                 player.openInventory(inv);
             });
@@ -471,9 +462,6 @@ public class AdminMenu {
                     inv.setItem(nextSlot, nextItem);
                 }
 
-                ItemStack searchItem = EloGui.loadConfigItem(adminConfig, "search", "COMPASS", "#ffaa00s\u1d07\u1d00\u0280\u1d04\u029c", Arrays.asList("&fClick to search a player by name"), -1);
-                inv.setItem(adminConfig.getInt("search.slot", 47), searchItem);
-
                 player.openInventory(inv);
             });
         });
@@ -485,23 +473,11 @@ public class AdminMenu {
         int backSlot    = EloGui.getSlotFromLayout(adminConfig, "admin-list.gui-disposition", 'b', adminConfig.getInt("back.slot", 45));
         int nextSlot    = EloGui.getSlotFromLayout(adminConfig, "admin-list.gui-disposition", 'n', adminConfig.getInt("next.slot", 53));
         int refreshSlot = EloGui.getSlotFromLayout(adminConfig, "admin-list.gui-disposition", 'r', adminConfig.getInt("refresh.slot", 49));
-        int searchSlot  = EloGui.getSlotFromLayout(adminConfig, "admin-list.gui-disposition", 'q', adminConfig.getInt("search.slot", 47));
 
         if (slot == backSlot) {
             if (page > 1) {
                 plugin.getEffectManager().playGuiSound(player, "click");
                 EloGui.openEloAdmin(plugin, player, page - 1);
-            }
-        } else if (slot == searchSlot) {
-
-            plugin.getEffectManager().playGuiSound(player, "click");
-            player.closeInventory();
-            if (dev.solar.solarelo.gui.ClientCompatibility.supportsDialog(player)) {
-                dev.solar.solarelo.gui.DialogInputHelper.showSearchDialog(plugin, player);
-            } else if (dev.solar.solarelo.gui.FloodgateFormHelper.isBedrockPlayer(player)) {
-                dev.solar.solarelo.gui.FloodgateFormHelper.showSearchForm(plugin, player);
-            } else {
-                dev.solar.solarelo.gui.FloodgateFormHelper.triggerChatSearch(plugin, player);
             }
         } else if (slot == refreshSlot) {
             plugin.getEffectManager().playGuiSound(player, "click");
