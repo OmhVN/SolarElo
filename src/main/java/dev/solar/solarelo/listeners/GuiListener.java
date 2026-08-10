@@ -55,9 +55,7 @@ public class GuiListener implements Listener {
                 || holder instanceof EloGui.RankRewardsHolder
                 || holder instanceof EloGui.StatsHolder
                 || holder instanceof EloGui.BountyHolder
-                || holder instanceof EloGui.BountyConfirmHolder
                 || holder instanceof EloGui.BountyCreateHolder
-                || holder instanceof EloGui.ActiveQuestHolder
                 || holder instanceof EloGui.MainMenuHolder
                 || holder instanceof EloGui.SettingsHolder
                 || holder instanceof EloGui.EloAdminHolder
@@ -83,10 +81,6 @@ public class GuiListener implements Listener {
             dev.solar.solarelo.gui.BountyMenu.handleInventoryClick(event, bountyHolder, player, slot, plugin);
         } else if (holder instanceof EloGui.BountyCreateHolder createHolder) {
             dev.solar.solarelo.gui.BountyMenu.handleBountyCreateClick(event, createHolder, player, slot, plugin);
-        } else if (holder instanceof EloGui.ActiveQuestHolder) {
-            dev.solar.solarelo.gui.BountyMenu.handleActiveQuestClick(event, player, slot, plugin);
-        } else if (holder instanceof EloGui.BountyConfirmHolder confirmHolder) {
-            dev.solar.solarelo.gui.BountyMenu.handleBountyConfirmClick(event, confirmHolder, player, slot, plugin);
         } else if (holder instanceof EloGui.MainMenuHolder) {
             dev.solar.solarelo.gui.OtherMenus.handleMainMenuClick(event, player, slot, plugin);
         } else if (holder instanceof EloGui.SettingsHolder) {
@@ -109,9 +103,7 @@ public class GuiListener implements Listener {
                 || holder instanceof EloGui.RankRewardsHolder
                 || holder instanceof EloGui.StatsHolder
                 || holder instanceof EloGui.BountyHolder
-                || holder instanceof EloGui.BountyConfirmHolder
                 || holder instanceof EloGui.BountyCreateHolder
-                || holder instanceof EloGui.ActiveQuestHolder
                 || holder instanceof EloGui.MainMenuHolder
                 || holder instanceof EloGui.SettingsHolder
                 || holder instanceof EloGui.EloAdminHolder

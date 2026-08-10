@@ -58,13 +58,10 @@ public class SolarElo extends JavaPlugin {
         dev.solar.solarelo.utils.LoaderUtils.checkStatic("SolarElo", getFile());
         printStartupLog();
 
-        if (!getDescription().getName().equals("SolarElo") || !getDataFolder().getName().equals("SolarElo")) {
+        if (!getDescription().getName().equals("SolarElo") || !getDataFolder().getName().equalsIgnoreCase("SolarElo")) {
             getLogger().severe("Invalid plugin or directory name!");
-            try {
-                org.bukkit.Bukkit.getPluginManager().disablePlugin(this);
-                org.bukkit.Bukkit.shutdown();
-            } catch (Throwable ignored) {}
-            throw new SecurityException("[SolarElo] Invalid plugin or directory name!");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
         }
 
         dev.solar.solarelo.managers.ConfigMigrator.checkFolder(this);

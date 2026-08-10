@@ -113,29 +113,6 @@ public class EloGui {
         }
     }
 
-    public static class BountyConfirmHolder implements InventoryHolder {
-        private final UUID targetUuid;
-        private final String targetName;
-        private Inventory inventory;
-
-        public BountyConfirmHolder(UUID targetUuid, String targetName) {
-            this.targetUuid = targetUuid;
-            this.targetName = targetName;
-        }
-
-        public UUID getTargetUuid() { return targetUuid; }
-        public String getTargetName() { return targetName; }
-
-        @Override
-        public Inventory getInventory() {
-            return inventory;
-        }
-
-        public void setInventory(Inventory inventory) {
-            this.inventory = inventory;
-        }
-    }
-
     public static class BountyCreateHolder implements InventoryHolder {
         private final UUID targetUuid;
         private final String targetName;
@@ -153,19 +130,6 @@ public class EloGui {
         public int getSelectedAmount() { return selectedAmount; }
         public void setSelectedAmount(int selectedAmount) { this.selectedAmount = Math.max(0, selectedAmount); }
         public void addSelectedAmount(int delta) { this.selectedAmount = Math.max(0, this.selectedAmount + delta); }
-
-        @Override
-        public Inventory getInventory() {
-            return inventory;
-        }
-
-        public void setInventory(Inventory inventory) {
-            this.inventory = inventory;
-        }
-    }
-
-    public static class ActiveQuestHolder implements InventoryHolder {
-        private Inventory inventory;
 
         @Override
         public Inventory getInventory() {
@@ -349,15 +313,6 @@ public class EloGui {
         BountyMenu.open(plugin, player, page, filter);
     }
 
-    public static void openBountyConfirm(SolarElo plugin, Player player, UUID targetUuid, String targetName) {
-        if (!plugin.getBountyConfig().getBoolean("bounty.enabled", true) || !plugin.getGuiConfigManager().getBountyConfig().getBoolean("enabled", true)) {
-            String msg = plugin.getMessageManager().get("gui-disabled-bounty", "&#ff3c3cTính năng Săn tiền thưởng hiện đang bị tắt.");
-            player.sendMessage(colorize(msg));
-            return;
-        }
-        OtherMenus.openBountyConfirm(plugin, player, targetUuid, targetName);
-    }
-
     public static void openBountyCreate(SolarElo plugin, Player player, UUID targetUuid, String targetName, int initialAmount) {
         if (!plugin.getBountyConfig().getBoolean("bounty.enabled", true) || !plugin.getGuiConfigManager().getBountyConfig().getBoolean("enabled", true)) {
             String msg = plugin.getMessageManager().get("gui-disabled-bounty", "&#ff3c3cTính năng Săn tiền thưởng hiện đang bị tắt.");
@@ -365,15 +320,6 @@ public class EloGui {
             return;
         }
         BountyMenu.openBountyCreate(plugin, player, targetUuid, targetName, initialAmount);
-    }
-
-    public static void openActiveQuest(SolarElo plugin, Player player) {
-        if (!plugin.getBountyConfig().getBoolean("bounty.enabled", true) || !plugin.getGuiConfigManager().getBountyConfig().getBoolean("enabled", true)) {
-            String msg = plugin.getMessageManager().get("gui-disabled-bounty", "&#ff3c3cTính năng Săn tiền thưởng hiện đang bị tắt.");
-            player.sendMessage(colorize(msg));
-            return;
-        }
-        OtherMenus.openActiveQuest(plugin, player);
     }
 
     public static void openMainMenu(SolarElo plugin, Player player) {

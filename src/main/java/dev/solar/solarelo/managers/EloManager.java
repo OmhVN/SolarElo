@@ -56,9 +56,6 @@ public class EloManager {
     private final Map<UUID, Long> lastSpawnTimes = new ConcurrentHashMap<>();
     private final Map<UUID, org.bukkit.Location> lastSpawnLocations = new ConcurrentHashMap<>();
 
-    private final Map<UUID, UUID> activeBountyTargets = new ConcurrentHashMap<>();
-    private final Map<UUID, Long> activeBountyEndTimes = new ConcurrentHashMap<>();
-    private final Map<UUID, Long> bountyCooldowns = new ConcurrentHashMap<>();
     private final Map<UUID, PendingDeathNotification> pendingDeathNotifications = new ConcurrentHashMap<>();
 
     private final EloCalculator eloCalculator;
@@ -179,74 +176,6 @@ public class EloManager {
         });
     }
 
-    public UUID getActiveBountyTarget(UUID playerUuid) {
-        Long endTime = activeBountyEndTimes.get(playerUuid);
-        if (endTime != null && System.currentTimeMillis() > endTime) {
-            activeBountyTargets.remove(playerUuid);
-            activeBountyEndTimes.remove(playerUuid);
-            return null;
-        }
-        return activeBountyTargets.get(playerUuid);
-    }
-
-    public Long getActiveBountyEndTime(UUID playerUuid) {
-        return activeBountyEndTimes.get(playerUuid);
-    }
-
-    public void setActiveBountyTarget(UUID playerUuid, UUID targetUuid) {
-        long duration = 5400;
-        try {
-            duration = plugin.getBountyConfig().getInt("bounty-quest.contract-duration-seconds", 5400);
-        } catch (Exception ignored) {}
-        setActiveBountyTarget(playerUuid, targetUuid, System.currentTimeMillis() + (duration * 1000L));
-    }
-
-    public void setActiveBountyTarget(UUID playerUuid, UUID targetUuid, long endTime) {
-        activeBountyTargets.put(playerUuid, targetUuid);
-        activeBountyEndTimes.put(playerUuid, endTime);
-    }
-
-    public void clearActiveBountyTarget(UUID playerUuid) {
-        activeBountyTargets.remove(playerUuid);
-        activeBountyEndTimes.remove(playerUuid);
-    }
-
-    public boolean isBountyTargetActive(UUID targetUuid) {
-        if (targetUuid == null) return false;
-        for (UUID hunterUuid : new java.util.ArrayList<>(activeBountyTargets.keySet())) {
-            UUID activeTarget = getActiveBountyTarget(hunterUuid);
-            if (targetUuid.equals(activeTarget)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void cleanUpExpiredBounties() {
-        long now = System.currentTimeMillis();
-        for (UUID key : new java.util.ArrayList<>(activeBountyEndTimes.keySet())) {
-            Long endTime = activeBountyEndTimes.get(key);
-            if (endTime != null && now > endTime) {
-                activeBountyTargets.remove(key);
-                activeBountyEndTimes.remove(key);
-            }
-        }
-        for (UUID key : new java.util.ArrayList<>(bountyCooldowns.keySet())) {
-            Long endTime = bountyCooldowns.get(key);
-            if (endTime != null && now > endTime) {
-                bountyCooldowns.remove(key);
-            }
-        }
-    }
-
-    public long getBountyCooldown(UUID playerUuid) {
-        cleanUpExpiredBounties();
-        return bountyCooldowns.getOrDefault(playerUuid, 0L);
-    }
-
-    public void setBountyCooldown(UUID playerUuid, long endTime) {
-        bountyCooldowns.put(playerUuid, endTime);
-    }
 
     public int getCachedRank(UUID uuid) {
         Integer cached = rankCache.getIfPresent(uuid);
@@ -350,7 +279,6 @@ public class EloManager {
     }
 
     public void loadPlayer(Player player) {
-        cleanUpExpiredBounties();
         plugin.runAsync(() -> {
             PlayerData data = plugin.getDatabaseManager().loadPlayer(player.getUniqueId(), player.getName());
             if (player.getAddress() != null) {
@@ -366,8 +294,6 @@ public class EloManager {
         if (data != null) {
             plugin.runAsync(() -> plugin.getDatabaseManager().savePlayer(data));
         }
-        activeBountyTargets.remove(uuid);
-        activeBountyEndTimes.remove(uuid);
         pendingDeathNotifications.remove(uuid);
     }
 

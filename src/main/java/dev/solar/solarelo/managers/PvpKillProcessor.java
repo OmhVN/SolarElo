@@ -306,36 +306,6 @@ public class PvpKillProcessor {
             }
         }
 
-        UUID activeTargetUuid = eloManager.getActiveBountyTarget(killer.getUniqueId());
-        if (activeTargetUuid != null && activeTargetUuid.equals(victim.getUniqueId())) {
-            eloManager.clearActiveBountyTarget(killer.getUniqueId());
-
-            int bountyQuestElo = plugin.getBountyConfig().getInt("bounty-quest.reward-elo", 20);
-            gainRef[0] += bountyQuestElo;
-
-            long cooldownEnd = System.currentTimeMillis() + (plugin.getBountyConfig().getInt("bounty-quest.cooldown-seconds", 5400) * 1000L);
-            eloManager.setBountyCooldown(killer.getUniqueId(), cooldownEnd);
-
-            List<String> bountyQuestCmds = plugin.getBountyConfig().getStringList("bounty-quest.commands");
-            if (bountyQuestCmds != null) {
-                for (String cmd : bountyQuestCmds) {
-                    bountyCommandsToRun.add(cmd.replace("{killer}", killer.getName())
-                                             .replace("{victim}", victim.getName())
-                                             .replace("{reward_elo}", String.valueOf(bountyQuestElo)));
-                }
-            }
-
-            String questBroadcast = plugin.getMessageManager().get("bounty-quest-broadcast", "#00ff3c{killer} #ffffffđã hoàn thành nhiệm vụ và tiêu diệt #ff3c3c{victim}#ffffff!");
-            String questCompletedMsg = plugin.getMessageManager().get("bounty-quest-completed", "#00ff3c[Nhiệm Vụ] Bạn đã tiêu diệt mục tiêu {victim} và nhận thưởng +{reward_elo} Elo!");
-
-            if (questBroadcast != null && !questBroadcast.isEmpty()) {
-                String bMsg = EloManager.colorize(questBroadcast.replace("{killer}", killer.getName()).replace("{victim}", victim.getName()).replace("{reward_elo}", String.valueOf(bountyQuestElo)));
-                plugin.runSync(() -> Bukkit.broadcastMessage(bMsg));
-            }
-            plugin.runForEntity(killer, () -> {
-                killer.sendMessage(EloManager.colorize(questCompletedMsg.replace("{victim}", victim.getName()).replace("{reward_elo}", String.valueOf(bountyQuestElo))));
-            });
-        }
         return bountyCommandsToRun;
     }
 

@@ -475,12 +475,4 @@ public class BountyMenu {
         holder.addSelectedAmount(delta);
         openBountyCreate(plugin, player, holder.getTargetUuid(), holder.getTargetName(), holder.getSelectedAmount());
     }
-
-    public static void handleActiveQuestClick(InventoryClickEvent event, Player player, int slot, SolarElo plugin) {
-        EloGui.openBounty(plugin, player);
-    }
-
-    public static void handleBountyConfirmClick(InventoryClickEvent event, EloGui.BountyConfirmHolder confirmHolder, Player player, int slot, SolarElo plugin) {
-        EloGui.openBounty(plugin, player);
-    }
 }
