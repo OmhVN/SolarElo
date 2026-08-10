@@ -795,8 +795,9 @@ public class EloManager {
     }
 
     private void sendActionBar(Player player, String message) {
+        if (player == null || !player.isOnline() || message == null || message.isEmpty()) return;
         player.sendActionBar(net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
-                .legacyAmpersand().deserialize(message.replace("§", "&")));
+                .legacySection().deserialize(colorize(message)));
     }
 
     public void resetSeason(org.bukkit.command.CommandSender sender) {

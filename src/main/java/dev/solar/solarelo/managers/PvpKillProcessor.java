@@ -419,8 +419,9 @@ public class PvpKillProcessor {
     }
 
     private void sendActionBar(Player player, String message) {
+        if (player == null || !player.isOnline() || message == null || message.isEmpty()) return;
         player.sendActionBar(net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
-                .legacyAmpersand().deserialize(message.replace("§", "&")));
+                .legacySection().deserialize(EloManager.colorize(message)));
     }
 
     private void broadcastKillMessage(Player killer, Player victim, PlayerData killerData, PlayerData victimData) {
