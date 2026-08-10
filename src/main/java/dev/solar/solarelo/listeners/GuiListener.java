@@ -55,6 +55,7 @@ public class GuiListener implements Listener {
                 || holder instanceof EloGui.RankRewardsHolder
                 || holder instanceof EloGui.StatsHolder
                 || holder instanceof EloGui.BountyHolder
+                || holder instanceof EloGui.BountySelectHolder
                 || holder instanceof EloGui.BountyCreateHolder
                 || holder instanceof EloGui.MainMenuHolder
                 || holder instanceof EloGui.SettingsHolder
@@ -79,6 +80,8 @@ public class GuiListener implements Listener {
             dev.solar.solarelo.gui.StatsMenu.handleInventoryClick(event, statsHolder, player, slot, plugin);
         } else if (holder instanceof EloGui.BountyHolder bountyHolder) {
             dev.solar.solarelo.gui.BountyMenu.handleInventoryClick(event, bountyHolder, player, slot, plugin);
+        } else if (holder instanceof EloGui.BountySelectHolder selectHolder) {
+            dev.solar.solarelo.gui.BountyMenu.handleBountySelectClick(event, selectHolder, player, slot, plugin);
         } else if (holder instanceof EloGui.BountyCreateHolder createHolder) {
             dev.solar.solarelo.gui.BountyMenu.handleBountyCreateClick(event, createHolder, player, slot, plugin);
         } else if (holder instanceof EloGui.MainMenuHolder) {
@@ -103,6 +106,7 @@ public class GuiListener implements Listener {
                 || holder instanceof EloGui.RankRewardsHolder
                 || holder instanceof EloGui.StatsHolder
                 || holder instanceof EloGui.BountyHolder
+                || holder instanceof EloGui.BountySelectHolder
                 || holder instanceof EloGui.BountyCreateHolder
                 || holder instanceof EloGui.MainMenuHolder
                 || holder instanceof EloGui.SettingsHolder

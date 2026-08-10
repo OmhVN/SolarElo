@@ -1,0 +1,107 @@
+# Bounty Creation & Amount Setup GUI Configuration (Giao diện Thiết lập Tiền thưởng Truy Nã)
+enabled: true
+title: "ʙᴏᴜɴᴛʏ ᴀᴍᴏᴜɴᴛ sᴇᴛᴜᴘ"
+rows: 6
+
+filler:
+  enabled: true
+  material: "GRAY_STAINED_GLASS_PANE"
+
+target-head:
+  slot: 13
+  name: "&cᴛᴀʀɢᴇᴛ: &f{target}"
+  lore:
+    - "&7Target Elo: &e{target_elo}"
+    - "&7Current Bounty: &a{target_bounty} Elo"
+    - "&7Your Current Elo: &b{your_elo} Elo"
+    - ""
+    - "&fSelected Amount: &a+{selected_amount} Elo"
+    - ""
+    - "&e👉 Click here to enter custom Elo amount!"
+
+# Adjustment buttons (Miếng kính nhuộm màu tăng/giảm tiền)
+buttons:
+  minus-10:
+    slot: 20
+    material: "RED_STAINED_GLASS_PANE"
+    name: "&c-10 Elo"
+    lore:
+      - "&7Click to decrease 10 Elo"
+  minus-50:
+    slot: 19
+    material: "RED_STAINED_GLASS_PANE"
+    name: "&c-50 Elo"
+    lore:
+      - "&7Click to decrease 50 Elo"
+  minus-100:
+    slot: 18
+    material: "RED_STAINED_GLASS_PANE"
+    name: "&c-100 Elo"
+    lore:
+      - "&7Click to decrease 100 Elo"
+  minus-500:
+    slot: 28
+    material: "RED_STAINED_GLASS_PANE"
+    name: "&c-500 Elo"
+    lore:
+      - "&7Click to decrease 500 Elo"
+  minus-1000:
+    slot: 27
+    material: "RED_STAINED_GLASS_PANE"
+    name: "&c-1000 Elo"
+    lore:
+      - "&7Click to decrease 1000 Elo"
+
+  plus-10:
+    slot: 24
+    material: "LIME_STAINED_GLASS_PANE"
+    name: "&a+10 Elo"
+    lore:
+      - "&7Click to increase 10 Elo"
+  plus-50:
+    slot: 25
+    material: "LIME_STAINED_GLASS_PANE"
+    name: "&a+50 Elo"
+    lore:
+      - "&7Click to increase 50 Elo"
+  plus-100:
+    slot: 26
+    material: "LIME_STAINED_GLASS_PANE"
+    name: "&a+100 Elo"
+    lore:
+      - "&7Click to increase 100 Elo"
+  plus-500:
+    slot: 34
+    material: "LIME_STAINED_GLASS_PANE"
+    name: "&a+500 Elo"
+    lore:
+      - "&7Click to increase 500 Elo"
+  plus-1000:
+    slot: 35
+    material: "LIME_STAINED_GLASS_PANE"
+    name: "&a+1000 Elo"
+    lore:
+      - "&7Click to increase 1000 Elo"
+
+confirm:
+  slot: 31
+  material: "EMERALD_BLOCK"
+  name: "&a✔ ᴄᴏɴꜰɪʀᴍ ʙᴏᴜɴᴛʏ"
+  lore:
+    - "&fPlace &a+{selected_amount} Elo &fon &c{target}"
+
+reset:
+  slot: 32
+  material: "BARRIER"
+  name: "&cʀᴇsᴇᴛ"
+  lore:
+    - "&fReset selected amount to 0"
+
+back:
+  slot: 49
+  material: "ARROW"
+  name: "&cʙᴀᴄᴋ"
+  lore:
+    - "&7Return to Bounty List"
+
+config-version: "1.5"

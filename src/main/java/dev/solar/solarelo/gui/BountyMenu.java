@@ -335,6 +335,9 @@ public class BountyMenu {
     public static void openBountyCreate(SolarElo plugin, Player player, UUID targetUuid, String targetName, int selectedAmount) {
         if (EloGui.checkIpBlockedRedirect(plugin, player, false)) return;
 
+        org.bukkit.configuration.file.FileConfiguration config = plugin.getGuiConfigManager().getBountyCreateConfig();
+        if (config == null || !config.getBoolean("enabled", true)) return;
+
         plugin.runAsync(() -> {
             PlayerData creatorData = plugin.getEloManager().getData(player.getUniqueId(), player.getName());
             PlayerData targetData = plugin.getEloManager().getData(targetUuid, targetName);
@@ -344,71 +347,212 @@ public class BountyMenu {
                 if (!player.isOnline()) return;
 
                 EloGui.BountyCreateHolder holder = new EloGui.BountyCreateHolder(targetUuid, targetName, selectedAmount);
-                String title = EloGui.colorize("&cʙᴏᴜɴᴛʏ ᴀᴍᴏᴜɴᴛ sᴇᴛᴜᴘ");
-                Inventory inv = EloGui.createInventory(holder, 27, title);
+                String rawTitle = config.getString("title", "&cʙᴏᴜɴᴛʏ ᴀᴍᴏᴜɴᴛ sᴇᴛᴜᴘ");
+                int rows = config.getInt("rows", 6);
+                int size = rows * 9;
+                Inventory inv = EloGui.createInventory(holder, size, EloGui.colorize(rawTitle));
                 holder.setInventory(inv);
 
-                ItemStack pane = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
-                ItemMeta pMeta = pane.getItemMeta();
-                if (pMeta != null) { pMeta.setDisplayName(" "); pane.setItemMeta(pMeta); }
-                for (int i = 0; i < 27; i++) {
-                    inv.setItem(i, pane);
+                if (config.getBoolean("filler.enabled", true)) {
+                    Material fillMat = Material.matchMaterial(config.getString("filler.material", "GRAY_STAINED_GLASS_PANE"));
+                    if (fillMat == null) fillMat = Material.GRAY_STAINED_GLASS_PANE;
+                    ItemStack pane = new ItemStack(fillMat);
+                    ItemMeta pMeta = pane.getItemMeta();
+                    if (pMeta != null) { pMeta.setDisplayName(" "); pane.setItemMeta(pMeta); }
+                    for (int i = 0; i < size; i++) {
+                        inv.setItem(i, pane);
+                    }
                 }
 
+                int headSlot = config.getInt("target-head.slot", 13);
                 ItemStack targetHead = new ItemStack(Material.PLAYER_HEAD);
                 SkullMeta headMeta = (SkullMeta) targetHead.getItemMeta();
                 if (headMeta != null) {
                     SkinsRestorerHook.applySkin(headMeta, targetUuid, targetName);
-                    headMeta.setDisplayName(EloGui.colorize("&cᴛᴀʀɢᴇᴛ: &f" + targetName));
+                    String nameFmt = config.getString("target-head.name", "&cᴛᴀʀɢᴇᴛ: &f{target}");
+                    nameFmt = nameFmt.replace("{target}", targetName);
+                    headMeta.setDisplayName(EloGui.colorize(nameFmt));
+
+                    List<String> rawLore = config.getStringList("target-head.lore");
                     List<String> lore = new ArrayList<>();
-                    lore.add(EloGui.colorize("&7Target Elo: &e" + EloGui.formatNumber(targetData.getElo())));
-                    lore.add(EloGui.colorize("&7Current Bounty: &a" + EloGui.formatNumber(targetData.getBounty()) + " Elo"));
-                    lore.add(EloGui.colorize("&7Your Current Elo: &b" + EloGui.formatNumber(creatorData.getElo()) + " Elo"));
-                    lore.add("");
-                    lore.add(EloGui.colorize("&fSelected Amount: &a+" + EloGui.formatNumber(holder.getSelectedAmount()) + " Elo"));
-                    lore.add("");
-                    lore.add(EloGui.colorize("&e👉 Click here to enter custom Elo amount!"));
+                    for (String line : rawLore) {
+                        line = line.replace("{target}", targetName)
+                                   .replace("{target_elo}", EloGui.formatNumber(targetData.getElo()))
+                                   .replace("{target_bounty}", EloGui.formatNumber(targetData.getBounty()))
+                                   .replace("{your_elo}", EloGui.formatNumber(creatorData.getElo()))
+                                   .replace("{selected_amount}", EloGui.formatNumber(holder.getSelectedAmount()));
+                        lore.add(EloGui.colorize(line));
+                    }
                     headMeta.setLore(lore);
                     targetHead.setItemMeta(headMeta);
                 }
-                inv.setItem(13, targetHead);
+                inv.setItem(headSlot, targetHead);
 
-                inv.setItem(10, createAmountButton(Material.RED_STAINED_GLASS_PANE, "&c-100 Elo", "&7Click to decrease 100 Elo"));
-                inv.setItem(11, createAmountButton(Material.RED_STAINED_GLASS_PANE, "&c-50 Elo", "&7Click to decrease 50 Elo"));
-                inv.setItem(12, createAmountButton(Material.RED_STAINED_GLASS_PANE, "&c-10 Elo", "&7Click to decrease 10 Elo"));
+                org.bukkit.configuration.ConfigurationSection buttonsSec = config.getConfigurationSection("buttons");
+                if (buttonsSec != null) {
+                    for (String key : buttonsSec.getKeys(false)) {
+                        org.bukkit.configuration.ConfigurationSection btn = buttonsSec.getConfigurationSection(key);
+                        if (btn == null) continue;
+                        int slot = btn.getInt("slot", -1);
+                        if (slot < 0 || slot >= size) continue;
+                        Material mat = Material.matchMaterial(btn.getString("material", "RED_STAINED_GLASS_PANE"));
+                        if (mat == null) mat = Material.RED_STAINED_GLASS_PANE;
+                        String name = btn.getString("name", "");
+                        List<String> lore = btn.getStringList("lore");
+                        inv.setItem(slot, createConfigItem(mat, name, lore, holder, targetName));
+                    }
+                }
 
-                inv.setItem(14, createAmountButton(Material.LIME_STAINED_GLASS_PANE, "&a+10 Elo", "&7Click to increase 10 Elo"));
-                inv.setItem(15, createAmountButton(Material.LIME_STAINED_GLASS_PANE, "&a+50 Elo", "&7Click to increase 50 Elo"));
-                inv.setItem(16, createAmountButton(Material.LIME_STAINED_GLASS_PANE, "&a+100 Elo", "&7Click to increase 100 Elo"));
+                int confirmSlot = config.getInt("confirm.slot", 31);
+                Material confirmMat = Material.matchMaterial(config.getString("confirm.material", "EMERALD_BLOCK"));
+                if (confirmMat == null) confirmMat = Material.EMERALD_BLOCK;
+                String confirmName = config.getString("confirm.name", "&a✔ ᴄᴏɴꜰɪʀᴍ ʙᴏᴜɴᴛʏ");
+                List<String> confirmLore = config.getStringList("confirm.lore");
+                inv.setItem(confirmSlot, createConfigItem(confirmMat, confirmName, confirmLore, holder, targetName));
 
-                inv.setItem(19, createAmountButton(Material.RED_STAINED_GLASS_PANE, "&c-1000 Elo", "&7Click to decrease 1000 Elo"));
-                inv.setItem(20, createAmountButton(Material.RED_STAINED_GLASS_PANE, "&c-500 Elo", "&7Click to decrease 500 Elo"));
+                int resetSlot = config.getInt("reset.slot", 32);
+                Material resetMat = Material.matchMaterial(config.getString("reset.material", "BARRIER"));
+                if (resetMat == null) resetMat = Material.BARRIER;
+                String resetName = config.getString("reset.name", "&cʀᴇsᴇᴛ");
+                List<String> resetLore = config.getStringList("reset.lore");
+                inv.setItem(resetSlot, createConfigItem(resetMat, resetName, resetLore, holder, targetName));
 
-                inv.setItem(21, createAmountButton(Material.ANVIL, "&eᴄᴜsᴛᴏᴍ ᴀᴍᴏᴜɴᴛ", "&fClick to type custom Elo amount in chat"));
-
-                inv.setItem(22, createAmountButton(Material.EMERALD_BLOCK, "&a✔ ᴄᴏɴꜰɪʀᴍ ʙᴏᴜɴᴛʏ", "&fPlace &a+" + holder.getSelectedAmount() + " Elo &fon &c" + targetName));
-
-                inv.setItem(23, createAmountButton(Material.BARRIER, "&cʀᴇsᴇᴛ", "&fReset selected amount to 0"));
-
-                inv.setItem(24, createAmountButton(Material.LIME_STAINED_GLASS_PANE, "&a+500 Elo", "&7Click to increase 500 Elo"));
-                inv.setItem(25, createAmountButton(Material.LIME_STAINED_GLASS_PANE, "&a+1000 Elo", "&7Click to increase 1000 Elo"));
+                int backSlot = config.getInt("back.slot", 49);
+                Material backMat = Material.matchMaterial(config.getString("back.material", "ARROW"));
+                if (backMat == null) backMat = Material.ARROW;
+                String backName = config.getString("back.name", "&cʙᴀᴄᴋ");
+                List<String> backLore = config.getStringList("back.lore");
+                inv.setItem(backSlot, createConfigItem(backMat, backName, backLore, holder, targetName));
 
                 player.openInventory(inv);
             });
         });
     }
 
-    private static ItemStack createAmountButton(Material mat, String name, String loreLine) {
+    private static ItemStack createConfigItem(Material mat, String name, List<String> rawLore, EloGui.BountyCreateHolder holder, String targetName) {
         ItemStack item = new ItemStack(mat);
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
             meta.setDisplayName(EloGui.colorize(name));
-            List<String> lore = new ArrayList<>();
-            lore.add(EloGui.colorize(loreLine));
-            meta.setLore(lore);
+            if (rawLore != null && !rawLore.isEmpty()) {
+                List<String> lore = new ArrayList<>();
+                for (String line : rawLore) {
+                    line = line.replace("{selected_amount}", EloGui.formatNumber(holder.getSelectedAmount()))
+                               .replace("{target}", targetName);
+                    lore.add(EloGui.colorize(line));
+                }
+                meta.setLore(lore);
+            }
             item.setItemMeta(meta);
         }
         return item;
+    }
+
+    public static void openBountySelectPlayer(SolarElo plugin, Player player, int page) {
+        if (EloGui.checkIpBlockedRedirect(plugin, player, false)) return;
+
+        plugin.runAsync(() -> {
+            List<PlayerData> playersList = new ArrayList<>(plugin.getEloManager().getCachedPlayers());
+            playersList.removeIf(p -> p.getUuid().equals(player.getUniqueId()));
+
+            if (playersList.isEmpty()) {
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    if (!p.getUniqueId().equals(player.getUniqueId())) {
+                        PlayerData pd = plugin.getEloManager().getData(p.getUniqueId(), p.getName());
+                        if (pd != null) playersList.add(pd);
+                    }
+                }
+            }
+
+            plugin.runForEntity(player, () -> {
+                if (!player.isOnline()) return;
+
+                EloGui.BountySelectHolder holder = new EloGui.BountySelectHolder(page);
+                int size = 54;
+                Inventory inv = EloGui.createInventory(holder, size, EloGui.colorize("&csᴇʟᴇᴄᴛ ʙᴏᴜɴᴛʏ ᴛᴀʀɢᴇᴛ"));
+                holder.setInventory(inv);
+
+                ItemStack pane = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+                ItemMeta pMeta = pane.getItemMeta();
+                if (pMeta != null) { pMeta.setDisplayName(" "); pane.setItemMeta(pMeta); }
+                for (int i = 0; i < size; i++) inv.setItem(i, pane);
+
+                int[] slots = {
+                    10, 11, 12, 13, 14, 15, 16,
+                    19, 20, 21, 22, 23, 24, 25,
+                    28, 29, 30, 31, 32, 33, 34
+                };
+
+                int itemsPerPage = slots.length;
+                int totalPages = Math.max(1, (int) Math.ceil((double) playersList.size() / itemsPerPage));
+                int currentPage = Math.min(Math.max(1, page), totalPages);
+                int startIndex = (currentPage - 1) * itemsPerPage;
+                int endIndex = Math.min(startIndex + itemsPerPage, playersList.size());
+
+                for (int i = startIndex; i < endIndex; i++) {
+                    PlayerData targetData = playersList.get(i);
+                    int slot = slots[i - startIndex];
+
+                    ItemStack head = new ItemStack(Material.PLAYER_HEAD);
+                    SkullMeta meta = (SkullMeta) head.getItemMeta();
+                    if (meta != null) {
+                        SkinsRestorerHook.applySkin(meta, targetData.getUuid(), targetData.getName());
+                        meta.setDisplayName(EloGui.colorize("&c" + targetData.getName()));
+                        List<String> lore = new ArrayList<>();
+                        lore.add(EloGui.colorize("&7Elo: &e" + EloGui.formatNumber(targetData.getElo())));
+                        lore.add(EloGui.colorize("&7Current Bounty: &a" + EloGui.formatNumber(targetData.getBounty()) + " Elo"));
+                        lore.add("");
+                        lore.add(EloGui.colorize("&e👉 Click to place bounty on this player!"));
+                        meta.setLore(lore);
+
+                        NamespacedKey uuidKey = new NamespacedKey(plugin, "target_uuid");
+                        meta.getPersistentDataContainer().set(uuidKey, PersistentDataType.STRING, targetData.getUuid().toString());
+                        head.setItemMeta(meta);
+                    }
+                    inv.setItem(slot, head);
+                }
+
+                // Back Button
+                ItemStack back = new ItemStack(Material.ARROW);
+                ItemMeta bMeta = back.getItemMeta();
+                if (bMeta != null) {
+                    bMeta.setDisplayName(EloGui.colorize("&cʙᴀᴄᴋ"));
+                    back.setItemMeta(bMeta);
+                }
+                inv.setItem(49, back);
+
+                player.openInventory(inv);
+            });
+        });
+    }
+
+    public static void handleBountySelectClick(InventoryClickEvent event, EloGui.BountySelectHolder holder, Player player, int slot, SolarElo plugin) {
+        if (slot == 49) {
+            plugin.getEffectManager().playGuiSound(player, "click");
+            EloGui.openBounty(plugin, player, 1, "HIGH_TO_LOW");
+            return;
+        }
+
+        ItemStack item = event.getCurrentItem();
+        if (item != null && item.getType() == Material.PLAYER_HEAD) {
+            SkullMeta skullMeta = (SkullMeta) item.getItemMeta();
+            if (skullMeta == null) return;
+
+            NamespacedKey uuidKey = new NamespacedKey(plugin, "target_uuid");
+            UUID targetUuid = null;
+            if (skullMeta.getPersistentDataContainer().has(uuidKey, PersistentDataType.STRING)) {
+                String str = skullMeta.getPersistentDataContainer().get(uuidKey, PersistentDataType.STRING);
+                if (str != null) targetUuid = UUID.fromString(str);
+            }
+            if (targetUuid == null && skullMeta.getOwningPlayer() != null) {
+                targetUuid = skullMeta.getOwningPlayer().getUniqueId();
+            }
+            if (targetUuid != null) {
+                org.bukkit.OfflinePlayer target = Bukkit.getOfflinePlayer(targetUuid);
+                plugin.getEffectManager().playGuiSound(player, "click");
+                openBountyCreate(plugin, player, target.getUniqueId(), target.getName() != null ? target.getName() : player.getName(), 0);
+            }
+        }
     }
 
     public static void handleInventoryClick(InventoryClickEvent event, EloGui.BountyHolder bountyHolder, Player player, int slot, SolarElo plugin) {
@@ -455,22 +599,7 @@ public class BountyMenu {
                 EloGui.openBounty(plugin, player, 1, nextFilter);
             } else if (slot == actSlot) {
                 plugin.getEffectManager().playGuiSound(player, "click");
-                List<Player> onlinePlayers = new ArrayList<>(Bukkit.getOnlinePlayers());
-                Player targetPlayer = null;
-                for (Player p : onlinePlayers) {
-                    if (!p.getUniqueId().equals(player.getUniqueId())) {
-                        targetPlayer = p;
-                        break;
-                    }
-                }
-                if (targetPlayer == null && !onlinePlayers.isEmpty()) {
-                    targetPlayer = onlinePlayers.get(0);
-                }
-                if (targetPlayer != null) {
-                    openBountyCreate(plugin, player, targetPlayer.getUniqueId(), targetPlayer.getName(), 0);
-                } else {
-                    openBountyCreate(plugin, player, player.getUniqueId(), player.getName(), 0);
-                }
+                openBountySelectPlayer(plugin, player, 1);
             }
         } else if (currentItem != null && currentItem.getType() == Material.PLAYER_HEAD) {
             SkullMeta skullMeta = (SkullMeta) currentItem.getItemMeta();
@@ -502,32 +631,66 @@ public class BountyMenu {
     }
 
     public static void handleBountyCreateClick(InventoryClickEvent event, EloGui.BountyCreateHolder holder, Player player, int slot, SolarElo plugin) {
-        switch (slot) {
-            case 10 -> updateBountyCreateAmount(plugin, player, holder, -100);
-            case 11 -> updateBountyCreateAmount(plugin, player, holder, -50);
-            case 12 -> updateBountyCreateAmount(plugin, player, holder, -10);
-            case 14 -> updateBountyCreateAmount(plugin, player, holder, +10);
-            case 15 -> updateBountyCreateAmount(plugin, player, holder, +50);
-            case 16 -> updateBountyCreateAmount(plugin, player, holder, +100);
-            case 19 -> updateBountyCreateAmount(plugin, player, holder, -1000);
-            case 20 -> updateBountyCreateAmount(plugin, player, holder, -500);
-            case 24 -> updateBountyCreateAmount(plugin, player, holder, +500);
-            case 25 -> updateBountyCreateAmount(plugin, player, holder, +1000);
-            case 23 -> updateBountyCreateAmount(plugin, player, holder, -holder.getSelectedAmount()); // Reset 0
-            case 13, 21 -> { // Custom chat input (Clicking target head OR Anvil)
-                plugin.getEffectManager().playGuiSound(player, "click");
-                player.closeInventory();
-                GuiListener.chatPrompts.put(player.getUniqueId(), new GuiListener.ChatPromptData(holder.getTargetUuid(), holder.getTargetName(), "bounty_custom"));
-                player.sendMessage(EloGui.colorize("&#00ff3c[Bounty] &fPlease enter the custom Elo bounty amount for &c" + holder.getTargetName() + " &fin chat (or type &#ff3c3ccancel&f to exit):"));
+        org.bukkit.configuration.file.FileConfiguration config = plugin.getGuiConfigManager().getBountyCreateConfig();
+        if (config == null) return;
+
+        int headSlot = config.getInt("target-head.slot", 13);
+        int confirmSlot = config.getInt("confirm.slot", 31);
+        int resetSlot = config.getInt("reset.slot", 32);
+        int backSlot = config.getInt("back.slot", 49);
+
+        if (slot == headSlot) {
+            plugin.getEffectManager().playGuiSound(player, "click");
+            player.closeInventory();
+            GuiListener.chatPrompts.put(player.getUniqueId(), new GuiListener.ChatPromptData(holder.getTargetUuid(), holder.getTargetName(), "bounty_custom"));
+            player.sendMessage(EloGui.colorize("&#00ff3c[Bounty] &fPlease enter the custom Elo bounty amount for &c" + holder.getTargetName() + " &fin chat (or type &#ff3c3ccancel&f to exit):"));
+            return;
+        }
+
+        if (slot == confirmSlot) {
+            if (holder.getSelectedAmount() <= 0) {
+                plugin.getEffectManager().playGuiSound(player, "error");
+                player.sendMessage(EloGui.colorize("&cPlease select a bounty amount greater than 0!"));
+                return;
             }
-            case 22 -> { // Confirm create
-                if (holder.getSelectedAmount() <= 0) {
-                    plugin.getEffectManager().playGuiSound(player, "error");
-                    player.sendMessage(EloGui.colorize("&cPlease select a bounty amount greater than 0!"));
-                    return;
+            player.closeInventory();
+            plugin.getEloManager().placeBounty(player, holder.getTargetUuid(), holder.getTargetName(), holder.getSelectedAmount());
+            return;
+        }
+
+        if (slot == resetSlot) {
+            updateBountyCreateAmount(plugin, player, holder, -holder.getSelectedAmount());
+            return;
+        }
+
+        if (slot == backSlot) {
+            plugin.getEffectManager().playGuiSound(player, "click");
+            EloGui.openBounty(plugin, player, 1, "HIGH_TO_LOW");
+            return;
+        }
+
+        org.bukkit.configuration.ConfigurationSection buttonsSec = config.getConfigurationSection("buttons");
+        if (buttonsSec != null) {
+            for (String key : buttonsSec.getKeys(false)) {
+                org.bukkit.configuration.ConfigurationSection btn = buttonsSec.getConfigurationSection(key);
+                if (btn != null && btn.getInt("slot", -1) == slot) {
+                    int delta = 0;
+                    if (key.equals("minus-10")) delta = -10;
+                    else if (key.equals("minus-50")) delta = -50;
+                    else if (key.equals("minus-100")) delta = -100;
+                    else if (key.equals("minus-500")) delta = -500;
+                    else if (key.equals("minus-1000")) delta = -1000;
+                    else if (key.equals("plus-10")) delta = +10;
+                    else if (key.equals("plus-50")) delta = +50;
+                    else if (key.equals("plus-100")) delta = +100;
+                    else if (key.equals("plus-500")) delta = +500;
+                    else if (key.equals("plus-1000")) delta = +1000;
+
+                    if (delta != 0) {
+                        updateBountyCreateAmount(plugin, player, holder, delta);
+                        return;
+                    }
                 }
-                player.closeInventory();
-                plugin.getEloManager().placeBounty(player, holder.getTargetUuid(), holder.getTargetName(), holder.getSelectedAmount());
             }
         }
     }

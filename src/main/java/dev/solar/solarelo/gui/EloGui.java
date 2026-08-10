@@ -141,6 +141,26 @@ public class EloGui {
         }
     }
 
+    public static class BountySelectHolder implements InventoryHolder {
+        private final int page;
+        private Inventory inventory;
+
+        public BountySelectHolder(int page) {
+            this.page = page;
+        }
+
+        public int getPage() { return page; }
+
+        @Override
+        public Inventory getInventory() {
+            return inventory;
+        }
+
+        public void setInventory(Inventory inventory) {
+            this.inventory = inventory;
+        }
+    }
+
     public static class MainMenuHolder implements InventoryHolder {
         private Inventory inventory;
 
