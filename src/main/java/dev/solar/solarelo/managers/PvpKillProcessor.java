@@ -294,14 +294,27 @@ public class PvpKillProcessor {
         }
 
         if (victimData.getBounty() > 0) {
-            int placedBountyElo = victimData.getBounty();
-            gainRef[0] += placedBountyElo;
+            int placedBounty = victimData.getBounty();
             victimData.setBounty(0);
 
+            boolean useVault = plugin.getVaultHook() != null && plugin.getVaultHook().hasEconomy();
+            String amountFormatted;
+
+            if (useVault) {
+                plugin.getVaultHook().deposit(killer, placedBounty);
+                amountFormatted = plugin.getVaultHook().format(placedBounty);
+            } else {
+                gainRef[0] += placedBounty;
+                amountFormatted = placedBounty + " Elo";
+            }
+
             String bountyClaimedBroadcast = plugin.getMessageManager().get("bounty-claimed-broadcast",
-                    "&#00ff3c[Truy Nã] &#ffaa00{killer} &#ffffffđã hạ gục mục tiêu bị truy nã &#ff3c3c{victim} &#ffffffvà ôm trọn phần thưởng &#00ff3c+{amount} Elo&#ffffff!");
+                    "&#00ff3c[Truy Nã] &#ffaa00{killer} &#ffffffđã hạ gục mục tiêu bị truy nã &#ff3c3c{victim} &#ffffffvà ôm trọn phần thưởng &#00ff3c{amount}&#ffffff!");
             if (bountyClaimedBroadcast != null && !bountyClaimedBroadcast.isEmpty()) {
-                String bMsg = EloManager.colorize(bountyClaimedBroadcast.replace("{killer}", killer.getName()).replace("{victim}", victim.getName()).replace("{amount}", String.valueOf(placedBountyElo)));
+                String bMsg = EloManager.colorize(bountyClaimedBroadcast
+                        .replace("{killer}", killer.getName())
+                        .replace("{victim}", victim.getName())
+                        .replace("{amount}", amountFormatted));
                 plugin.runSync(() -> Bukkit.broadcastMessage(bMsg));
             }
         }
