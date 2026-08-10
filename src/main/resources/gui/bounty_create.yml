@@ -17,7 +17,15 @@ target-head:
     - ""
     - "&fSelected Amount: &a+{selected_amount} Elo"
     - ""
-    - "&e👉 Click here to enter custom Elo amount!"
+    - "&a✔ Click here to confirm and place bounty!"
+
+# Custom amount button (Nút nhập số tiền tùy chỉnh)
+custom-amount:
+  slot: 31
+  material: "BOOK"
+  name: "&eᴄᴜsᴛᴏᴍ ᴀᴍᴏᴜɴᴛ"
+  lore:
+    - "&7Click to type custom Elo amount in chat"
 
 # Adjustment buttons (Miếng kính nhuộm màu tăng/giảm tiền)
 buttons:
@@ -83,20 +91,6 @@ buttons:
     lore:
       - "&7Click to increase 1000 Elo"
 
-confirm:
-  slot: 31
-  material: "EMERALD_BLOCK"
-  name: "&a✔ ᴄᴏɴꜰɪʀᴍ ʙᴏᴜɴᴛʏ"
-  lore:
-    - "&fPlace &a+{selected_amount} Elo &fon &c{target}"
-
-reset:
-  slot: 32
-  material: "BARRIER"
-  name: "&cʀᴇsᴇᴛ"
-  lore:
-    - "&fReset selected amount to 0"
-
 back:
   slot: 49
   material: "ARROW"
@@ -104,4 +98,4 @@ back:
   lore:
     - "&7Return to Bounty List"
 
-config-version: "1.5"
+config-version: "1.6"

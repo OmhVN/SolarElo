@@ -403,19 +403,12 @@ public class BountyMenu {
                     }
                 }
 
-                int confirmSlot = config.getInt("confirm.slot", 31);
-                Material confirmMat = Material.matchMaterial(config.getString("confirm.material", "EMERALD_BLOCK"));
-                if (confirmMat == null) confirmMat = Material.EMERALD_BLOCK;
-                String confirmName = config.getString("confirm.name", "&a✔ ᴄᴏɴꜰɪʀᴍ ʙᴏᴜɴᴛʏ");
-                List<String> confirmLore = config.getStringList("confirm.lore");
-                inv.setItem(confirmSlot, createConfigItem(confirmMat, confirmName, confirmLore, holder, targetName));
-
-                int resetSlot = config.getInt("reset.slot", 32);
-                Material resetMat = Material.matchMaterial(config.getString("reset.material", "BARRIER"));
-                if (resetMat == null) resetMat = Material.BARRIER;
-                String resetName = config.getString("reset.name", "&cʀᴇsᴇᴛ");
-                List<String> resetLore = config.getStringList("reset.lore");
-                inv.setItem(resetSlot, createConfigItem(resetMat, resetName, resetLore, holder, targetName));
+                int customSlot = config.getInt("custom-amount.slot", 31);
+                Material customMat = Material.matchMaterial(config.getString("custom-amount.material", "BOOK"));
+                if (customMat == null) customMat = Material.BOOK;
+                String customName = config.getString("custom-amount.name", "&eᴄᴜsᴛᴏᴍ ᴀᴍᴏᴜɴᴛ");
+                List<String> customLore = config.getStringList("custom-amount.lore");
+                inv.setItem(customSlot, createConfigItem(customMat, customName, customLore, holder, targetName));
 
                 int backSlot = config.getInt("back.slot", 49);
                 Material backMat = Material.matchMaterial(config.getString("back.material", "ARROW"));
@@ -635,19 +628,10 @@ public class BountyMenu {
         if (config == null) return;
 
         int headSlot = config.getInt("target-head.slot", 13);
-        int confirmSlot = config.getInt("confirm.slot", 31);
-        int resetSlot = config.getInt("reset.slot", 32);
+        int customSlot = config.getInt("custom-amount.slot", 31);
         int backSlot = config.getInt("back.slot", 49);
 
         if (slot == headSlot) {
-            plugin.getEffectManager().playGuiSound(player, "click");
-            player.closeInventory();
-            GuiListener.chatPrompts.put(player.getUniqueId(), new GuiListener.ChatPromptData(holder.getTargetUuid(), holder.getTargetName(), "bounty_custom"));
-            player.sendMessage(EloGui.colorize("&#00ff3c[Bounty] &fPlease enter the custom Elo bounty amount for &c" + holder.getTargetName() + " &fin chat (or type &#ff3c3ccancel&f to exit):"));
-            return;
-        }
-
-        if (slot == confirmSlot) {
             if (holder.getSelectedAmount() <= 0) {
                 plugin.getEffectManager().playGuiSound(player, "error");
                 player.sendMessage(EloGui.colorize("&cPlease select a bounty amount greater than 0!"));
@@ -658,8 +642,11 @@ public class BountyMenu {
             return;
         }
 
-        if (slot == resetSlot) {
-            updateBountyCreateAmount(plugin, player, holder, -holder.getSelectedAmount());
+        if (slot == customSlot) {
+            plugin.getEffectManager().playGuiSound(player, "click");
+            player.closeInventory();
+            GuiListener.chatPrompts.put(player.getUniqueId(), new GuiListener.ChatPromptData(holder.getTargetUuid(), holder.getTargetName(), "bounty_custom"));
+            player.sendMessage(EloGui.colorize("&#00ff3c[Bounty] &fPlease enter the custom Elo bounty amount for &c" + holder.getTargetName() + " &fin chat (or type &#ff3c3ccancel&f to exit):"));
             return;
         }
 
