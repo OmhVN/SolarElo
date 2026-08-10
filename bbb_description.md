@@ -26,8 +26,7 @@ fully compatible and optimized for [B]Paper[/B] and [B]Folia[/B].
 [CENTER][IMG]https://cdn.modrinth.com/data/cached_images/f7e84b5e46f148585d4f92364b13f70acc28b555.png[/IMG][/CENTER]
 [B]Global Leaderboard & Stats[/B] — View top players asynchronously using player skulls, with sorting options (High to Low, Low to High, Online only). Click player heads to inspect detailed PvP profiles.
 
-[CENTER][IMG]https://cdn.modrinth.com/data/cached_images/f83b1876ec5844f49eea69c848a6adce7a8d7d04.png[/IMG][/CENTER]
-[B]Dynamic Bounty Contracts & Quests[/B] — Accept random PvP assassination contracts from the Bounty GUI. Hunt online targets to claim ELO, money, and custom command rewards.
+[B]Custom Player Bounty Creation[/B] — Open /bounty to select targets, customize bounty amounts using + / - buttons or chat input, and let players claim Elo rewards upon slaying targets.
 
 [CENTER][IMG]https://cdn.modrinth.com/data/cached_images/46d3ff5726eec406959089780f002275cd18421d.png[/IMG][/CENTER]
 [B]Tiered Rank Rewards[/B] — View rank requirements, progression milestones, and claimable bracket rewards in a visual tiered dashboard.
