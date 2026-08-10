@@ -419,6 +419,7 @@ public class BountyMenu {
         int nextSlot = EloGui.getSlotFromLayout(bountyConfig, 'n', 53);
         int refreshSlot = EloGui.getSlotFromLayout(bountyConfig, 'r', 49);
         int filSlot = EloGui.getSlotFromLayout(bountyConfig, 'f', 50);
+        int actSlot = EloGui.getSlotFromLayout(bountyConfig, 'a', 48);
 
         PlayerData selfData = plugin.getEloManager().getData(player.getUniqueId(), player.getName());
         if (selfData != null && selfData.isLocked()) {
@@ -430,7 +431,7 @@ public class BountyMenu {
         }
 
         ItemStack currentItem = event.getCurrentItem();
-        if (slot == prevSlot || slot == nextSlot || slot == refreshSlot || slot == filSlot) {
+        if (slot == prevSlot || slot == nextSlot || slot == refreshSlot || slot == filSlot || slot == actSlot) {
             if (slot == prevSlot && page > 1) {
                 plugin.getEffectManager().playGuiSound(player, "click");
                 EloGui.openBounty(plugin, player, page - 1, filter);
@@ -450,6 +451,24 @@ public class BountyMenu {
                 int nextIdx = (idx + 1) % options.size();
                 String nextFilter = options.get(nextIdx);
                 EloGui.openBounty(plugin, player, 1, nextFilter);
+            } else if (slot == actSlot) {
+                plugin.getEffectManager().playGuiSound(player, "click");
+                List<Player> onlinePlayers = new ArrayList<>(Bukkit.getOnlinePlayers());
+                Player targetPlayer = null;
+                for (Player p : onlinePlayers) {
+                    if (!p.getUniqueId().equals(player.getUniqueId())) {
+                        targetPlayer = p;
+                        break;
+                    }
+                }
+                if (targetPlayer == null && !onlinePlayers.isEmpty()) {
+                    targetPlayer = onlinePlayers.get(0);
+                }
+                if (targetPlayer != null) {
+                    openBountyCreate(plugin, player, targetPlayer.getUniqueId(), targetPlayer.getName(), 0);
+                } else {
+                    openBountyCreate(plugin, player, player.getUniqueId(), player.getName(), 0);
+                }
             }
         } else if (currentItem != null && currentItem.getType() == Material.PLAYER_HEAD) {
             SkullMeta skullMeta = (SkullMeta) currentItem.getItemMeta();
@@ -464,15 +483,18 @@ public class BountyMenu {
             if (targetUuid == null && skullMeta.getOwningPlayer() != null) {
                 targetUuid = skullMeta.getOwningPlayer().getUniqueId();
             }
+            if (targetUuid == null) {
+                targetUuid = player.getUniqueId();
+            }
             if (targetUuid != null) {
-                if (targetUuid.equals(player.getUniqueId())) {
+                if (targetUuid.equals(player.getUniqueId()) && Bukkit.getOnlinePlayers().size() > 1 && !player.hasPermission("solarelo.admin")) {
                     plugin.getEffectManager().playGuiSound(player, "error");
                     player.sendMessage(EloGui.colorize("&cBạn không thể tự treo thưởng lên chính mình!"));
                     return;
                 }
                 org.bukkit.OfflinePlayer target = Bukkit.getOfflinePlayer(targetUuid);
                 plugin.getEffectManager().playGuiSound(player, "click");
-                openBountyCreate(plugin, player, target.getUniqueId(), target.getName() != null ? target.getName() : "Unknown", 0);
+                openBountyCreate(plugin, player, target.getUniqueId(), target.getName() != null ? target.getName() : player.getName(), 0);
             }
         }
     }
