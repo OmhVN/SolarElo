@@ -132,13 +132,27 @@ public class EloManager {
         plugin.runAsync(() -> {
             PlayerData creatorData = getData(creator.getUniqueId(), creator.getName());
             if (creatorData == null || creatorData.isLocked()) {
-                creator.sendMessage(colorize("&#ff3c3cElo của bạn đang bị khóa, không thể treo thưởng truy nã!"));
+                creator.sendMessage(colorize("&#ff3c3cTài khoản của bạn đang bị khóa, không thể treo thưởng truy nã!"));
                 return;
             }
 
-            if (creatorData.getElo() < amount) {
-                creator.sendMessage(colorize("&#ff3c3cBạn không đủ Elo để treo thưởng mức " + amount + " Elo!"));
-                return;
+            boolean useVault = plugin.getVaultHook() != null && plugin.getVaultHook().hasEconomy();
+            if (useVault) {
+                double balance = plugin.getVaultHook().getBalance(creator);
+                if (balance < amount) {
+                    creator.sendMessage(colorize("&#ff3c3cBạn không đủ tiền (Cần " + plugin.getVaultHook().format(amount) + ") để treo thưởng!"));
+                    return;
+                }
+                if (!plugin.getVaultHook().withdraw(creator, amount)) {
+                    creator.sendMessage(colorize("&#ff3c3cGiao dịch trừ tiền thất bại!"));
+                    return;
+                }
+            } else {
+                if (creatorData.getElo() < amount) {
+                    creator.sendMessage(colorize("&#ff3c3cBạn không đủ Elo để treo thưởng mức " + amount + " Elo!"));
+                    return;
+                }
+                removeElo(creator.getUniqueId(), creator.getName(), amount);
             }
 
             PlayerData targetData = getData(targetUuid, targetName);
@@ -151,26 +165,23 @@ public class EloManager {
                 targetData = loaded;
             }
 
-            int oldCreatorElo = creatorData.getElo();
-            removeElo(creator.getUniqueId(), creator.getName(), amount);
             targetData.addBounty(amount);
             plugin.getDatabaseManager().savePlayer(targetData);
 
-            plugin.getDatabaseManager().recordEloChange(creator.getUniqueId(), -amount, "Treo thưởng truy nã lên " + targetName + " (-" + amount + " Elo)");
+            final String amountFormatted = useVault ? plugin.getVaultHook().format(amount) : (amount + " Elo");
+            final String totalFormatted = useVault ? plugin.getVaultHook().format(targetData.getBounty()) : (targetData.getBounty() + " Elo");
 
-            int newCreatorElo = creatorData.getElo() - amount;
             plugin.runForEntity(creator, () -> {
-                handleEloChangeEffectsAndRank(creator, oldCreatorElo, newCreatorElo);
                 plugin.getEffectManager().playGuiSound(creator, "click");
-                creator.sendMessage(colorize("&#00ff3c[Truy Nã] Đã treo thưởng thành công &#ffaa00" + amount + " Elo &#00ff3clên đầu &#ffffff" + targetName));
+                creator.sendMessage(colorize("&#00ff3c[Truy Nã] Đã treo thưởng thành công &#ffaa00" + amountFormatted + " &#00ff3clên đầu &#ffffff" + targetName));
             });
 
             String broadcastMsg = plugin.getMessageManager().get("bounty-placed-broadcast",
-                    "&#ff3c3c[Truy Nã] &#ffaa00{creator} &#ffffffđã treo thưởng &#00ff3c{amount} Elo &#fffffflên đầu &#ff3c3c{target}#ffffff! Tổng thưởng: &#ffaa00{total_bounty} Elo!")
+                    "&#ff3c3c[Truy Nã] &#ffaa00{creator} &#ffffffđã treo thưởng &#00ff3c{amount} &#fffffflên đầu &#ff3c3c{target}#ffffff! Tổng thưởng: &#ffaa00{total_bounty}!")
                     .replace("{creator}", creator.getName())
                     .replace("{target}", targetName)
-                    .replace("{amount}", String.valueOf(amount))
-                    .replace("{total_bounty}", String.valueOf(targetData.getBounty()));
+                    .replace("{amount}", amountFormatted)
+                    .replace("{total_bounty}", totalFormatted);
 
             plugin.runSync(() -> Bukkit.broadcastMessage(colorize(broadcastMsg)));
         });

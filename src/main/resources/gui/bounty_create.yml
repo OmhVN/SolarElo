@@ -12,10 +12,9 @@ target-head:
   name: "&cᴛᴀʀɢᴇᴛ: &f{target}"
   lore:
     - "&7Target Elo: &e{target_elo}"
-    - "&7Current Bounty: &a{target_bounty} Elo"
-    - "&7Your Current Elo: &b{your_elo} Elo"
+    - "&7Current Bounty: &a{target_bounty}"
     - ""
-    - "&fSelected Amount: &a+{selected_amount} Elo"
+    - "&fSelected Bounty: &a+{selected_amount}"
     - ""
     - "&a✔ Click here to confirm and place bounty!"
 
@@ -25,71 +24,71 @@ custom-amount:
   material: "BOOK"
   name: "&eᴄᴜsᴛᴏᴍ ᴀᴍᴏᴜɴᴛ"
   lore:
-    - "&7Click to type custom Elo amount in chat"
+    - "&7Click to type custom bounty amount in chat"
 
 # Adjustment buttons (Miếng kính nhuộm màu tăng/giảm tiền)
 buttons:
   minus-10:
     slot: 20
     material: "RED_STAINED_GLASS_PANE"
-    name: "&c-10 Elo"
+    name: "&c-10"
     lore:
-      - "&7Click to decrease 10 Elo"
+      - "&7Click to decrease 10"
   minus-50:
     slot: 19
     material: "RED_STAINED_GLASS_PANE"
-    name: "&c-50 Elo"
+    name: "&c-50"
     lore:
-      - "&7Click to decrease 50 Elo"
+      - "&7Click to decrease 50"
   minus-100:
     slot: 18
     material: "RED_STAINED_GLASS_PANE"
-    name: "&c-100 Elo"
+    name: "&c-100"
     lore:
-      - "&7Click to decrease 100 Elo"
+      - "&7Click to decrease 100"
   minus-500:
     slot: 28
     material: "RED_STAINED_GLASS_PANE"
-    name: "&c-500 Elo"
+    name: "&c-500"
     lore:
-      - "&7Click to decrease 500 Elo"
+      - "&7Click to decrease 500"
   minus-1000:
     slot: 27
     material: "RED_STAINED_GLASS_PANE"
-    name: "&c-1000 Elo"
+    name: "&c-1000"
     lore:
-      - "&7Click to decrease 1000 Elo"
+      - "&7Click to decrease 1000"
 
   plus-10:
     slot: 24
     material: "LIME_STAINED_GLASS_PANE"
-    name: "&a+10 Elo"
+    name: "&a+10"
     lore:
-      - "&7Click to increase 10 Elo"
+      - "&7Click to increase 10"
   plus-50:
     slot: 25
     material: "LIME_STAINED_GLASS_PANE"
-    name: "&a+50 Elo"
+    name: "&a+50"
     lore:
-      - "&7Click to increase 50 Elo"
+      - "&7Click to increase 50"
   plus-100:
     slot: 26
     material: "LIME_STAINED_GLASS_PANE"
-    name: "&a+100 Elo"
+    name: "&a+100"
     lore:
-      - "&7Click to increase 100 Elo"
+      - "&7Click to increase 100"
   plus-500:
     slot: 34
     material: "LIME_STAINED_GLASS_PANE"
-    name: "&a+500 Elo"
+    name: "&a+500"
     lore:
-      - "&7Click to increase 500 Elo"
+      - "&7Click to increase 500"
   plus-1000:
     slot: 35
     material: "LIME_STAINED_GLASS_PANE"
-    name: "&a+1000 Elo"
+    name: "&a+1000"
     lore:
-      - "&7Click to increase 1000 Elo"
+      - "&7Click to increase 1000"
 
 back:
   slot: 49

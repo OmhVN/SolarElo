@@ -40,6 +40,7 @@ public class SolarElo extends JavaPlugin {
     private EffectManager effectManager;
     private UpdateManager updateManager;
     private SolarEloAPIImpl api;
+    private dev.solar.solarelo.hooks.VaultHook vaultHook;
     private dev.solar.solarelo.placeholders.SolarEloExpansion placeholderExpansion;
     private Object decayTask;
 
@@ -196,6 +197,10 @@ public class SolarElo extends JavaPlugin {
 
     public UpdateManager getUpdateManager() {
         return updateManager;
+    }
+
+    public dev.solar.solarelo.hooks.VaultHook getVaultHook() {
+        return vaultHook;
     }
 
     public boolean isFolia() {
