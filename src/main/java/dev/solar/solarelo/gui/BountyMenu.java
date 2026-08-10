@@ -467,18 +467,9 @@ public class BountyMenu {
                 Inventory inv = EloGui.createInventory(holder, size, EloGui.colorize("sᴇʟᴇᴄᴛ ᴛᴀʀɢᴇᴛ"));
                 holder.setInventory(inv);
 
-                ItemStack pane = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
-                ItemMeta pMeta = pane.getItemMeta();
-                if (pMeta != null) { pMeta.setDisplayName(" "); pane.setItemMeta(pMeta); }
-                for (int i = 0; i < size; i++) inv.setItem(i, pane);
+                // Clean GUI without glass panes fillers
 
-                int[] slots = {
-                    10, 11, 12, 13, 14, 15, 16,
-                    19, 20, 21, 22, 23, 24, 25,
-                    28, 29, 30, 31, 32, 33, 34
-                };
-
-                int itemsPerPage = slots.length;
+                int itemsPerPage = 45; // Slots 0 to 44
                 int totalPages = Math.max(1, (int) Math.ceil((double) playersList.size() / itemsPerPage));
                 int currentPage = Math.min(Math.max(1, page), totalPages);
                 int startIndex = (currentPage - 1) * itemsPerPage;
@@ -486,7 +477,7 @@ public class BountyMenu {
 
                 for (int i = startIndex; i < endIndex; i++) {
                     PlayerData targetData = playersList.get(i);
-                    int slot = slots[i - startIndex];
+                    int slot = i - startIndex;
 
                     ItemStack head = new ItemStack(Material.PLAYER_HEAD);
                     SkullMeta meta = (SkullMeta) head.getItemMeta();
@@ -495,7 +486,8 @@ public class BountyMenu {
                         meta.setDisplayName(EloGui.colorize("&c" + targetData.getName()));
                         List<String> lore = new ArrayList<>();
                         lore.add(EloGui.colorize("&7Elo: &e" + EloGui.formatNumber(targetData.getElo())));
-                        lore.add(EloGui.colorize("&7Current Bounty: &a" + EloGui.formatNumber(targetData.getBounty()) + " Elo"));
+                        String bountyVal = plugin.getVaultHook().hasEconomy() ? plugin.getVaultHook().format(targetData.getBounty()) : (EloGui.formatNumber(targetData.getBounty()) + " Elo");
+                        lore.add(EloGui.colorize("&7Current Bounty: &a" + bountyVal));
                         lore.add("");
                         lore.add(EloGui.colorize("&e👉 Click to place bounty on this player!"));
                         meta.setLore(lore);
@@ -507,14 +499,35 @@ public class BountyMenu {
                     inv.setItem(slot, head);
                 }
 
-                // Back Button
+                // Back Button (Slot 45 - Bottom Left)
                 ItemStack back = new ItemStack(Material.ARROW);
                 ItemMeta bMeta = back.getItemMeta();
                 if (bMeta != null) {
                     bMeta.setDisplayName(EloGui.colorize("&cʙᴀᴄᴋ"));
+                    List<String> bLore = new ArrayList<>();
+                    if (currentPage > 1) {
+                        bLore.add(EloGui.colorize("&7Go to page " + (currentPage - 1)));
+                    } else {
+                        bLore.add(EloGui.colorize("&7Return to bounty menu"));
+                    }
+                    bMeta.setLore(bLore);
                     back.setItemMeta(bMeta);
                 }
-                inv.setItem(49, back);
+                inv.setItem(45, back);
+
+                // Next Button (Slot 53 - Bottom Right) if there's a next page
+                if (currentPage < totalPages) {
+                    ItemStack next = new ItemStack(Material.ARROW);
+                    ItemMeta nMeta = next.getItemMeta();
+                    if (nMeta != null) {
+                        nMeta.setDisplayName(EloGui.colorize("&aɴᴇxᴛ"));
+                        List<String> nLore = new ArrayList<>();
+                        nLore.add(EloGui.colorize("&7Go to page " + (currentPage + 1)));
+                        nMeta.setLore(nLore);
+                        next.setItemMeta(nMeta);
+                    }
+                    inv.setItem(53, next);
+                }
 
                 player.openInventory(inv);
             });
@@ -522,9 +535,21 @@ public class BountyMenu {
     }
 
     public static void handleBountySelectClick(InventoryClickEvent event, EloGui.BountySelectHolder holder, Player player, int slot, SolarElo plugin) {
-        if (slot == 49) {
+        int currentPage = holder.getPage();
+
+        if (slot == 45) { // Bottom-left corner back button
             plugin.getEffectManager().playGuiSound(player, "click");
-            EloGui.openBounty(plugin, player, 1, "HIGH_TO_LOW");
+            if (currentPage > 1) {
+                openBountySelectPlayer(plugin, player, currentPage - 1);
+            } else {
+                EloGui.openBounty(plugin, player, 1, "HIGH_TO_LOW");
+            }
+            return;
+        }
+
+        if (slot == 53) { // Bottom-right corner next button
+            plugin.getEffectManager().playGuiSound(player, "click");
+            openBountySelectPlayer(plugin, player, currentPage + 1);
             return;
         }
 
