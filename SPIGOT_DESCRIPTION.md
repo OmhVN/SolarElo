@@ -4,6 +4,7 @@
 [![Paper & Folia Ready](https://img.shields.io/badge/Server-Paper%20%7C%20Leaf%20%7C%20Folia-blue.svg)](https://papermc.io)
 [![Built with Triumph-GUI](https://img.shields.io/badge/GUI-Triumph--GUI-orange.svg)](https://github.com/TriumphTeam/triumph-gui)
 [![Database](https://img.shields.io/badge/Database-H2%20%7C%20MySQL%20%7C%20SQLite-yellow.svg)](https://github.com/brettwooldridge/HikariCP)
+[![bStats](https://bstats.org/signatures/bukkit/SolarElo.svg)](https://bstats.org/plugin/bukkit/SolarElo/31740)
 
 Say goodbye to unfair PvP farming, win-trading, and clunky configuration. **SolarElo** is a modern, high-performance **PvP ELO, Rank & Bounty Management System** built for Paper, Leaf, and Folia 1.21+ servers.
 
@@ -170,4 +171,8 @@ Integrated security algorithms: IP/Subnet checks, AFK movement checks, spawn cam
 [*][ICODE]/stats[/ICODE] — Personal Stats Profile
 [*][ICODE]/eloadmin[/ICODE] — Admin Management Panel (solarelo.admin)
 [/LIST]
+
+[HR][/HR]
+
+[CENTER][URL=https://bstats.org/plugin/bukkit/SolarElo/31740][IMG]https://bstats.org/signatures/bukkit/SolarElo.svg[/IMG][/URL][/CENTER]
 ```
