@@ -250,6 +250,32 @@ public class BountyMenu {
                 inv.setItem(nextSlot, nextItem);
             }
 
+            int actSlot = EloGui.getSlotFromLayout(bountyConfig, 'a', 48);
+            if (actSlot >= 0 && actSlot < rows * 9) {
+                org.bukkit.configuration.ConfigurationSection actSec = bountyConfig.getConfigurationSection("active-quest");
+                if (actSec == null) {
+                    actSec = bountyConfig.getConfigurationSection("active-bounty-item");
+                }
+                String matStr = actSec != null ? actSec.getString("material", "BLUE_BANNER") : "BLUE_BANNER";
+                Material mat = EloGui.getMaterial(matStr, Material.BLUE_BANNER);
+                ItemStack actItem = new ItemStack(mat);
+                ItemMeta actMeta = actItem.getItemMeta();
+                if (actMeta != null) {
+                    String name = actSec != null ? actSec.getString("name", "#00BFFFᴀᴄᴛɪᴠᴇ ǫᴜᴇsᴛ") : "#00BFFFᴀᴄᴛɪᴠᴇ ǫᴜᴇsᴛ";
+                    actMeta.setDisplayName(EloGui.colorize(name));
+                    List<String> actLore = new ArrayList<>();
+                    List<String> rawLore = actSec != null ? actSec.getStringList("lore") : null;
+                    if (rawLore != null) {
+                        for (String l : rawLore) {
+                            actLore.add(EloGui.colorize(l));
+                        }
+                    }
+                    actMeta.setLore(actLore);
+                    actItem.setItemMeta(actMeta);
+                }
+                inv.setItem(actSlot, actItem);
+            }
+
             int refSlot = EloGui.getSlotFromLayout(bountyConfig, 'r', 49);
             if (refSlot >= 0 && refSlot < rows * 9) {
                 Material mat = EloGui.getMaterial(bountyConfig.getString("refresh.material"), Material.ANVIL);
