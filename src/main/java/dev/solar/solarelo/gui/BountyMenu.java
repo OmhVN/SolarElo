@@ -51,9 +51,6 @@ public class BountyMenu {
 
             List<PlayerData> targetDataList = new ArrayList<>();
             for (Player p : onlinePlayers) {
-                if (p.getUniqueId().equals(player.getUniqueId()) && onlinePlayers.size() > 1) {
-                    continue;
-                }
                 if (plugin.getEloManager().isIpBlocked(p)) {
                     continue;
                 }
@@ -61,26 +58,21 @@ public class BountyMenu {
                 if (data == null) {
                     data = plugin.getEloManager().getData(p.getUniqueId(), p.getName());
                 }
-                if (data != null && data.getElo() >= minTargetElo) {
+                if (data != null && data.getBounty() > 0 && data.getElo() >= minTargetElo) {
                     targetDataList.add(data);
                 }
             }
 
-            if (targetDataList.isEmpty()) {
-                List<PlayerData> dbPlayers = plugin.getDatabaseManager().getTopPlayers(50, 0, true);
-                if (dbPlayers != null) {
-                    for (PlayerData data : dbPlayers) {
-                        if (data != null && data.getElo() >= minTargetElo) {
-                            targetDataList.add(data);
-                        }
-                    }
+            for (PlayerData pd : plugin.getEloManager().getCachedPlayers()) {
+                if (pd != null && pd.getBounty() > 0 && pd.getElo() >= minTargetElo && !targetDataList.contains(pd)) {
+                    targetDataList.add(pd);
                 }
             }
 
             if (activeFilter.equalsIgnoreCase("LOW_TO_HIGH")) {
-                targetDataList.sort((d1, d2) -> Integer.compare(d1.getElo(), d2.getElo()));
+                targetDataList.sort((d1, d2) -> Integer.compare(d1.getBounty(), d2.getBounty()));
             } else {
-                targetDataList.sort((d1, d2) -> Integer.compare(d2.getElo(), d1.getElo()));
+                targetDataList.sort((d1, d2) -> Integer.compare(d2.getBounty(), d1.getBounty()));
             }
 
             int totalTargets = targetDataList.size();

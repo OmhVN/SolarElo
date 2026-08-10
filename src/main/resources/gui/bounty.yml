@@ -19,76 +19,76 @@ minimum-unlock-elo: 0 # Minimum Elo required for a player to use/unlock the Boun
 
 # Item shown for each online player in the bounty selection GUI
 target-player-head:
-  name: "&cᴛᴀʀɢᴇᴛ: &f{player}"
+  name: "#ffaa00ᴛᴀʀɢᴇᴛ: #ffffff{player}"
   lore:
-    - "&7Elo: &e{elo}"
-    - "&7Rank: &f{rank}"
-    - "&7Bounty: &a{bounty}"
+    - "#aaaaaaElo: #ffaa00{elo}"
+    - "#aaaaaaRank: #ffffff{rank}"
+    - "#aaaaaaBounty: #00ff3c{bounty}"
     - ""
-    - "&fClick to view or place bounty on this player!"
+    - "#00ff3cClick to place or add bounty on this player!"
 
 # When player has an active target (Khi đang có nhiệm vụ hoạt động)
 active-bounty-item:
-  name: "&aᴀᴄᴛɪᴠᴇ ǫᴜᴇsᴛ"
+  name: "#00ff3cᴀᴄᴛɪᴠᴇ ǫᴜᴇsᴛ"
   material: "PLAYER_HEAD"
   lore:
-    - "&7Target: &c{target}"
-    - "&7Reward Elo: &a+{reward_elo}"
-    - "&7Time Remaining: &e{time_remaining}"
+    - "#aaaaaaTarget: #ff3c3c{target}"
+    - "#aaaaaaReward Elo: #00ff3c+{reward_elo}"
+    - "#aaaaaaTime Remaining: #ffaa00{time_remaining}"
     - ""
-    - "&fFind and eliminate &e{target} &fto get rewards!"
-    - "&fIf they log out, the contract is preserved."
+    - "#ffffffFind and eliminate #ffaa00{target} #ffffffto get rewards!"
+    - "#ffffffIf they log out, the contract is preserved."
 
 cancel-bounty-item:
-  name: "&cᴄᴀɴᴄᴇʟ ǫᴜᴇsᴛ"
+  name: "#ff3c3cᴄᴀɴᴄᴇʟ ǫᴜᴇsᴛ"
   material: "BARRIER"
   lore:
-    - "&fClick to cancel the current bounty contract."
-    - "&fYou will be penalized with a &c{cooldown} second &fcooldown"
-    - "&fbefore you can accept another quest."
+    - "#ffffffClick to cancel the current bounty contract."
+    - "#ffffffYou will be penalized with a #ff3c3c{cooldown} second #ffffffcooldown"
+    - "#ffffffbefore you can accept another quest."
   confirm_sound: error
 
 cooldown-item:
-  name: "&cᴄᴏᴏʟᴅᴏᴡɴ"
+  name: "#ff3c3cᴄᴏᴏʟᴅᴏᴡɴ"
   material: "CLOCK"
   lore:
-    - "&fYou completed or canceled a quest recently."
-    - "&fPlease wait before accepting the next quest."
+    - "#ffffffYou completed or canceled a quest recently."
+    - "#ffffffPlease wait before accepting the next quest."
     - ""
-    - "&fRemaining time: &c{remaining} seconds."
+    - "#ffffffRemaining time: #ff3c3c{remaining} seconds."
 
 no-targets-item:
-  name: "&cɴᴏ ᴠᴀʟɪᴅ ᴛᴀʀɢᴇᴛs"
+  name: "#ff3c3cɴᴏ ᴀᴄᴛɪᴠᴇ ʙᴏᴜɴᴛɪᴇs"
   material: "PAPER"
   lore:
-    - "&fNo other valid players online currently."
-    - "&f(You cannot target yourself)"
+    - "#ffffffCurrently there are no active bounties."
+    - "#ffffffClick '+' button or head to place a bounty!"
 
 locked-item:
-  name: "&cʙᴏᴜɴᴛʏ ʟᴏᴄᴋᴇᴅ"
+  name: "#ff3c3cʙᴏᴜɴᴛʏ ʟᴏᴄᴋᴇᴅ"
   material: "BARRIER"
   lore:
-    - "&fYou need at least &e{required} Elo &fto unlock"
-    - "&fthe Bounty feature."
+    - "#ffffffYou need at least #ffaa00{required} Elo #ffffffto unlock"
+    - "#ffffffthe Bounty feature."
     - ""
-    - "&7Your current Elo: &c{elo} Elo"
+    - "#aaaaaaYour current Elo: #ff3c3c{elo} Elo"
 
 back:
-  name: "&cʙᴀᴄᴋ"
+  name: "#00BFFFʙᴀᴄᴋ"
   lore:
     - "&fClick to go to the previous page"
   material: "ARROW"
   customModelData: -1
 
 next:
-  name: "&aɴᴇxᴛ"
+  name: "#00BFFFɴᴇxᴛ"
   lore:
     - "&fClick to go to the next page"
   material: "ARROW"
   customModelData: -1
 
 active-quest:
-  name: "&fᴀᴄᴛɪᴠᴇ ǫᴜᴇsᴛ"
+  name: "#00BFFFᴀᴄᴛɪᴠᴇ ǫᴜᴇsᴛ"
   lore:
     - "&fClick to view current contract details"
     - "&fand remaining time."
@@ -96,17 +96,17 @@ active-quest:
   customModelData: -1
 
 refresh:
-  name: "&fʀᴇꜰʀᴇsʜ"
+  name: "#00BFFFʀᴇꜰʀᴇsʜ"
   lore:
     - "&fClick to refresh the targets list"
   material: "ANVIL"
   customModelData: -1
 
 filter:
-  name: "&fғɪʟᴛᴇʀ"
+  name: "#00BFFFғɪʟᴛᴇʀ"
   material: "HOPPER"
   customModelData: -1
-  selected_color: "&e"
+  selected_color: "#00BFFF"
   unselected_color: "&f"
   bullet_icon: "▪ "
   options: # DON'T CHANGE ANYTHING IN HERE
@@ -119,6 +119,6 @@ filter:
     - "&fFilter state:"
     - "{options}"
     - ""
-    - "&fClick to change filter!"
+    - "#00BFFFClick to change filter!"
 
 config-version: "1.5"
