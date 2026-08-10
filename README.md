@@ -12,10 +12,6 @@
 ### Why SolarElo?
 Say goodbye to unfair PvP farming, win-trading, and complex setup headaches. SolarElo calculates, tracks, and manages PvP ELO with zero performance impact - fully compatible and optimized for **Paper**, **Leaf**, and **Folia**. This plugin provides a highly scalable and secure competitive experience, complete with dynamic ranking formulas, robust anti-abuse algorithms, interactive GUIs, and seamless Discord integration.
 
-> **WARNING — AI-Assisted Development**
->
-> This plugin's codebase has been developed, refactored, and optimized with the assistance of advanced AI coding agents. Please test updates in a development or staging environment before deploying to production.
-
 ---
 
 ## Main Feature Showcase
