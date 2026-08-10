@@ -1,6 +1,6 @@
 # Elo Leaderboard GUI Configuration
 enabled: true
-title: "ʟᴇᴀᴅᴇʀʙᴏᴀʀᴅ - ᴘᴀɢᴇ {page}"
+title: "ʟᴇᴀᴅᴇʀʙᴏᴀʀᴅ"
 gui-disposition:
   - "xxxxxxxxx"
   - "xxxxxxxxx"

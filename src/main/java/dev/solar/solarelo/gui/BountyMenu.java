@@ -464,7 +464,7 @@ public class BountyMenu {
 
                 EloGui.BountySelectHolder holder = new EloGui.BountySelectHolder(page);
                 int size = 54;
-                Inventory inv = EloGui.createInventory(holder, size, EloGui.colorize("&csᴇʟᴇᴄᴛ ʙᴏᴜɴᴛʏ ᴛᴀʀɢᴇᴛ"));
+                Inventory inv = EloGui.createInventory(holder, size, EloGui.colorize("sᴇʟᴇᴄᴛ ᴛᴀʀɢᴇᴛ"));
                 holder.setInventory(inv);
 
                 ItemStack pane = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);

@@ -7,7 +7,7 @@ filler:
 
 
 admin-list:
-  title: "ᴇʟᴏ ᴀᴅᴍɪɴ - {page}"
+  title: "ᴇʟᴏ ᴀᴅᴍɪɴ"
   gui-disposition:
     - "xxxxxxxxx"
     - "xxxxxxxxx"
@@ -17,7 +17,7 @@ admin-list:
     - "b###r###n"
 
 admin-detail:
-  title: "ᴀᴅᴍɪɴ ᴅᴇᴛᴀɪʟs - {player}"
+  title: "ᴀᴅᴍɪɴ ᴇᴅɪᴛᴏʀ"
   gui-disposition:
     - "#########"
     - "####h####"
@@ -26,7 +26,7 @@ admin-detail:
     - "#########"
 
 elo-history:
-  title: "ᴇʟᴏ ʜɪsᴛᴏʀʏ - {player}"
+  title: "ᴇʟᴏ ʜɪsᴛᴏʀʏ"
   gui-disposition:
     - "xxxxxxxxx"
     - "xxxxxxxxx"
@@ -36,7 +36,7 @@ elo-history:
     - "b###f###n"
 
 kill-history:
-  title: "ᴘᴠᴘ ʜɪsᴛᴏʀʏ - {player}"
+  title: "ᴋɪʟʟ ʜɪsᴛᴏʀʏ"
   gui-disposition:
     - "xxxxxxxxx"
     - "xxxxxxxxx"
