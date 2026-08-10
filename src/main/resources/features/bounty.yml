@@ -1,4 +1,4 @@
-# Elo Bounty System (Hệ thống Săn thưởng Elo)
+# Bounty System Configuration (Hệ thống Truy Nã / Săn Thưởng)
 bounty:
   enabled: true
   # Thưởng chuỗi hạ gục (Streak Bounties)
