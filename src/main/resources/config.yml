@@ -47,6 +47,17 @@ elo:
   # Maximum ELO limit (Elo tối đa)
   maximum-elo: 50000
 
+# Rank Difference Scaling (Cơ chế thưởng/phạt theo chênh lệch Cấp Bậc/Rank)
+# - Low rank kills high rank -> Receives MORE Elo (Thưởng khi rank thấp thắng rank cao)
+# - High rank kills low rank -> Receives LESS Elo (Giảm thưởng khi rank cao đánh rank thấp)
+rank-difference-scaling:
+  enabled: true
+  # Multiplier per rank tier difference (Hệ số nhân cho mỗi cấp chênh lệch Rank, 0.15 = +15%/cấp)
+  multiplier-per-tier: 0.15
+  # Minimum & maximum multiplier limits (Giới hạn hệ số nhân tối thiểu & tối đa)
+  min-multiplier: 0.2
+  max-multiplier: 3.0
+
 # Auto ELO Lock Configuration (Cấu hình khóa Elo khi đạt mức tối thiểu)
 elo-lock:
   # Duration to lock ELO when reaching minimum limit (Thời gian tự động khóa Elo khi chạm mốc tối thiểu)

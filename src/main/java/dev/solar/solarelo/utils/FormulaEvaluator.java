@@ -5,6 +5,12 @@ import dev.solar.solarelo.SolarElo;
 public class FormulaEvaluator {
 
     public static double evaluateFormula(SolarElo plugin, String formula, int killerElo, int victimElo, double killerKD, double victimKD, int killerStreak, int victimStreak, int kFactor) {
+        String killerRank = plugin.getRankManager().getRank(killerElo);
+        String victimRank = plugin.getRankManager().getRank(victimElo);
+        int killerTier = plugin.getRankManager().getRankOrdinal(killerRank);
+        int victimTier = plugin.getRankManager().getRankOrdinal(victimRank);
+        int rankDiff = victimTier - killerTier;
+
         String expr = formula
                 .replace("{killer_elo}", String.valueOf(killerElo))
                 .replace("killer_elo", String.valueOf(killerElo))
@@ -18,8 +24,15 @@ public class FormulaEvaluator {
                 .replace("killer_streak", String.valueOf(killerStreak))
                 .replace("{victim_streak}", String.valueOf(victimStreak))
                 .replace("victim_streak", String.valueOf(victimStreak))
+                .replace("{killer_rank_tier}", String.valueOf(killerTier))
+                .replace("killer_rank_tier", String.valueOf(killerTier))
+                .replace("{victim_rank_tier}", String.valueOf(victimTier))
+                .replace("victim_rank_tier", String.valueOf(victimTier))
+                .replace("{rank_diff}", String.valueOf(rankDiff))
+                .replace("rank_diff", String.valueOf(rankDiff))
                 .replace("{k_factor}", String.valueOf(kFactor))
                 .replace("k_factor", String.valueOf(kFactor));
+
 
         try {
             return evaluateMathExpression(expr);

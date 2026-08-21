@@ -42,13 +42,41 @@ public class EloCalculator {
     public int[] calculateEloChange(int killerElo, int victimElo,
                                      PlayerData killerData, PlayerData victimData) {
         ScoringMode mode = getScoringMode();
-        return switch (mode) {
+        int[] baseChanges = switch (mode) {
             case RANDOM -> calculateRandom();
             case KD -> calculateKD(killerData, victimData);
             case CUSTOM -> calculateCustom(killerElo, victimElo, killerData, victimData);
             default -> calculateFormula(killerElo, victimElo);
         };
+
+        if (plugin.getConfig().getBoolean("rank-difference-scaling.enabled", true)) {
+            String killerRank = plugin.getRankManager().getRank(killerElo);
+            String victimRank = plugin.getRankManager().getRank(victimElo);
+
+            int killerTier = plugin.getRankManager().getRankOrdinal(killerRank);
+            int victimTier = plugin.getRankManager().getRankOrdinal(victimRank);
+
+            int tierDiff = victimTier - killerTier;
+
+            double perTier = plugin.getConfig().getDouble("rank-difference-scaling.multiplier-per-tier", 0.15);
+            double minMult = plugin.getConfig().getDouble("rank-difference-scaling.min-multiplier", 0.2);
+            double maxMult = plugin.getConfig().getDouble("rank-difference-scaling.max-multiplier", 3.0);
+
+            double multiplier = 1.0 + (tierDiff * perTier);
+            multiplier = Math.max(minMult, Math.min(maxMult, multiplier));
+
+            int gain = (int) Math.round(baseChanges[0] * multiplier);
+            int loss = (int) Math.round(baseChanges[1] * multiplier);
+
+            gain = Math.max(1, gain);
+            loss = Math.max(1, loss);
+
+            return new int[]{gain, loss};
+        }
+
+        return baseChanges;
     }
+
 
     private int[] calculateCustom(int killerElo, int victimElo, PlayerData killerData, PlayerData victimData) {
         String formulaGain = plugin.getConfig().getString("elo.custom.formula-gain", "32 * (1 - 1 / (1 + 10^((victim_elo - killer_elo) / 400)))");
