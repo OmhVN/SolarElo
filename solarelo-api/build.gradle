@@ -20,7 +20,8 @@ def getGitCommitHash = { ->
 def gitCommit = getGitCommitHash()
 
 group = 'dev.solar'
-version = "1.1-R08-${gitCommit}"
+version = "1.1-R09-${gitCommit}"
+
 
 java {
     toolchain {
